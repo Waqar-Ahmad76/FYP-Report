@@ -1,0 +1,1228 @@
+% =====================================================================
+%  FYP REPORT -- Urdu-Ink Mobile
+%  Formatted per: "FYP Report Guidelines", Dept. of Computer Science,
+%  National University of Modern Languages (NUML)
+%
+%  Compile with:  pdflatex main.tex  (run TWICE, so TOC/LOF/LOT resolve)
+%  Optional files placed next to main.tex:
+%     numl-logo.png        -> university logo for the title page
+%     turnitin-report.pdf  -> Turnitin originality report (inserted as-is)
+%  Everything in red [ ... ] is a placeholder you must fill in/verify.
+% =====================================================================
+\documentclass[12pt,a4paper]{report}
+
+% ---------- Fonts: Times (body) + Helvetica Narrow (captions) ----------
+\usepackage{fontspec}
+\setmainfont{Times New Roman}  % Times-compatible. For true Times New Roman use XeLaTeX
+                        % + fontspec (see note at the very end of this file).
+\usepackage{helvet}     % provides Helvetica Narrow (phvc) for captions
+
+% ---------- Page layout: A4; top/bottom/right 1in; left 1.25in ----------
+\usepackage[a4paper,top=1in,bottom=1in,right=1in,left=1.25in]{geometry}
+
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{array,tabularx,longtable}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{etoolbox}
+\usepackage{caption}
+\usepackage{tocloft}
+\usepackage{pdfpages}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric,shapes.misc,arrows.meta,positioning,fit,calc,shapes.multipart}
+\usepackage[hidelinks]{hyperref}
+
+\setstretch{1.15}
+\setlength{\parindent}{0.35in}
+\setlength{\parskip}{0pt}
+\raggedbottom
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+% ---------- Project metadata (edit here only) ----------
+\newcommand{\projecttitle}{Urdu-Ink Mobile: A GAN-Enhanced Real-Time Handwriting Recognition Keyboard}
+\newcommand{\studentA}{Waqar Ahmad}
+\newcommand{\studentB}{Isna Jadoon}
+\newcommand{\supervisorname}{Dr. QuaratulAin Safdar}
+\newcommand{\campus}{ISLAMABAD}       % guideline sample says RAWALPINDI; your proposal cover said ISLAMABAD
+\newcommand{\submissiondate}{November, 2026} % <-- set your actual submission month/year
+
+% ---------- Red placeholder helper ----------
+\newcommand{\todo}[1]{\textcolor{red}{[#1]}}
+
+% ---------- Headings: 16 / 14 / 12 pt, bold, numbered 1.1 / 1.1.1 / 1.1.1.1 ----------
+\titleformat{\section}{\bfseries\fontsize{16}{19}\selectfont}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\bfseries\fontsize{14}{17}\selectfont}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\bfseries\fontsize{12}{14.5}\selectfont}{\thesubsubsection}{0.6em}{}
+\titlespacing*{\section}{0pt}{16pt}{8pt}
+\titlespacing*{\subsection}{0pt}{12pt}{6pt}
+\titlespacing*{\subsubsection}{0pt}{10pt}{4pt}
+
+% ---------- Captions: Arial Narrow-style 10 pt; table caption on top, figure below ----------
+\DeclareCaptionFont{arialnarrow}{\fontfamily{phv}\fontseries{mc}\fontsize{10}{12}\selectfont}
+\captionsetup{labelfont=arialnarrow,textfont=arialnarrow,labelsep=colon,justification=centering}
+\captionsetup[table]{position=top,skip=6pt}
+\captionsetup[figure]{position=bottom,skip=6pt}
+% Figures/tables are numbered with the chapter number (Figure 2.1, Table 4.2 ...)
+% automatically, because the `report` class resets them at each chapter counter step.
+
+% ---------- Page style: number at bottom right, no header ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[R]{\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+% ---------- Table of contents / lists formatting ----------
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftchapfont}{\normalfont}
+\renewcommand{\cftchappagefont}{\normalfont}
+\setlength{\cftbeforechapskip}{8pt}
+\setlength{\cftchapindent}{0pt}
+\setlength{\cftsecindent}{0.25in}\setlength{\cftsecnumwidth}{0.45in}
+\setlength{\cftsubsecindent}{0.7in}\setlength{\cftsubsecnumwidth}{0.6in}
+\setlength{\cftsubsubsecindent}{1.3in}\setlength{\cftsubsubsecnumwidth}{0.7in}
+\setlength{\cftfigindent}{0pt}\setlength{\cftfignumwidth}{0.55in}
+\setlength{\cfttabindent}{0pt}\setlength{\cfttabnumwidth}{0.55in}
+\renewcommand{\cftfigaftersnum}{\ :}
+\renewcommand{\cfttabaftersnum}{\ :}
+\renewcommand{\cftfigpresnum}{\hspace{0pt}}
+\renewcommand{\cftfigfont}{\normalfont}
+
+% ---------- Front-matter heading: 16 pt, bold, caps, centred ----------
+\newcommand{\frontheading}[1]{%
+  \begin{center}\bfseries\fontsize{16}{20}\selectfont\MakeUppercase{#1}\end{center}\vspace{8pt}}
+
+% ---------- Chapter title page: 18 pt number + 22 pt name, bold, no page number ----------
+% Usage: \fypchapter{CHAPTER NAME IN CAPITALS}
+\newcommand{\fypchapter}[1]{%
+  \clearpage
+  \refstepcounter{chapter}%
+  \addcontentsline{toc}{chapter}{CHAPTER \thechapter: #1}%
+  \thispagestyle{empty}%
+  \vspace*{\fill}%
+  \begin{center}
+    {\bfseries\fontsize{18}{22}\selectfont Chapter \thechapter\par}
+    \vspace{14pt}
+    {\bfseries\fontsize{22}{26}\selectfont #1\par}
+  \end{center}
+  \vspace*{\fill}%
+  \clearpage}
+
+% Title page for Appendix / References (same typography, no number shown)
+% Usage: \fypspecial{18pt line (may be empty)}{22pt line}{TOC entry}
+\newcommand{\fypspecial}[3]{%
+  \clearpage\phantomsection
+  \addcontentsline{toc}{chapter}{#3}%
+  \thispagestyle{empty}%
+  \vspace*{\fill}%
+  \begin{center}
+    {\bfseries\fontsize{18}{22}\selectfont #1\par}
+    \vspace{14pt}
+    {\bfseries\fontsize{22}{26}\selectfont #2\par}
+  \end{center}
+  \vspace*{\fill}%
+  \clearpage}
+
+% ---------- Bibliography: no automatic chapter heading (title page is used instead) ----------
+\patchcmd{\thebibliography}{\chapter*{\bibname}\@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}}{}{}{}
+
+% ---------- Figure helper: use your own image if it exists, else show the TikZ drawing ----------
+\newcommand{\figbox}[2]{% #1 = width fraction, #2 = tikz picture (already resized)
+  \begin{center}\resizebox{#1\textwidth}{!}{#2}\end{center}}
+
+% ---------- Test-case table (follows the template in the guidelines) ----------
+% \testcase{caption}{label}{number / stage}{description}{requirements}{setup & stop}{environment}{inputs & steps}{expected}
+\newcommand{\testcase}[9]{%
+\begin{longtable}{|>{\bfseries\raggedright}p{1.35in}|p{4.3in}|}
+\caption{#1}\label{#2}\\
+\hline
+\endfirsthead
+\hline
+\endhead
+\hline
+\endfoot
+\multicolumn{2}{|c|}{\cellcolor{gray!30}\textbf{GENERAL INFORMATION}}\\\hline
+Test Case Number / Stage & #3\\\hline
+Test Case Description & #4\\\hline
+Test Date \& Tester & \todo{dd/mm/yyyy} \quad \todo{tester name(s)}\\\hline
+Result & \todo{Pass / Fail} \quad Incident number: \todo{if applicable}\\\hline
+\multicolumn{2}{|c|}{\cellcolor{gray!30}\textbf{INTRODUCTION}}\\\hline
+Requirement(s) Tested & #5\\\hline
+Set-up and Stop Procedures & #6\\\hline
+\multicolumn{2}{|c|}{\cellcolor{gray!30}\textbf{ENVIRONMENTAL NEEDS}}\\\hline
+Hardware and Software & #7\\\hline
+\multicolumn{2}{|c|}{\cellcolor{gray!30}\textbf{TEST}}\\\hline
+Inputs and Procedural Steps & #8\\\hline
+Expected Results & #9\\\hline
+\multicolumn{2}{|c|}{\cellcolor{gray!30}\textbf{ACTUAL RESULTS}}\\\hline
+Output Specification & \todo{Record observed outputs, attach screen capture, and describe any discrepancy from the expected result.}\\
+\end{longtable}}
+
+\begin{document}
+
+% =====================================================================
+%  TITLE PAGE (no page number)
+% =====================================================================
+\begin{titlepage}
+\thispagestyle{empty}
+\centering
+\singlespacing
+{\bfseries\fontsize{18}{23}\selectfont \MakeUppercase{\projecttitle}\par}
+\vspace{22pt}
+\IfFileExists{numl-logo.png}{\includegraphics[width=2.1in]{numl-logo.png}}%
+  {\fbox{\parbox[c][1.9in][c]{1.9in}{\centering\todo{Place university logo as numl-logo.png}}}}\par
+\vspace{26pt}
+{\bfseries\fontsize{16}{20}\selectfont \studentA\par\vspace{8pt}\studentB\par}
+\vspace{26pt}
+{\itshape\fontsize{14}{17}\selectfont Supervised By\par}
+\vspace{6pt}
+{\bfseries\fontsize{16}{20}\selectfont \supervisorname\par}
+\vspace{26pt}
+{\itshape\fontsize{14}{17}\selectfont Submitted for the partial fulfillment of BS Computer Science degree to the\\Faculty of Engineering \& CS\par}
+\vspace{24pt}
+{\fontsize{14}{17}\selectfont DEPARTMENT OF COMPUTER SCIENCE\par}
+\vspace{6pt}
+{\bfseries\fontsize{14}{17}\selectfont NATIONAL UNIVERSITY OF MODERN LANGUAGES,\\\campus\par}
+\vfill
+{\bfseries\fontsize{14}{17}\selectfont \submissiondate\par}
+\end{titlepage}
+
+% Roman numbering starts at the Abstract (page i, number suppressed as in the sample);
+% the Final Approval Certificate therefore shows ii.
+\pagenumbering{roman}
+
+% =====================================================================
+%  ABSTRACT
+% =====================================================================
+\thispagestyle{empty}
+\frontheading{Abstract}
+
+% Urdu is spoken by more than 230 million people, yet writing it on a smartphone still depends on phonetic or fixed-layout keyboards that many users find slow and unnatural. This project presents \emph{Urdu-Ink Mobile}, a real-time handwriting recognition keyboard that lets a user write Urdu naturally with a finger or stylus on the screen and converts the handwriting into editable Unicode text inside any application. Existing academic systems recognise isolated characters or ligatures, largely on tablet input, while commercial keyboards offer only basic Naskh support and struggle with Nastaliq-style cursive. The work builds on the pre-classification and wavelet-feature pipeline of Safdar et~al.\ (2022), which reached 96.1\% accuracy for half-form recognition, and extends it to word-level, on-device recognition on mobile hardware.
+
+Urdu is the language of more than 230 million people across the world, yet slow and unnatural phonetic or fixed-layout keyboards are used to write it on digital devices like smartphones. Our project presents \emph{Urdu-Ink Mobile}, a real-time handwriting recognition keyboard that users can use to write Urdu naturally with their finger or stylus and then convert the handwritten word into editable Unicode text. Preexisting academic systems only recognize isolated characters or ligatures, while commercial offerings like Gboard offer very limited support for Nastaliq style handwriting. This project extends the half-form recognition pipeline of Safdar et~al.\ (2022), which uses pre-classification and wavelet-feature to achieve an accuracy of 96.1\% to recognize full-form words. 
+
+% The system is organised as a multi-stage pipeline. Raw touch strokes are captured through an Input Method Editor (IME), resampled, smoothed and normalised, and then refined by a generator--discriminator network (RefinerGAN) that maps jittery strokes towards clean Nastaliq forms. A skeleton-based segmenter splits the cursive input into ligatures, a graph neural network routes each ligature to one of 28 subsets, and a hybrid feature extractor combining db2 wavelets, structural descriptors and learned CNN embeddings feeds a Transformer with a BiLSTM-CTC decoder. An Urdu N-gram model and BERT-Urdu then rescore the output before it is committed as Unicode. A CycleGAN augments the handwriting corpus. The models were developed in Python with PyTorch and Keras and deployed with TensorFlow Lite, ONNX Runtime Mobile and CoreML, with Kotlin, Swift and C++ used for the mobile and inference layers.
+The system is organized in multiple stages. Raw handwriting data in the form of XY coordinates, time and pressure values was collected using a flutter based canvas. The raw data was then passed through a jitter removal, downsampling, interpolation and normalization pre-processing pipeline to prepare the dataset for model training. A GAN network was trained to on the collected dataset to generate synthetic samples to extend the dataset. A Neural Network was then trained on both the organic and synthetic samples to recognize handwritten Urdu words. The models were developed using Python libraries PyTorch and Keras and deployed using TenosrFlow lite.
+
+The system was tested using unit, integration, black-box and performance testing on Infinix Hot 11 Play with MediaTek Helio G36 processor with 4 GB of RAM running on Android 11 and .\todo{device model, processor, RAM and Android/iOS version}. Recognition accuracy was measured using Character Error Rate and Word Error Rate. The tests showed a CER of \todo{value}\% and a WER of \todo{value}\% on \todo{test set description}, with an average end-to-end latency of \todo{value}~ms per word, all of which met \todo{or did not meet} the targets set in the non-functional requirements.
+
+%The current system is limited to the Urdu Nastaliq/Naskh script, depends on the processing power of the device, and can still lose accuracy on highly unusual handwriting. Future work includes extending the recognizer to other Perso-Arabic languages such as Pashto and Sindhi, compressing the models further for entry-level phones, and moving from word-level to full sentence-level recognition.
+The current system is limited by the size of the dataset. It can lose accuracy on very complex and long words. Expanding the dataset to include more writers and samples could be possible future works.
+
+\clearpage
+
+% =====================================================================
+%  FINAL APPROVAL CERTIFICATE
+% =====================================================================
+\frontheading{Certificate}
+\begin{center}\fontsize{14}{17}\selectfont\textbf{Final Approval}\end{center}
+\vspace{4pt}
+\noindent Dated: \hrulefill
+
+\vspace{14pt}
+\noindent\fontsize{14}{20}\selectfont
+It is certified that the project report titled \textbf{`\projecttitle'} submitted by \textbf{\studentA} and \textbf{\studentB} for the partial fulfillment of the requirement of \textbf{``Bachelor's Degree in Computer Science''} is approved.
+
+\vspace{20pt}
+\begin{center}\bfseries\fontsize{14}{17}\selectfont COMMITTEE\end{center}
+\vspace{16pt}
+\noindent\fontsize{14}{17}\selectfont
+\begin{tabularx}{\textwidth}{@{}X l@{}}
+\todo{Name of Dean}\newline Acting Dean Engineering \& CS: & Signature: \underline{\hspace{1.6in}}\\[28pt]
+Dr. Noman Malik\newline HoD Computer Science: & Signature: \underline{\hspace{1.6in}}\\[28pt]
+\todo{Name of Coordinator}\newline Project Coordinator: & Signature: \underline{\hspace{1.6in}}\\[28pt]
+\supervisorname\newline Supervisor: & Signature: \underline{\hspace{1.6in}}\\
+\end{tabularx}
+\normalsize\clearpage
+
+% =====================================================================
+%  DECLARATION
+% =====================================================================
+\frontheading{Declaration}
+\noindent We hereby declare that our dissertation is entirely our work and genuine / original. We understand that in case of discovery of any PLAGIARISM at any stage, our group will be assigned an F (FAIL) grade and it may result in withdrawal of our Bachelor's degree.
+
+\vspace{18pt}
+\noindent\textbf{Group members:}
+
+\vspace{10pt}
+\noindent\begin{tabularx}{\textwidth}{@{}X l@{}}
+\textbf{Name} & \textbf{Signature}\\[10pt]
+\studentA & \underline{\hspace{2in}}\\[16pt]
+\studentB & \underline{\hspace{2in}}\\
+\end{tabularx}
+\clearpage
+
+% =====================================================================
+%  PLAGIARISM CERTIFICATE
+% =====================================================================
+\frontheading{Plagiarism Certificate}
+\noindent This is to certify that the project entitled ``\textbf{\projecttitle}'', which is being submitted herewith for the award of the ``\textbf{Degree of Bachelor's in Computer Science}''. This is the result of the original work by \textbf{\studentA} and \textbf{\studentB} under my supervision and guidance. The work embodied in this project has not been done earlier for the basis of award of any degree or compatible certificate or similar title of this for any other diploma/examining body or university to the best of my knowledge and belief.
+
+\vspace{16pt}
+\noindent\textbf{Turnitin Originality Report}\\
+Processed on \todo{dd-Mon-yyyy hh:mm PKT}\\
+ID: \todo{Turnitin ID}\\
+Word Count: \todo{count}
+
+\vspace{10pt}
+\noindent Similarity Index\\
+\todo{xx}\%\\[6pt]
+Similarity by Source\\
+\begin{tabular}{@{}l l@{}}
+Internet Sources: & \hspace{1.2in}\todo{xx}\%\\
+Publications: & \hspace{1.2in}\todo{xx}\%\\
+Student Papers: & \hspace{1.2in}\todo{xx}\%\\
+\end{tabular}
+
+\vspace{60pt}
+\noindent Date: \todo{dd/mm/yyyy} \hfill \underline{\hspace{2.2in}}\\
+\hspace*{\fill}\supervisorname\ (Supervisor)
+\clearpage
+
+% =====================================================================
+%  TURNITIN ORIGINALITY REPORT
+% =====================================================================
+%\IfFileExists{turnitin-report.pdf}{%
+  %\includepdf[pages=-,pagecommand={\thispagestyle{fancy}}]{turnitin-report.pdf}}{%
+  %\frontheading{Turnitin Originality Report}
+  %\noindent\textbf{\projecttitle} [BSCS] by \studentA\ and \studentB\\
+  %From \supervisorname\\
+  %Processed on \todo{date}\quad ID: \todo{ID}\quad Word Count: \todo{count}\\
+  %Similarity Index: \todo{xx}\%\\[8pt]
+  %\todo{Replace this page by placing the downloaded Turnitin report as turnitin-report.pdf next to main.tex; it will then be inserted automatically.}
+  %\clearpage}
+
+% =====================================================================
+%  ACKNOWLEDGMENT (optional)
+% =====================================================================
+\frontheading{Acknowledgment}
+We express our sincere gratitude to our supervisor, Mam QuratUl Ain Safdar, for her guidance, patience and constructive feedback throughout this project. We also thank the volunteers who contributed their Urdu handwriting samples, and our families for their constant support.
+%  \todo{Edit or shorten as required; keep it brief and precise.}
+\clearpage
+
+% =====================================================================
+%  TABLE OF CONTENTS / LIST OF FIGURES / LIST OF TABLES
+% =====================================================================
+\frontheading{Table of Contents}
+\noindent\textbf{Chapter}\hfill\textbf{Page}\par\vspace{4pt}
+\makeatletter\@starttoc{toc}\makeatother
+\clearpage
+
+\frontheading{List of Figures}
+\noindent\textbf{Figure \quad Caption}\hfill\textbf{Page No.}\par\vspace{4pt}
+\makeatletter\@starttoc{lof}\makeatother
+\clearpage
+
+\frontheading{List of Tables}
+\noindent\textbf{Table \quad Caption}\hfill\textbf{Page No.}\par\vspace{4pt}
+\makeatletter\@starttoc{lot}\makeatother
+\clearpage
+
+% =====================================================================
+%  LIST OF ACRONYMS (optional)
+% =====================================================================
+\frontheading{List of Acronyms}
+\renewcommand{\arraystretch}{1.25}
+\noindent\begin{tabular}{@{}p{1.1in}p{4.7in}@{}}
+BERT & Bidirectional Encoder Representations from Transformers\\
+BiLSTM & Bidirectional Long Short-Term Memory\\
+CER & Character Error Rate\\
+CNN & Convolutional Neural Network\\
+CTC & Connectionist Temporal Classification\\
+DFD & Data Flow Diagram\\
+GAN & Generative Adversarial Network\\
+GNN & Graph Neural Network\\
+HWR & Handwriting Recognition\\
+IME & Input Method Editor\\
+NPU & Neural Processing Unit\\
+ONNX & Open Neural Network Exchange\\
+SDG & Sustainable Development Goal\\
+SSD & System Sequence Diagram\\
+SVM & Support Vector Machine\\
+TFLite & TensorFlow Lite\\
+WER & Word Error Rate\\
+\end{tabular}
+\renewcommand{\arraystretch}{1}
+
+% Arabic page numbering restarts at 1 on the Chapter 1 title page
+\clearpage
+\pagenumbering{arabic}
+
+% =====================================================================
+%  CHAPTER 1
+% =====================================================================
+\fypchapter{INTRODUCTION}
+
+% The swift digitization of communication has placed the smartphone at the center of how people write, study, work and socialize. For languages written in the Latin script, text entry on these devices is largely a solved problem: compact QWERTY layouts, predictive text and swipe typing allow fast and comfortable input. A clear recent trend, however, is that users increasingly expect to enter text in the way they naturally write, and handwriting recognition has therefore become a standard feature of modern keyboards. Handwriting recognition (HWR) performs exceptionally well for Latin-script languages and even for logographic systems such as Chinese and Japanese, where deep neural networks trained on very large corpora are now embedded directly in mobile operating systems. The same level of maturity has not been reached for Urdu, a language spoken by more than 230 million people worldwide, the national language of Pakistan and a recognized scheduled language in India.
+Rapid digitization has made smartphones a central piece in our life. It changes how we communicate, socialize and work. For Latin-script based languages, text entry on smartphones is not a problem. QWERTY keyboards and glide typing allow easy text input. Even natural handwriting support for many languages is now built-in in modern keyboards. There is no such support for Urdu which is spoken by more than 230 million people around the world and the national language of Pakistan along with being a recognized scheduled language in India.
+
+% Urdu is written in a cursive, context-sensitive Nastaliq/Naskh script that belongs to the Perso-Arabic family. A single Urdu letter can take up to four context-dependent shapes (isolated, initial, medial and terminal), and the combination of these shapes produces more than 108 distinct half-form shapes that a recognizer must separate in real time. Characters join to their neighbors, dots and diacritical marks are written separately from the main body of a ligature, and the same stroke can mean different letters depending on where it is placed. Academic work has made steady progress on this problem. The pre-classification and wavelet/structural feature pipeline of Safdar et~al.\ \cite{safdar2022} achieved 96.1\% accuracy on half-form characters written on a tablet, and earlier studies reached accuracies between 85\% and 93\% on small sets of isolated characters or ligatures \cite{razzak2010,hussain,malik,shahzad}. Yet these systems remain confined to controlled tablet input, isolated characters or ligatures, and small datasets. Commercial keyboards fare little better: Urdu handwriting support is basic, concentrates on Naskh-style writing and has difficulty with connected Nastaliq-style cursive. There is, as a result, a real need for a mobile keyboard that understands how Urdu is actually written.
+
+Urdu is written in cursive and context sensitive Perso-Arabic script. One Urdu letter can take isolated, initial, medial or terminal shape depending on the context. These different forms of letters form 108 unique half-form letteres that must be recognized by the recognizer. Some academic progress has been made on this problem. A preprocessing pipleline which used preclassification and wavelet features by Safdar et et~al.\ \cite{safdar2022} successfully achieved 96.1\% accuracy on half-form characters and some studies achieved between 85\% to 93\% accuracy on isolated characters\cite{razzak2010,hussain,malik,shahzad}. But these systems are limited to isolated characters. Commercial keyboards are somewhat better but support for Nastaliq style is limited. There is a gap for a mobile keyboard that can be used to recognized Urdu handwriting.
+
+%This report presents \emph{Urdu-Ink Mobile}, a scalable, real-time, GAN-enhanced handwriting recognition keyboard for smartphones and tablets. Users write Urdu words in continuous natural cursive on the screen, and the system converts the handwriting into editable Unicode text that can be inserted into any application. The project contributes to current trends in three ways. First, it follows the full pipeline of Safdar et~al.\ \cite{safdar2022} and extends it from isolated half-forms to words. Second, it adds a generative adversarial network \cite{goodfellow2014} that cleans noisy touchscreen strokes before recognition, and uses a CycleGAN \cite{zhu2017} to enlarge the training corpus. Third, it replaces classical classifiers with a Transformer \cite{vaswani2017} and a BiLSTM-CTC decoder \cite{graves2006} and runs all inference on the device, so that handwriting never leaves the phone. Compared with existing systems, which work on isolated shapes, on tablets or in the cloud, the proposed system targets word-level, system-wide and offline-capable operation on mobile hardware.
+This report presents \emph{Urdu-Ink Mobile}, a mobile and tablet keyboard that can recognize Urdu handwriting in real-time. Users write Urdu in a natural way, the keyboard recognizes the words and converts them into editable Unicode text usable in any application. First, It uses a Neural Network to recongize the words. Second, it introduces a GAN network \cite{zhu2017}trained on the collected dataset to generate synthetic sampeles that can increase the total number of samples in the dataset. Third, this system runs completely on-device requiring no internet connection.
+
+\section{Project Domain}
+%The project belongs to the domain of artificial intelligence, specifically deep learning and pattern recognition applied to online (stroke-based) handwriting recognition, with supporting elements from natural language processing and mobile computing. Online handwriting recognition differs from offline recognition of scanned images because the input is a time-ordered sequence of pen coordinates, so that the order, direction and speed of writing can be used by the recognizer. The language-processing part of the project uses statistical and neural language models to repair recognition errors using word context, and the mobile-computing part deals with packaging the trained models into an Input Method Editor that runs under the strict memory and latency limits of a phone. The problem solved in this project is the conversion of continuous, natural Urdu handwriting written on a smartphone screen into correct Unicode text in real time, which matches the title of the project.
+This project falls in the domain of artifficial intelligence, specifically deep learning and pattern recognition for online handwriting recognition. Online handwriting recognition differs from offline recognition as it used a realtime stream of stroke coordinates instead of scanned images. The language processing and recognitin part involves neural networks to recognize the words and the mobile deployment part includes packaging the trained model into a keyboard that runs withing the memory limits of smartphone devices. The problem that is solved in this project is the conversion of continuous Urdu handwriting into its corresponding Unicode text in real-time.
+
+\section{Problem Identification}
+%Considerable work has been done on Urdu character recognition, beginning with holistic and geometric-feature methods for small sets of isolated characters, continuing with fuzzy and hidden-Markov-model approaches for ligatures, and moving towards recurrent neural networks for offline Nastaliq text. The most complete recent contribution, by Safdar et~al.\ \cite{safdar2022}, recognizes 108 half-forms with 96.1\% accuracy using a pre-classification stage, db2 wavelet features and a support vector machine. The limitations of this body of work are, however, clear. The approaches are tied to tablet input, they handle isolated characters or short ligatures rather than words, their datasets are small, and their accuracy falls sharply for writers who were not part of the training data. Writing on a phone is also a different problem from writing on a tablet: the screen is small, the finger is a blunt instrument, strokes are jittery, and users write quickly and join letters. Commercial keyboards do not solve the problem either, since their Urdu handwriting support is basic and targets Naskh-style writing. The problem addressed in this project is therefore the absence of an accurate, real-time, word-level, on-device Urdu handwriting keyboard that tolerates the noisy and fast writing typical of mobile screens.
+Many contributions have been made in the field of Urdu character recognition. The most recent and some of the complete contribution has been made by by Safdar et~al.\ \cite{safdar2022}, which achieved a 96.1\% accuracy in recognizing 108 half-form characters using preclassification and wavelet feature. But these contributions are limited to isolated and short characters. Mobile input using fingers is also a problem due to small screen size and quick writing. Commercial keyboards do not solve this prolem completely with their limited and basic suppport for Nastalic style Urdu handwriting. The main problem solved by our project is the absence of a word level, real-time and on-device Urdu handwriting recognizer keyboard.
+
+\subsection{Proposed Solution}
+%Urdu-Ink Mobile is proposed as a system-level mobile keyboard that captures raw touch strokes through an Input Method Editor, cleans them with classical preprocessing and a GAN-based refinement network, and recognizes them with a multi-stage deep learning pipeline. The pipeline first segments the continuous script into ligatures using a skeleton-based method and routes each ligature to one of 28 subsets with a graph neural network pre-classifier. A hybrid feature extractor then combines db2 wavelet coefficients, structural features and learned CNN embeddings, which are passed to a Transformer encoder and a BiLSTM-CTC decoder that produce character sequences for cursive words. An Urdu N-gram model and BERT-Urdu rescore the candidates using linguistic context, and the final text is emitted as Unicode. All models are optimized with TensorFlow Lite and ONNX Runtime so that inference runs on the device. A CycleGAN-based augmentation step enlarges the handwriting corpus so that the recognizer generalizes better to unseen writers.
+Our proposed solution is \emph{Urdu-Ink Mobile}, a system level mobile keyboard that records handwriting data in XY coordinates, time and pressure values and then passes that data through a pre-processing pipeline. The proprocessing pipeline applies jiter removal, downsampling, interpolation/extrapolation and normalization to the raw handwriting data. A GAN network that is trained on the dataset is used to generate synthetic samples to increase the total number of samples.
+The preprocessed data is fed into a Neural Network that recognizes the handwritten words. The recognized words are then converted into Unicode text that can be used in any app.
+
+\subsection{Objectives}
+The objectives of the project are as follows.
+\begin{enumerate}[leftmargin=0.5in,itemsep=2pt]
+\item To develop a multi-phase word level Urdu handwriting recognition pipeline for smartphones that builds upon the character recognition work of Safdar et~al.\ \cite{safdar2022}
+\item To train a GAN network that generates synthetic handwriting samples to increase the total number of samples in the dataset
+\item To collect a coordintes based Urdu handwriting dataset from native Urdu writers.
+%\item To improve recognition accuracy and writer independence by combining wavelet, structural and learned features with a Transformer and BiLSTM-CTC classifier and by correcting errors with N-gram and BERT-Urdu language models.
+\item To protect user privacy and reduce latency by running all inference locally using TensorFlow lite runtime.
+\item To test and evaluate the trained models on real mobile devices.
+%
+\end{enumerate}
+
+\subsection{Scope of the Project}
+%The system targets cursive, context-sensitive Nastaliq/Naskh Urdu writing, including more than 108 half-form shapes, and recognizes half-forms, ligatures, words and sentences, with the main emphasis on words written in continuous cursive. It is designed as a real-time, system-level keyboard for smartphones and tablets running Android 13 and later and iOS 16 and later, with a possible port to Linux-based mobile operating systems such as postmarketOS. The user writes on a dedicated writing canvas inside the keyboard, and the recognized Unicode text is inserted into the active application, such as a messaging, e-mail or note-taking app. Core recognition works offline. The system is not intended to recognize other languages or decorative calligraphic styles, and optional features such as translation add-ons may need an internet connection. The system is expected to be used by students, educators, journalists and professionals in everyday communication, in note-taking and in the filling of digital forms.
+The main target of this system is to recognize handwritted Urdu words written in Nastaliq/Naskh style. The system is developed to run on Android 10 and later. The users write on the canvas inside the keyboard app, the trained model recognizes the word and converts it into editable Unicode text to be used in any app such as messaging or email. Recognizing other language words or decorative calligraphic styles in not included in the scope of our project. Educators, journalists, students and other general users are expected users of this system in routine tasks and communications.
+
+\section{Effectiveness / Usefulness of the System}
+%The proposed system differs from existing work in that it brings together noise-robust stroke refinement, word-level recognition and fully local inference in a single product. Whereas tablet-based systems cannot be used in everyday messaging and commercial keyboards give only basic Urdu handwriting support, Urdu-Ink Mobile works in every application because it is installed as an Input Method Editor. Its usefulness is first of all one of digital inclusion: millions of Urdu-medium speakers who find English-centric keyboards or phonetic typing awkward can interact with modern mobile technology in their native script. It is useful in education for assignments and note-taking, in digital governance for filling forms in Urdu, and in media for rapid posting in the native script. Because inference is performed locally, personal handwriting never leaves the phone, and the keyboard remains usable without a network connection, which matters in areas with weak connectivity. The project also aligns with the Sustainable Development Goals for decent work and economic growth, industry, innovation and infrastructure, and reduced inequalities, as discussed in the proposal on which this work is based.
+Our system is different from existing systems as it brings word-level recognition and complete local inference. Our system can be used in any app because it is desinged as a keyboard that can give system-input. Native Urdu speakers who prefer to use Urdu instead of English can use this system to conveniently write in their native language. It can be used by students for their assignments and note-taking and by geneal users for filling forms and performing other handwriting related tasks. Keeping the security and privacy in mind, the system does not send any handwriting data to the internet and all inference is performed on-device.
+
+\section{Resource Requirement}
+%The project needs hardware for training the deep learning models and for running them on mobile devices, a software stack for model development and for the mobile application, and a corpus of Urdu handwriting. These requirements are described in the following subsections.
+General consumer hardware is required for model training, GAN network training and on-device inference. Deep learning frameworks are required for model training. A dataset of coordinates based Urdu handwriting is required for training the recognizer. These requirements are described in more detail in the following subsections.
+
+\subsection{Hardware Requirement}
+Consumer grade hardware is required for model and GAN network training. The deployed keyboard can conveniently be run on Android 10+ smartphones. Table~\ref{tab:hw} lists the minimum specification of the target device, which was finalized in the project proposal. It also list the workstation required for training.
+
+\begin{table}[H]
+\caption{Hardware requirements}\label{tab:hw}
+\centering\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|p{1.5in}|p{2.2in}|p{1.7in}|}
+\hline
+\textbf{Component} & \textbf{Target device (minimum)} & \textbf{Training workstation}\\\hline
+Device & Android/iOS smartphone or tablet & HP/Mechrevo\\\hline
+Processor & Quad-core 1.8 GHz & Ryzen 5 7430U/ Intel I3 13100U\\\hline
+Memory (RAM) & 3 GB & 8 GB\\\hline
+Storage & 500 MB & 128\\\hline
+Accelerator & Mobile GPU/NPU recommended & Integrated GPU\\\hline
+\end{tabular}
+\end{table}
+
+\subsection{Software Requirement}
+This system uses modern frameworks for training the Neural Network. Python 3.11 is used for data processing and model training, Java is used for Android keyboard development, and C++ for optimizing the model so that it runs smoothly on smartphones. Networks were trained using PyTorch 2.x, Keras for the GAN experiments, and TensorFlow Lite for optimized local inference.Table~\ref{tab:sw} provides a summary of all the software tools.
+
+\begin{table}[H]
+\caption{Software requirements}\label{tab:sw}
+\centering\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|p{1.9in}|p{3.6in}|}
+\hline
+\textbf{Category} & \textbf{Tools / Languages}\\\hline
+Programming languages & Python 3.11, Java, C++\\\hline
+Deep learning frameworks & PyTorch 2.x, TensorFlow Lite, Keras\\\hline
+Mobile inference runtimes & ONNX Runtime Mobile, CoreML, TensorFlow Lite\\\hline
+Keyboard user interface & Java\\\hline
+Target operating systems & Android 10+ \\\hline
+\end{tabular}
+\end{table}
+
+\subsection{Data Requirement}
+As the recognizer is a machine learning, it requires a dataset of relevant coordinates based Urdu handwriting samples. Each word is stored in a .bin file starting with a four-byte magic header, followed by the canvas width and height represented as 64-bit floating-point values and then the number of strokes as an unsigned 32-bit integer. Number of points are stored for every stroke.
+For each point, the values of x,y coordinates and pressure are stored as 64-bit floating points. An unsigned 32-bit integer is used to store the time offset. All these values use little endian order. Many writers contributes samples to the dataset. The dataset is split into training, validation and test sets, with separate writers for training and testing data samples. The dataset is augmented using a GAN network that was trained on the same samples.Total number of writers and samples in the dataset is listed in Table~\ref{tab:dataset}. 
+
+\begin{table}[H]
+\caption{Dataset totals}\label{tab:dataset}
+\centering\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|p{2.8in}|p{2.2in}|}
+\hline
+\textbf{Measure} & \textbf{Total}\\\hline
+Writers & 12 \\\hline
+Words & 996 \\\hline
+Samples & 1,619\\\hline
+\end{tabular}
+\end{table}
+
+\section{Report Organization}
+This report has been organized into six chapters. Chapter~1 introduces our project, its domain, problem, objectives, scope and resource requirements. Chapter~2 includes literature and review of existing systems. It identifies the research gap and defines the boundary of the proposed solution. Chapter~3 lists the modules, functional requirements and non-functional requirements of the system. Chapter~4 the system models and design are covered in this chapter, including the use case, activity, data flow, sequence, class and architectural diagrams. Chapter~5 goes over the testing techniques, test cases and the validation of the non-functional requirements. Chapter~6 includes the conclusion of the report and discusses limitations and future work. An appendix and the list of references is added at the end of the report.
+
+% =====================================================================
+%  CHAPTER 2
+% =====================================================================
+\fypchapter{BACKGROUND AND EXISTING SYSTEMS}
+
+The problem under consideration is the real-time recognition of continuous Urdu handwriting written on a smartphone and its conversion into Unicode text. Urdu's cursive, context-dependent script makes this difficult, and existing academic and commercial solutions cover only parts of the problem.
+
+This chapter is organized as follows. Section~2.1 reviews related academic literature, Section~2.2 describes related systems and applications, Section~2.3 discusses the problems identified from existing work, and Section~2.4 defines the boundary of the proposed solution.
+
+\section{Related Literature Review}
+This section discusses six papers that relate to the project either through the technique they use or through the problem they address.
+
+Safdar et~al.\ \cite{safdar2022} propose the base methodology of this project. Their approach recognizes 108 Urdu half-forms written on a tablet by first classifying the input into a smaller group using simple stroke features, such as the number of strokes and the position of diacritics, and then extracting db2 wavelet features that are classified with a support vector machine. The pre-classification stage reduces confusion between visually similar shapes and keeps the final classifier small. The reported accuracy is 96.1\%. The limitations are that the data come from tablets, no segmentation is performed to handle words, and the system works at the half-form level only. These limitations motivate the extensions made in this project.
+
+Razzak et~al.\ \cite{razzak2010} combined fuzzy logic with hidden Markov models to recognize 1,800 Urdu ligatures written in the Nastaliq style and reported an accuracy of 87.6\%. Working at ligature level is an important step towards connected writing because ligatures are the natural units of Urdu words. The method is, however, limited to ligatures from a fixed vocabulary and relies on handcrafted features, which restricts how well it can generalize to new writers or to words made of unseen ligature combinations.
+
+Hussain and Khan \cite{hussain} used a spatial--temporal neural network to recognize 15 Urdu ligatures and reported an accuracy of about 85\%. Their work is notable because it exploits the temporal order of pen movement, which is a central property of online handwriting. The experiment was run on a very small set of ligatures, so the result gives limited evidence of how the method would behave on the full Urdu character set or on natural writing.
+
+Malik and Khan \cite{malik} proposed a holistic approach for 39 isolated Urdu characters and achieved about 93\% accuracy. The holistic strategy avoids segmentation by treating each character as a single pattern, which works for isolated characters but cannot be applied directly to connected cursive words, where the boundaries between characters are not clear. The limitation of this work is therefore that it is restricted to isolated characters.
+
+Shahzad et~al.\ \cite{shahzad} used nine geometric features to recognize 38 isolated Urdu characters with an accuracy of 92.8\%. The study also reports that accuracy dropped sharply, to about 31\%, when the system was tested on non-native writers. This finding is important for the present project because it shows how strongly handwriting recognizers depend on writer style, and it is the reason for writer-invariant training in the proposed system.
+
+Naz et~al.\ \cite{naz2014} used multi-dimensional long short-term memory (MDLSTM) networks to recognize offline Nastaliq text and obtained an accuracy of roughly 88\%. The work shows that recurrent networks can model the long-range dependencies of cursive Urdu without explicit segmentation. It operates on scanned images of text, so there is no interactive input, no use of pen-trajectory information and no real-time operation, which makes it unsuitable for a keyboard.
+
+Beyond the Urdu-specific studies, the proposed pipeline rests on general deep learning techniques whose original papers were also reviewed. Goodfellow et~al.\ \cite{goodfellow2014} introduced generative adversarial networks, in which a generator that produces samples and a discriminator that tries to tell them apart from real data are trained against each other, so that the generator gradually produces output that is difficult to distinguish from genuine data. This idea underlies the RefinerGAN of the present project. Zhu et~al.\ \cite{zhu2017} proposed CycleGAN, which learns a mapping between two collections of data without paired examples by enforcing cycle consistency, and which is useful here because paired samples of the same word written by different writers do not exist. Vaswani et~al.\ \cite{vaswani2017} replaced recurrence with self-attention in the Transformer, which allows every part of a sequence to be related to every other part and makes training easy to parallelize. Graves et~al.\ \cite{graves2006} introduced connectionist temporal classification, a loss that lets a recurrent network be trained on unsegmented sequences without knowing which input frames belong to which output character, and the thesis of Graves \cite{graves2008} describes it in the wider context of sequence labelling. Devlin et~al.\ \cite{devlin2019} showed that a deep bidirectional Transformer pretrained on large text collections can be adapted to many language tasks, which is the basis of the BERT-Urdu rescoring. Finally, Ganin et~al.\ \cite{ganin2016} proposed domain-adversarial training, in which a network learns features that are useful for the main task but do not reveal the domain of the input; in this project the domain is the writer, so the method supports writer-independent recognition. Abandah and Jamour \cite{abandah2010} showed that skeleton-based grapheme segmentation is an efficient way of splitting handwritten Arabic-script words, a technique that carries over to Urdu ligature segmentation. None of these works is specific to Urdu on mobile devices, and the present project combines them for that purpose.
+
+Table~\ref{tab:lit} summarizes the Urdu-specific papers that were reviewed.
+
+\begin{table}[H]
+\caption{Summary of Reviewed Literature}\label{tab:lit}
+\centering\small\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{|p{0.4in}|p{0.95in}|p{1.1in}|p{1.15in}|p{1.4in}|}
+\hline
+\textbf{Year} & \textbf{Authors} & \textbf{Contribution} & \textbf{Techniques} & \textbf{Limitations / Remarks}\\\hline
+2022 & Safdar et~al.\ & 108 half-forms, 96.1\% accuracy & Pre-classification, db2 wavelet, SVM & Tablet only; no segmentation; no word level\\\hline
+2010 & Razzak et~al.\ & 1,800 ligatures, 87.6\% (Nastaliq) & Fuzzy logic, HMM & Limited to fixed ligatures\\\hline
+-- & Hussain \& Khan & 15 ligatures, 85\% & Spatial--temporal neural network & Tiny dataset\\\hline
+-- & Malik \& Khan & 39 isolated characters, 93\% & Holistic recognition & Isolated characters only\\\hline
+-- & Shahzad et~al.\ & 38 isolated characters, 92.8\% & Nine geometric features & Falls to 31\% for non-native writers\\\hline
+2014 & Naz et~al.\ & Offline Nastaliq text, about 88\% & MDLSTM & Offline; no interactivity\\\hline
+\end{tabular}
+\end{table}
+
+\section{Related Systems/Applications}
+Several commercial and open-source keyboards offer handwriting or phonetic input, and they were reviewed to understand what is available to Urdu users today.
+
+Gboard, the keyboard developed by Google, supports handwriting input for many languages and works system-wide on mobile devices. Its Urdu support is basic and concentrates on Naskh-style writing, and it has difficulty with connected Nastaliq-style cursive. The advantage of Gboard is its wide availability, and its limitation is the quality of Urdu handwriting recognition. \todo{Verify the current Gboard Urdu handwriting behavior on your test device before submission.}
+
+SwiftKey, developed by Microsoft, is best known for predictive text and personalized word suggestions and is available as a system-wide keyboard. Its handwriting support for Urdu is limited, so it helps users who type but not those who prefer to write. Its strength is its language model, which is a design idea that is also used in the proposed system.
+
+The default Apple iOS keyboard provides handwriting recognition for English and Chinese, but it provides no Urdu handwriting recognition. Urdu users on iOS must therefore rely on typing with a fixed layout or on third-party applications.
+
+Easy Urdu is a phonetic typing application, in which the user writes Urdu words by typing Roman letters that are converted into Urdu script. It is helpful for users who are comfortable with Roman characters, but it does not offer handwriting recognition.
+
+Table~\ref{tab:sys} compares these systems.
+
+\begin{table}[H]
+\caption{Summary of Existing Systems}\label{tab:sys}
+\centering\small\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{|p{0.55in}|p{0.8in}|p{1.0in}|p{0.95in}|p{1.0in}|p{0.7in}|}
+\hline
+\textbf{Year} & \textbf{System} & \textbf{Contribution} & \textbf{Tools / Technologies} & \textbf{Limitations} & \textbf{Applications}\\\hline
+Current & Gboard (Google) & Multi-language handwriting recognition & Neural recognizers, system keyboard & Basic Naskh support; weak on Nastaliq & Messaging, general text\\\hline
+Current & SwiftKey (Microsoft) & Predictive text & Language models, system keyboard & Limited handwriting support & Messaging, general text\\\hline
+Current & Apple iOS Keyboard & English and Chinese handwriting & System keyboard & No Urdu handwriting & Messaging, general text\\\hline
+Current & Easy Urdu & Phonetic typing & Roman-to-Urdu mapping & No handwriting recognition & Messaging\\\hline
+\end{tabular}
+\end{table}
+
+\section{Identified Problem from Existing Work}
+The literature and the existing keyboards show a clear pattern of limitations. From a technology point of view, academic systems recognize isolated characters, half-forms or ligatures, and use handcrafted features and classical classifiers such as support vector machines and hidden Markov models. Their datasets are small, their accuracy drops for writers not seen in training, as shown by the fall to 31\% reported for non-native writers \cite{shahzad}, and they were tested on tablets and not on the small, noisy touchscreens of phones. The only offline approach that scales to text, based on MDLSTM \cite{naz2014}, has no interactivity and works on scanned images. From a functional point of view, none of the reviewed systems offers word-level recognition of continuous cursive, system-wide use in any application, or language-model correction of recognition errors. From a non-functional point of view, commercial keyboards give only basic Urdu support, and none of the academic systems report real-time latency or privacy protection on a mobile device. These gaps can be addressed by extending the pipeline of Safdar et~al.\ \cite{safdar2022} with stroke refinement through a GAN, ligature segmentation, modern sequence models, language-model post-processing and on-device inference, and these gaps define the scope of this project.
+
+\section{Selected Boundary for Proposed Solution}
+The proposed solution implements the following functionality, each part of which responds to a gap identified in Section~2.3. A system-level Input Method Editor captures strokes on the touchscreen of a phone or tablet so that recognition is available in every application. A preprocessing engine and a RefinerGAN network clean noisy strokes, which responds to the lack of robustness on mobile input. A skeleton-based segmenter and a graph-neural-network pre-classifier handle continuous cursive, so that recognition moves from half-forms to ligatures and words. A hybrid feature extractor and a Transformer with BiLSTM-CTC decoder replace the classical classifiers, while an N-gram model and BERT-Urdu correct errors using context. A CycleGAN enlarges the corpus and domain-adversarial training makes the recognizer less dependent on the writer. All models run on the device through TensorFlow Lite or ONNX Runtime so that the keyboard works offline and keeps handwriting private.
+
+Several things are not implemented in the project. The system does not recognize scripts other than Urdu or highly decorative calligraphic styles, because they would require additional training data. Real-time performance depends on the mobile GPU or NPU, so the system cannot guarantee smooth operation on very old entry-level phones. Optional accessibility add-ons such as translation require an internet connection and are outside the offline core. Full deployment on every Linux-based mobile operating system and the recognition of unconstrained long documents are left for future work.
+
+% =====================================================================
+%  CHAPTER 3
+% =====================================================================
+\fypchapter{SYSTEM REQUIREMENTS AND SPECIFICATIONS}
+
+This chapter describes what Urdu-Ink Mobile must do and how well it must do it. It covers the specification of the system, the modules into which the system is divided, the functional requirements that define its behavior and the non-functional requirements that define its quality. All requirements are aligned with the scope and objectives given in Chapter~1.
+
+The chapter is organized as follows. Section~3.1 gives the system specification, Section~3.2 describes the system modules, Section~3.3 lists the functional requirements, and Section~3.4 describes the non-functional requirements together with the way each one is measured.
+
+\section{System Specification}
+The system specification fixes the technical boundaries within which the keyboard is designed. Urdu-Ink Mobile recognizes cursive, context-sensitive Nastaliq/Naskh Urdu writing that includes more than 108 half-form shapes. It operates on smartphones and tablets running Android 13 or later and iOS 16 or later, with a possible port to Linux-based mobile operating systems. It works as a real-time, system-level keyboard, meaning that it is installed as an Input Method Editor and is available in every application. The recognition granularity covers half-forms, ligatures, words and sentences. The specification of the target device is a quad-core 1.8~GHz processor, 3~GB of RAM and 500~MB of storage, as listed in Table~\ref{tab:hw}. This chapter explains the modules, functions and quality attributes that follow from this specification.
+
+\section{System Modules}
+A module is a separate unit of software that accomplishes one function and contains everything necessary to do so. Splitting the keyboard into modules allows each stage of the recognition pipeline to be developed, trained, replaced and tested independently, and it allows the heavy models to be optimized separately for mobile deployment. The system is divided into eleven modules, which follow the order in which handwriting flows through the pipeline from the touchscreen to the Unicode output.
+
+\subsection{Data Acquisition Module}
+This module captures the raw handwriting. A specialized Input Method Editor interface reads touch events directly from the capacitive touchscreen, and a stroke logger records the coordinates, pressure and timing of every point of every stroke, including strokes that are written close together in time. The same module is used during data collection to record the training corpus in the binary stroke format described in Section~1.4.3, and during normal use to feed the live recognition pipeline.
+
+\subsection{Urdu Handwriting Corpus Module}
+This module stores and manages the handwriting data used to train and evaluate the models. Samples are gathered from different native writers and cover half-forms, ligatures and words in continuous cursive. To increase the amount and diversity of the data, a CycleGAN generates synthetic handwriting samples in the style of real writers. The module keeps training, validation and test partitions apart, and keeps the writers of the test set separate from those of the training set so that writer-independent accuracy can be measured honestly.
+
+\subsection{Preprocessing Engine}
+The preprocessing engine improves the raw ink before it reaches the neural networks. Resampling places points at a uniform distance from each other, and smoothing removes the jagged edges that come from finger movement. Normalization adjusts scale and pressure so that the data do not depend on the size of the writing or the force used by the writer. Denoising removes accidental touches and electronic interference. This standardization lets all later modules work on consistent input.
+
+\subsection{RefinerGAN Module}
+The RefinerGAN module addresses the messy nature of handwriting on a small screen. It is a generative adversarial network whose generator learns to map irregular, jittery user strokes to a clean latent space of standardized Nastaliq ligatures. During training, a discriminator checks that the refined strokes still resemble genuine Urdu script, so that the refinement improves recognizability without changing the linguistic meaning of what was written. At run time only the generator is deployed on the phone.
+
+\subsection{Ligature Segmentation Module}
+Urdu words are written as connected ligatures, so recognition requires a way to divide a word into manageable parts. This module uses a skeleton-based approach: it thins the written word to its skeleton and then detects the natural break points of the cursive script, so that the word is split into ligatures or characters, in the manner of skeleton-based grapheme segmentation for cursive Arabic-script writing \cite{abandah2010}. Grapheme detection identifies where one unit ends and the next begins, which improves the accuracy of the downstream recognition.
+
+\subsection{Pre-Classifier Module}
+The pre-classifier reduces the work of the main recognizer. A graph neural network encodes the topology of the strokes, that is, their structure and connectivity, together with simple features such as the number of strokes and the position of dots and diacritical marks. On the basis of this encoding, the input is routed to one of 28 subsets of shapes, so that the recognition core only has to choose among the members of one subset instead of among all 108 half-forms. This lowers the computational load and reduces confusion between similar-looking shapes.
+
+\subsection{Hybrid Feature Extraction Module}
+This module turns each segmented ligature into a numerical representation that combines three kinds of information. The db2 wavelet transform captures the mathematical shape of the trajectory at several scales, structural features describe properties such as loops, dots and direction changes, and learned CNN embeddings capture visual patterns that are hard to describe by hand. The three representations are combined into a single vector so that the classifier benefits from both handcrafted and learned knowledge.
+
+\subsection{Recognition Core}
+The recognition core is the classifier of the system. A Transformer encoder models the temporal order and long-range dependencies of the handwriting, and a BiLSTM with a CTC decoder converts the variable-length sequence into a sequence of characters without requiring an exact alignment between input and output \cite{graves2006,graves2008}. Domain-adversarial training \cite{ganin2016} is applied so that the learned features depend as little as possible on the identity of the writer. This arrangement replaces the support vector machines and simple recurrent networks of earlier work and is well suited to the sequential nature of cursive Urdu.
+
+\subsection{Language Model Layer}
+Recognition errors that come from visual ambiguity are corrected using linguistic context. An Urdu N-gram model scores the probability of word sequences, and BERT-Urdu rescoring, based on the BERT architecture \cite{devlin2019}, applies deeper contextual understanding to choose the most likely word among visually similar candidates. The layer also produces the ranked list of candidate words shown to the user.
+
+\subsection{Real-Time Inference Engine}
+The inference engine runs the trained models on the phone. The models are converted to TensorFlow Lite, ONNX or CoreML formats, quantized to reduce size, and executed through the corresponding mobile runtime with the help of the mobile GPU or NPU where it is available. Running everything locally keeps latency low, makes the keyboard work without a network connection and keeps the handwriting private.
+
+\subsection{Evaluation and Analytics Module}
+This module measures how well the system works. It calculates Character Error Rate (CER) and Word Error Rate (WER) against labelled test samples and records latency measurements. A performance dashboard shows a confusion matrix that lets developers see which characters are most often misidentified, so that the corpus or the models can be improved.
+
+\section{Functional Requirements/Software Features}
+Functional requirements state what the system must do. The requirements below are derived from the objectives and scope of the project and are each linked to one or more of the modules in Section~3.2. They are used in Chapter~5 to design the test cases.
+
+\subsection{Stroke Capture (FR1)}
+The system shall capture finger or stylus strokes on a writing canvas inside the keyboard, recording the position, pressure and time of every point, and shall support multiple strokes for a single word, including late-written dots and diacritical marks.
+
+\subsection{Stroke Preprocessing (FR2)}
+The system shall resample, smooth, normalize and denoise captured strokes so that the recognition stages receive input of uniform quality regardless of the speed, size or pressure of the writing.
+
+\subsection{Stroke Refinement (FR3)}
+The system shall pass preprocessed strokes through the RefinerGAN generator, which returns cleaner strokes that keep the linguistic identity of the written shapes.
+
+\subsection{Segmentation and Pre-classification (FR4)}
+The system shall divide continuous cursive writing into ligatures using skeleton-based segmentation and shall route each ligature to one of the 28 subsets by using the graph neural network.
+
+\subsection{Handwriting Recognition (FR5)}
+The system shall recognize half-forms, ligatures and words of Urdu cursive handwriting by using the hybrid feature extractor and the Transformer with BiLSTM-CTC classifier, and shall output a character sequence for each written word.
+
+\subsection{Language-Model Correction and Suggestions (FR6)}
+The system shall correct recognition errors using the N-gram model and BERT-Urdu, and shall display a ranked list of candidate words from which the user can choose.
+
+\subsection{Unicode Insertion (FR7)}
+The system shall insert the accepted word into the text field of the active application as Unicode text, so that the result is editable and searchable by that application.
+
+\subsection{Text Correction and Editing (FR8)}
+The system shall allow the user to delete the last character or word, to clear the canvas, to rewrite a word and to insert a space or a new line without leaving the keyboard.
+
+\subsection{Keyboard Management (FR9)}
+The system shall be installable as a system keyboard, shall let the user switch between the handwriting keyboard and other keyboards, and shall provide a settings screen for choices such as recognition suggestions and writing speed.
+
+\subsection{Performance Evaluation (FR10)}
+The system shall provide an evaluation mode in which CER, WER and latency are calculated for a labelled test set and in which a confusion matrix is displayed for developers.
+
+\section{Non-Functional Requirements}
+Non-functional requirements, also called quality attributes, describe how well the system performs its functions. Only the attributes that matter for a real-time handwriting keyboard are included, and each of them is stated with a rationale and a measure so that it can be verified in Chapter~5. The numeric thresholds below are the targets set for the project.
+
+\subsection{Recognition Accuracy}
+A keyboard that makes frequent mistakes forces the user to correct text and is quickly abandoned, so recognition accuracy is the most important quality attribute. It is measured as Character Error Rate and Word Error Rate on a test set written by writers who were not part of the training data. The target is a CER of at most 8\% and a WER of at most 20\% for unseen writers, and a half-form accuracy that is not lower than the 96.1\% reported in the base work \cite{safdar2022} on comparable data.
+
+\subsection{Speed}
+Handwriting recognition feels natural only when the result appears almost immediately after the user stops writing. Speed is measured as the time between the end of a word (the pen lifting and a short pause) and the display of the candidate list on the reference device with the minimum specification. The target is an average of at most 300~ms and a 95th-percentile value of at most 600~ms.
+
+\subsection{Usability}
+Usability is the ease with which a person learns and uses the keyboard. It is important because the target users include people who are not comfortable with English keyboards. It is measured by observing new users and by a System Usability Scale questionnaire. The keyboard is considered usable if a new user can write and insert a first word within two attempts after a one-minute demonstration, and if the average System Usability Scale score is at least 70.
+
+\subsection{Privacy}
+Handwriting is personal data and can reveal what a person writes in private messages. The system therefore performs recognition entirely on the device. Privacy is measured by monitoring network traffic while the keyboard is used in offline-core mode, and the requirement is met if no handwriting, stroke or recognized text is sent over the network.
+
+\subsection{Size and Resource Use}
+A keyboard that uses too much storage or memory cannot run on low-cost phones. Size is measured in megabytes of installed storage and the peak memory used during recognition. The installed application with all models shall not exceed 500~MB of storage, which is the minimum storage figure of the target device, and the peak memory use shall stay within the 3~GB available on the reference device.
+
+\subsection{Reliability and Robustness}
+Because the keyboard is used in every application, a crash would interrupt the work of the user in other applications. Reliability is measured as the number of failures during a long run of continuous use, and robustness as the time required to recover from a failure. The target is no crash during 1,000 consecutive recognized words and a restart after failure in less than two seconds without loss of the text already inserted.
+
+\subsection{Portability}
+The system is intended to serve users of both major mobile platforms. Portability is measured by the number of target operating systems on which the keyboard is installed and passes the functional tests, and by the proportion of recognition code shared between platforms. The requirement is to pass the functional tests on Android 13 or later and iOS 16 or later, with the same trained models used on both.
+
+% =====================================================================
+%  CHAPTER 4
+% =====================================================================
+\fypchapter{SYSTEM MODELING AND DESIGN}
+
+System design and analysis translate the requirements of Chapter~3 into models that developers and reviewers can examine before and during implementation. Urdu-Ink Mobile is an interactive system with a user who writes on the screen, a pipeline of processing stages, and a host application that receives the result, so the models in this chapter show the functions available to the user, the flow of activities, the flow of data, the interaction between the user and the system, the interaction between the internal objects, the software classes, and the architecture of the whole system.
+
+The chapter is organized as follows. Section~4.1 gives an overview of the models used, Section~4.2 presents the use case diagram, Section~4.3 gives the full dress use cases, Section~4.4 presents the activity diagram, Section~4.5 the data flow diagrams, Section~4.6 the system sequence diagram, Section~4.7 the sequence diagram, Section~4.8 the design class diagram, and Section~4.9 the architectural diagrams.
+
+\tikzset{
+  uc/.style={ellipse,draw,minimum width=3.7cm,minimum height=1cm,align=center,font=\small,inner sep=1pt},
+  act/.style={rounded rectangle,draw,minimum width=5.4cm,minimum height=0.8cm,align=center,font=\small,inner sep=3pt},
+  ent/.style={rectangle,draw,minimum width=2.6cm,minimum height=1cm,align=center,font=\small},
+  proc/.style={rounded rectangle,draw,minimum width=3.2cm,minimum height=1.3cm,align=center,font=\small,inner sep=3pt},
+  store/.style={draw,minimum width=3.2cm,minimum height=0.8cm,align=center,font=\small},
+  cls/.style={rectangle split,rectangle split parts=3,draw,font=\scriptsize,text width=4.3cm,align=left,inner sep=3pt},
+  lay/.style={rectangle,draw,minimum height=0.9cm,align=center,font=\small,inner sep=3pt},
+  arr/.style={-{Stealth[length=2.2mm]}},
+  dsh/.style={dashed,-{Stealth[length=2.2mm]}},
+  flbl/.style={font=\scriptsize,fill=white,inner sep=1pt}
+}
+\newcommand{\stick}[3]{% x, y, label
+  \draw (#1,#2) circle (0.22);
+  \draw (#1,#2-0.22)--(#1,#2-0.95) (#1-0.45,#2-0.5)--(#1+0.45,#2-0.5)
+        (#1,#2-0.95)--(#1-0.35,#2-1.5) (#1,#2-0.95)--(#1+0.35,#2-1.5);
+  \node[font=\small\bfseries,align=center] at (#1,#2-1.95) {#3};}
+
+\section{System Design and Analysis}
+Analysis models describe what the system must do, and design models describe how it is built. In this project the following models are used. Use case diagrams and full dress use cases describe the functions seen from the point of view of the user. An activity diagram models the workflow of a recognition session. Data flow diagrams of level 0 and level 1 show how handwriting data are transformed into Unicode text. A system sequence diagram and a sequence diagram show the interaction between the user and the system and between the internal objects. A design class diagram shows the main software classes, and architectural diagrams, which include a layered architecture, the interface design, the component-level design and the deployment diagram, show the structure of the final product. Not every possible diagram is drawn, only those that add information for a system of this nature.
+
+\section{Use Case Diagrams}
+A use case diagram depicts the functions of the system that are performed through interaction with its users, and it helps to view the system from the perspective of the user. Figure~\ref{fig:usecase} shows the main use case diagram of Urdu-Ink Mobile. The primary actor is the User, who writes Urdu words on the canvas, reviews and selects suggested words, corrects text and configures the keyboard. Writing a word includes the recognition of the strokes and the insertion of the accepted text into the host application. A second actor, the Developer/Researcher, collects handwriting samples and views the evaluation dashboard.
+
+\begin{figure}[!ht]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}
+\draw (3.2,-9.0) rectangle (12.8,1.6);
+\node[font=\small\bfseries] at (8,1.2) {\guillemotleft system\guillemotright\ Urdu-Ink Mobile};
+\stick{0.9}{-2.6}{User}
+\stick{14.8}{-5.2}{Developer /\\Researcher}
+\node[uc] (u1) at (5.6,0) {Write Urdu\\Handwriting};
+\node[uc] (u2) at (10.6,0) {Recognize Word};
+\node[uc] (u3) at (5.6,-2.6) {Select Suggested\\Word};
+\node[uc] (u4) at (10.6,-2.6) {Insert Text into\\Host Application};
+\node[uc] (u5) at (5.6,-5.2) {Correct or Delete\\Text};
+\node[uc] (u6) at (5.6,-7.8) {Configure Keyboard\\Settings};
+\node[uc] (u7) at (10.6,-5.6) {Collect Handwriting\\Samples};
+\node[uc] (u8) at (10.6,-7.8) {View Evaluation\\Dashboard};
+\foreach \u in {u1,u3,u5,u6} \draw (1.0,-3.5)--(\u.west);
+\draw (14.6,-6.1)--(u7.east);
+\draw (14.6,-6.1)--(u8.east);
+\draw[dsh] (u1)--(u2) node[midway,above,flbl]{\guillemotleft include\guillemotright};
+\draw[dsh] (u3)--(u4) node[midway,above,flbl]{\guillemotleft include\guillemotright};
+\draw[dsh] (u3)--(u1) node[midway,right,flbl]{\guillemotleft extend\guillemotright};
+\end{tikzpicture}}
+\caption{Main Use Case Diagram}\label{fig:usecase}
+\end{figure}
+
+\section{Full Dress Use Case/Detailed Use Case}
+Full dress use cases describe the main scenario and the alternatives of a use case in detail, and they are written only for use cases that are complex and need explanation. Two use cases were chosen for detailing: Write Urdu Handwriting, because it contains the whole recognition pipeline and most of the project's functional requirements, and Select Suggested Word, because it shows how language-model suggestions are used to resolve ambiguity. Simple use cases such as configuring the settings are not detailed.
+
+\subsection{Write Urdu Handwriting -- Full Dress Use Case}
+Table~\ref{tab:fd1} describes the use case in which a user writes a word on the canvas and the system produces candidate words.
+
+{\small\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{|>{\bfseries}p{1.45in}|p{4.2in}|}
+\caption{Full Dress Use Case for Write Urdu Handwriting}\label{tab:fd1}\\
+\hline
+Use Case Name & Write Urdu Handwriting\\\hline
+Scope & Urdu-Ink Mobile keyboard\\\hline
+Level & User goal\\\hline
+Primary Actor & User\\\hline
+Stakeholders and Interests & User: wants fast and correct conversion of handwriting into text. Application owner: wants the host application to receive valid Unicode. Developer: wants accurate logs for evaluation.\\\hline
+Pre-conditions & The keyboard is installed and selected as the active input method; a text field of a host application has focus; the models are loaded.\\\hline
+Success Guarantee & A ranked list of candidate words for the written word is shown, and the handwriting data stay on the device.\\\hline
+Main Success Scenario & 1. The user writes a word in continuous cursive on the canvas. 2. The system captures the strokes. 3. The system resamples, smooths and normalizes them. 4. The RefinerGAN cleans the strokes. 5. The system segments the word into ligatures and routes them with the pre-classifier. 6. The recognition core produces character sequences. 7. The language model rescores the candidates. 8. The system displays the ranked candidate words.\\\hline
+Extensions & 2a. Accidental touch: the system discards the stroke as noise. 6a. Recognition confidence is low: the system shows the best candidates with a prompt to rewrite. 7a. Word not in the vocabulary: the system shows the raw recognition result.\\\hline
+Special Requirements & Candidates appear within 300~ms (Section~3.4.2); all processing is local (Section~3.4.4).\\\hline
+\end{longtable}}
+
+\subsection{Select Suggested Word -- Full Dress Use Case}
+Table~\ref{tab:fd2} describes the selection of a word from the candidate list and its insertion into the host application.
+
+{\small\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{|>{\bfseries}p{1.45in}|p{4.2in}|}
+\caption{Full Dress Use Case for Select Suggested Word}\label{tab:fd2}\\
+\hline
+Use Case Name & Select Suggested Word\\\hline
+Scope & Urdu-Ink Mobile keyboard\\\hline
+Level & User goal\\\hline
+Primary Actor & User\\\hline
+Stakeholders and Interests & User: wants the intended word inserted with a single tap. Host application: wants correct Unicode text.\\\hline
+Pre-conditions & A candidate list is displayed for the last written word.\\\hline
+Success Guarantee & The selected word is inserted into the active text field as Unicode and the canvas is cleared for the next word.\\\hline
+Main Success Scenario & 1. The user taps the intended word in the candidate bar. 2. The system sends the Unicode text to the host application. 3. The system clears the canvas and the candidate bar. 4. The system updates the language-model context with the chosen word.\\\hline
+Extensions & 1a. The intended word is not in the list: the user rewrites the word or deletes it. 2a. The host application rejects the input: the system shows an error and keeps the word in the candidate bar.\\\hline
+Special Requirements & Insertion completes within 100~ms of the tap (Section~3.4.2).\\\hline
+\end{longtable}}
+
+\section{Activity Diagram}
+An activity diagram is a flowchart that shows the flow from one activity to another, and it is used here to give a high-level understanding of the system's functions from the perspective of the recognition session. Figure~\ref{fig:activity} shows the flow of a session. The user writes strokes, which are preprocessed, refined, segmented, pre-classified and recognized, after which the language model rescores the result and candidate words are displayed. If the user accepts a candidate, its Unicode text is inserted into the host application, and otherwise the user edits or rewrites the word and the flow returns to the beginning. The decision node after the candidate list is the only point at which the flow branches, and the loop it creates matches the real behavior of a keyboard, where a word that is not recognized correctly is simply written again. All activities before the decision are performed automatically by the system without user action, and they are the activities that must complete within the latency target of Section~3.4.2.
+
+\begin{figure}[!ht]
+\centering
+\resizebox{!}{0.56\textheight}{%
+\begin{tikzpicture}[node distance=0.5cm]
+\node[circle,fill=black,minimum size=0.4cm,inner sep=0] (s) {};
+\node[act,below=of s] (a1) {Write strokes on canvas};
+\node[act,below=of a1] (a2) {Capture, resample, smooth and normalize};
+\node[act,below=of a2] (a3) {Refine strokes with RefinerGAN};
+\node[act,below=of a3] (a4) {Segment into ligatures};
+\node[act,below=of a4] (a5) {Pre-classify into 28 subsets (GNN)};
+\node[act,below=of a5] (a6) {Recognize (Transformer + BiLSTM-CTC)};
+\node[act,below=of a6] (a7) {Rescore with N-gram and BERT-Urdu};
+\node[act,below=of a7] (a8) {Display candidate words};
+\node[diamond,draw,aspect=2.4,below=of a8,font=\small,inner sep=1pt] (d) {User accepts?};
+\node[act,below=of d] (a9) {Insert Unicode text into application};
+\node[circle,draw,minimum size=0.5cm,inner sep=0,below=of a9] (e) {};
+\node[circle,fill=black,minimum size=0.28cm,inner sep=0] at (e) {};
+\node[act,right=1.4cm of d,minimum width=3.6cm] (r) {Edit or rewrite word};
+\foreach \f/\t in {s/a1,a1/a2,a2/a3,a3/a4,a4/a5,a5/a6,a6/a7,a7/a8,a8/d,a9/e} \draw[arr] (\f)--(\t);
+\draw[arr] (d)--(a9) node[midway,right,flbl]{[yes]};
+\draw[arr] (d)--(r) node[midway,above,flbl]{[no]};
+\draw[arr] (r.east)-|++(0.9,0)|-(a1.east);
+\end{tikzpicture}}
+\caption{Activity Diagram}\label{fig:activity}
+\end{figure}
+
+\section{Data Flow Diagram}
+A data flow diagram represents the flow of data through a system, showing the inputs and outputs of each entity and process without control flow or decisions. A data flow diagram is appropriate for this project because the system receives input data in the form of strokes, transforms them through a number of processes and returns text as output. Figure~\ref{fig:dfd0} shows the level 0 diagram, in which the whole keyboard is a single process that exchanges data with three external entities. The User supplies handwritten strokes and receives candidate words, the Host Application receives Unicode text, and the Developer/Researcher supplies test samples and receives evaluation metrics.
+
+\begin{figure}[!ht]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}
+\node[circle,draw,minimum size=3.2cm,align=center,font=\small] (p) at (0,0) {0\\Urdu-Ink\\Mobile};
+\node[ent] (u) at (-6.5,0) {User};
+\node[ent] (h) at (6.5,0) {Host\\Application};
+\node[ent] (d) at (0,-4.2) {Developer /\\Researcher};
+\draw[arr] (u.30)--(p.150) node[midway,above,flbl]{Handwritten strokes};
+\draw[arr] (p.210)--(u.330) node[midway,below,flbl]{Candidate words};
+\draw[arr] (p.east)--(h.west) node[midway,above,flbl]{Unicode text};
+\draw[arr] (d.100)--(p.260) node[midway,left,flbl]{Test samples};
+\draw[arr] (p.280)--(d.80) node[midway,right,flbl]{CER/WER metrics, confusion matrix};
+\end{tikzpicture}}
+\caption{DFD Level 0}\label{fig:dfd0}
+\end{figure}
+
+Figure~\ref{fig:dfd1} decomposes the system into six processes. Strokes from the user are captured and preprocessed (1.0), refined by the RefinerGAN (2.0), segmented and pre-classified (3.0), and recognized by the feature extractor and classifier (4.0). The language model (5.0) rescores the result and sends Unicode text to the host application, and an evaluation process (6.0) compares the recognized text against ground-truth labels. The models used by processes 2.0, 3.0 and 4.0 are held in the trained model store (D1), the language model process reads the Urdu text corpus (D2), and the evaluation process reads the labelled test samples (D3).
+
+\begin{figure}[!ht]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}
+\node[ent] (u) at (0,6) {User};
+\node[proc,minimum width=3cm] (p1) at (4.8,6) {1.0\\Capture and\\Preprocess};
+\node[proc,minimum width=3cm] (p2) at (10,6) {2.0\\Refine Strokes\\(RefinerGAN)};
+\node[proc,minimum width=3cm] (p3) at (15.2,6) {3.0\\Segment and\\Pre-classify};
+\node[store] (d1) at (12.6,3.7) {D1  Trained models};
+\node[proc,minimum width=3cm] (p4) at (15.2,1.2) {4.0\\Extract Features\\and Recognize};
+\node[proc,minimum width=3cm] (p5) at (10,1.2) {5.0\\Apply Language\\Model};
+\node[store] (d2) at (10,-1.3) {D2  Urdu text corpus};
+\node[ent] (h) at (4.8,1.2) {Host\\Application};
+\node[proc,minimum width=3cm] (p6) at (4.8,-3) {6.0\\Evaluate\\Performance};
+\node[store] (d3) at (4.8,-5.5) {D3  Labelled test samples};
+\node[ent] (dv) at (0,-3) {Developer /\\Researcher};
+\draw[arr] (u)--(p1) node[midway,above,flbl]{Strokes};
+\draw[arr] (p1)--(p2) node[midway,above,flbl]{Clean ink};
+\draw[arr] (p2)--(p3) node[midway,above,flbl]{Refined strokes};
+\draw[arr] (p3)--(p4) node[midway,right,flbl]{Ligatures, subsets};
+\draw[arr] (p4)--(p5) node[midway,above,flbl]{Candidates};
+\draw[arr] (p5)--(h) node[midway,above,flbl]{Unicode text};
+\draw[arr] (p5.south west)--(p6.north east) node[midway,above,sloped,flbl]{Recognized text};
+\draw[arr] (p5.north)--++(0,1.3)-|(u.south) node[pos=0.25,above,flbl]{Candidate words};
+\draw[dsh] (d1.north west)--(p2.south);
+\draw[dsh] (d1.north east)--(p3.south west);
+\draw[dsh] (d1.south east)--(p4.north west);
+\draw[dsh] (d2)--(p5);
+\draw[dsh] (d3)--(p6);
+\draw[arr] (dv.north east)--(p6.north west) node[midway,above,sloped,flbl]{Test samples};
+\draw[arr] (p6.west)--(dv.east) node[midway,below,flbl]{Metrics};
+\end{tikzpicture}}
+\caption{DFD Level 1}\label{fig:dfd1}
+\end{figure}
+
+\section{System Sequence Diagram}
+A system sequence diagram illustrates the input and output events that pass between an actor and the system treated as a black box, and it is derived from a use case. It is drawn here for the Write Urdu Handwriting and Select Suggested Word use cases of Section~4.3, so that the external events that the keyboard must handle are clear. Figure~\ref{fig:ssd} shows that the user repeatedly sends stroke data while writing, signals the end of a word by lifting the finger and pausing, receives the list of candidates, selects one of them and finally causes Unicode text to be committed.
+
+\begin{figure}[!ht]
+\centering
+\resizebox{0.9\textwidth}{!}{%
+\begin{tikzpicture}
+\node[ent,minimum width=2cm] (a) at (0,0) {Actor: User};
+\node[ent,minimum width=3cm] (s) at (8,0) {:Urdu-Ink System};
+\draw[dashed] (a.south)--++(0,-9.2);
+\draw[dashed] (s.south)--++(0,-9.2);
+\draw (0.75,-1.4) rectangle (8.9,-3.2);
+\node[font=\scriptsize,anchor=north west,fill=white,draw] at (0.75,-1.4) {loop [while writing]};
+\draw[arr] (0,-2.3)--(8,-2.3) node[midway,above,flbl]{writeStroke(points, pressure, time)};
+\draw[arr] (0,-4.2)--(8,-4.2) node[midway,above,flbl]{endOfWord(pause detected)};
+\draw[dsh] (8,-5.4)--(0,-5.4) node[midway,above,flbl]{candidateList(words, scores)};
+\draw[arr] (0,-6.8)--(8,-6.8) node[midway,above,flbl]{selectCandidate(index)};
+\draw[dsh] (8,-8.2)--(0,-8.2) node[midway,above,flbl]{commitText(Unicode)};
+\end{tikzpicture}}
+\caption{System Sequence Diagram}\label{fig:ssd}
+\end{figure}
+
+\section{Sequence Diagram}
+A sequence diagram depicts the interaction between objects in the order in which messages are exchanged. It is drawn here for the event of recognizing and inserting one written word. Figure~\ref{fig:seq} shows that the input method service passes the captured strokes to the preprocessor, which sends clean strokes to the RefinerGAN. The refined strokes are segmented, the ligatures are recognized, and the N-best list is rescored by the language model, after which the candidates are returned to the input method service and displayed to the user. When the user selects a word, the service commits the Unicode text to the host application.
+
+\begin{figure}[!ht]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}
+\foreach \x/\n in {0/User,2.7/{:KeyboardIME},5.4/{:Preprocessor},8.1/{:RefinerGAN},10.8/{:Segmenter},13.5/{:Recognizer},16.2/{:LanguageModel}}
+  {\node[ent,minimum width=2.3cm,font=\footnotesize] at (\x,0) {\n}; \draw[dashed] (\x,-0.5)--(\x,-11.2);}
+\draw[arr] (0,-1.2)--(2.7,-1.2) node[midway,above,flbl]{writeStrokes()};
+\draw[arr] (2.7,-2.3)--(5.4,-2.3) node[midway,above,flbl]{preprocess(strokes)};
+\draw[arr] (5.4,-3.4)--(8.1,-3.4) node[midway,above,flbl]{refine(strokes)};
+\draw[arr] (8.1,-4.5)--(10.8,-4.5) node[midway,above,flbl]{segment(refined)};
+\draw[arr] (10.8,-5.6)--(13.5,-5.6) node[midway,above,flbl]{recognize(ligatures)};
+\draw[arr] (13.5,-6.7)--(16.2,-6.7) node[midway,above,flbl]{rescore(N-best)};
+\draw[dsh] (16.2,-7.8)--(2.7,-7.8) node[pos=0.5,above,flbl]{candidates(words)};
+\draw[dsh] (2.7,-8.7)--(0,-8.7) node[midway,above,flbl]{showCandidates()};
+\draw[arr] (0,-9.6)--(2.7,-9.6) node[midway,above,flbl]{select(word)};
+\draw[dsh] (2.7,-10.5)--(0,-10.5) node[midway,above,flbl]{commitText(Unicode) to host app};
+\end{tikzpicture}}
+\caption{Sequence Diagram}\label{fig:seq}
+\end{figure}
+
+\section{Design Class Diagram}
+The design class diagram shows the main software classes of the system, their attributes and operations, and the relationships between them. The central class is UrduInkIME, the input method service that receives touch events, owns the InkSession (which holds the Stroke objects of the current word) and delegates recognition to the InferenceEngine. The InferenceEngine coordinates the pipeline classes in order: Preprocessor, RefinerGAN, LigatureSegmenter, PreClassifier, RecognitionCore and LanguageModel. Each of these classes corresponds to a module of Section~3.2. The UrduInkIME class is the only class that interacts with the operating system, which keeps the platform-specific Kotlin and Swift code separate from the recognition code. The InkSession aggregates one or more Stroke objects, and each Stroke in turn holds the ordered points with their coordinates, pressure and time offsets, mirroring the binary corpus format of Section~1.4.3. The InferenceEngine hides the differences between the mobile runtimes, so that a model can be exchanged without changes to the other classes. The numbers on the arrows between the pipeline classes show the order in which they are called for each written word. Figure~\ref{fig:class} shows the diagram.
+
+\begin{figure}[!ht]
+\centering
+\resizebox{0.95\textwidth}{!}{%
+\begin{tikzpicture}
+\node[cls] (ime) at (0,0) {\textbf{UrduInkIME}\nodepart{second}-session: InkSession\\-engine: InferenceEngine\nodepart{third}+onTouchEvent()\\+showCandidates()\\+commitText()};
+\node[cls] (ses) at (5.8,0) {\textbf{InkSession}\nodepart{second}-strokes: List$\langle$Stroke$\rangle$\\-canvasSize\nodepart{third}+addStroke()\\+clear()};
+\node[cls] (str) at (11.6,0) {\textbf{Stroke}\nodepart{second}-points: List$\langle$Point$\rangle$\\-startTime\nodepart{third}+length()\\+boundingBox()};
+\node[cls] (eng) at (5.8,-3.9) {\textbf{InferenceEngine}\nodepart{second}-runtime: TFLite/ONNX/CoreML\nodepart{third}+recognizeWord(session)\\+loadModels()};
+\node[cls] (pre) at (0,-8) {\textbf{Preprocessor}\nodepart{second}-targetSpacing\\-smoothingWindow\nodepart{third}+resample()\\+smooth()\\+normalize()\\+denoise()};
+\node[cls] (ref) at (5.8,-8) {\textbf{RefinerGAN}\nodepart{second}-generator\\-discriminator\nodepart{third}+refine(strokes)};
+\node[cls] (seg) at (11.6,-8) {\textbf{LigatureSegmenter}\nodepart{second}-skeletonParams\nodepart{third}+skeletonize()\\+split()};
+\node[cls] (lm) at (0,-12.2) {\textbf{LanguageModel}\nodepart{second}-ngram\\-bertUrdu\nodepart{third}+rescore(nbest)\\+suggest()};
+\node[cls] (rec) at (5.8,-12.2) {\textbf{RecognitionCore}\nodepart{second}-featureExtractor\\-transformer\\-ctcDecoder\nodepart{third}+extractFeatures()\\+decode()};
+\node[cls] (pc) at (11.6,-12.2) {\textbf{PreClassifier}\nodepart{second}-gnnModel\\-subsets: 28\nodepart{third}+encodeTopology()\\+route()};
+\draw[arr] (ime)--(ses) node[midway,above,flbl]{owns};
+\draw[arr] (ses)--(str) node[midway,above,flbl]{1..*};
+\draw[arr] (ime.south)--++(0,-0.6)-|(eng.north west) node[pos=0.2,left,flbl]{uses};
+\draw[arr] (eng.south west)--++(0,-0.3)-|(pre.north) node[pos=0.25,above,flbl]{1. calls};
+\draw[arr] (pre)--(ref) node[midway,above,flbl]{2.};
+\draw[arr] (ref)--(seg) node[midway,above,flbl]{3.};
+\draw[arr] (seg)--(pc) node[midway,right,flbl]{4.};
+\draw[arr] (pc)--(rec) node[midway,above,flbl]{5.};
+\draw[arr] (rec)--(lm) node[midway,above,flbl]{6.};
+\end{tikzpicture}}
+\caption{Class Diagram}\label{fig:class}
+\end{figure}
+
+\section{Architectural Diagrams}
+An architecture serves as a blueprint of the system. It provides an abstraction that manages complexity and defines how the components communicate and coordinate. A layered architecture is followed for Urdu-Ink Mobile because the processing stages form a natural pipeline and because each layer can be replaced or optimized without changing the others, for example when a new runtime or a better recognizer becomes available. Figure~\ref{fig:arch} shows the five layers of the system. The presentation layer holds the keyboard user interface. The input layer captures the strokes. The processing layer cleans, refines, segments and pre-classifies them. The recognition and language layer extracts features, recognizes and corrects the text. The runtime and platform layer executes the models on the operating system of the phone. The strict ordering of the layers also supports testing, because each layer can be exercised with recorded input from the layer above it, and it supports portability, because only the presentation, input and platform layers need platform-specific code while the processing, recognition and language layers use the same model files on Android and iOS. The interface design, component-level design and deployment diagram follow in the next subsections.
+
+\begin{figure}[!ht]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}
+\begin{scope}[yshift=0cm]
+\node[lay,minimum width=15cm,minimum height=1.9cm] {};
+\node[font=\small\bfseries,anchor=north west] at (-7.4,0.9) {Presentation layer};
+\node[lay,minimum width=4.2cm,minimum height=0.9cm,font=\footnotesize] at (-4.4,-0.25) {Writing canvas};
+\node[lay,minimum width=4.2cm,minimum height=0.9cm,font=\footnotesize] at (0.5,-0.25) {Candidate bar};
+\node[lay,minimum width=4.2cm,minimum height=0.9cm,font=\footnotesize] at (5.4,-0.25) {Keys and settings};
+\end{scope}
+\begin{scope}[yshift=-2.6cm]
+\node[lay,minimum width=15cm,minimum height=1.9cm] {};
+\node[font=\small\bfseries,anchor=north west] at (-7.4,0.9) {Input layer};
+\node[lay,minimum width=6.8cm,minimum height=0.9cm,font=\footnotesize] at (-3.6,-0.25) {IME service};
+\node[lay,minimum width=6.8cm,minimum height=0.9cm,font=\footnotesize] at (3.6,-0.25) {Multi-touch stroke logger};
+\end{scope}
+\begin{scope}[yshift=-5.2cm]
+\node[lay,minimum width=15cm,minimum height=1.9cm] {};
+\node[font=\small\bfseries,anchor=north west] at (-7.4,0.9) {Processing layer};
+\node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (-5.5,-0.25) {Preprocessing};
+\node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (-1.8,-0.25) {RefinerGAN};
+\node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (1.9,-0.25) {Ligature segmentation};
+\node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (5.6,-0.25) {GNN pre-classifier};
+\end{scope}
+\begin{scope}[yshift=-7.8cm]
+\node[lay,minimum width=15cm,minimum height=1.9cm] {};
+\node[font=\small\bfseries,anchor=north west] at (-7.4,0.9) {Recognition and language layer};
+\node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (-5.5,-0.25) {Hybrid features};
+\node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (-1.8,-0.25) {Transformer +\\BiLSTM-CTC};
+\node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (1.9,-0.25) {N-gram model};
+\node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (5.6,-0.25) {BERT-Urdu};
+\end{scope}
+\begin{scope}[yshift=-10.4cm]
+\node[lay,minimum width=15cm,minimum height=1.9cm] {};
+\node[font=\small\bfseries,anchor=north west] at (-7.4,0.9) {Runtime and platform layer};
+\node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (-5.5,-0.25) {TensorFlow Lite};
+\node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (-1.8,-0.25) {ONNX Runtime\\Mobile};
+\node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (1.9,-0.25) {CoreML};
+\node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (5.6,-0.25) {Android / iOS};
+\end{scope}
+\foreach \y in {-1.0,-3.6,-6.2,-8.8} \draw[arr] (0,\y)--(0,\y-0.65);
+\end{tikzpicture}}
+\caption{Layered Architecture Diagram}\label{fig:arch}
+\end{figure}
+
+\subsection{Interface Design}
+The interface design shows the layout of the keyboard as the user sees it. Figure~\ref{fig:ui} presents the wireframe. The upper part of the screen shows the text field of the host application, below it a candidate bar displays the ranked words, and the largest area is the writing canvas with a dashed baseline that helps users write on a line. A bottom row holds the keys for switching keyboards, inserting a space, deleting and inserting a new line, and a button for the settings. The design keeps all common actions within reach of the thumb and allows the user to write and select a word without leaving the keyboard.
+
+\begin{figure}[!ht]
+\centering
+\resizebox{!}{0.42\textheight}{%
+\begin{tikzpicture}
+\draw[rounded corners=14pt,thick] (0,0) rectangle (8,13.5);
+\draw (0.5,10.4) rectangle (7.5,12.9);
+\node[font=\small,align=center] at (4,11.65) {Text field of the\\host application};
+\draw (0.5,9.1) rectangle (7.5,10.1);
+\foreach \x/\t in {0.5/{word 1},2.9/{word 2},5.2/{word 3}} \draw[rounded corners=6pt,fill=gray!15] (\x+0.1,9.2) rectangle (\x+2.2,10) node[midway,font=\small]{\t};
+\draw (0.5,2.1) rectangle (7.5,8.8);
+\draw[dashed] (0.8,5.5)--(7.2,5.5);
+\node[font=\small,gray] at (4,7.9) {Writing canvas (write Urdu here)};
+\foreach \x/\t in {0.5/Switch,1.9/Space,4.5/Delete,5.9/Enter} {};
+\draw (0.5,0.5) rectangle (1.9,1.8) node[midway,font=\scriptsize]{Switch};
+\draw (2.0,0.5) rectangle (4.6,1.8) node[midway,font=\scriptsize]{Space};
+\draw (4.7,0.5) rectangle (6.0,1.8) node[midway,font=\scriptsize]{Delete};
+\draw (6.1,0.5) rectangle (7.5,1.8) node[midway,font=\scriptsize]{Enter};
+\end{tikzpicture}}
+\caption{Interface Design Diagram}\label{fig:ui}
+\end{figure}
+
+\subsection{Component Level Design}
+The component diagram shows the software components and the interfaces through which they communicate. In Figure~\ref{fig:comp} the keyboard user interface passes strokes through the stroke-input interface to the Ink Capture component, which delivers raw ink to the Preprocessing Engine. The cleaned ink goes to the RefinerGAN component, then to the Ligature Segmenter, the Recognition Core and the Language Model component, and the final candidates return to the keyboard user interface. The three neural components, the RefinerGAN, the Recognition Core and the Language Model, obtain their model execution from the Inference Runtime component, which hides the differences between TensorFlow Lite, ONNX Runtime Mobile and CoreML.
+
+\begin{figure}[!ht]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[comp/.style={rectangle,draw,minimum width=2.9cm,minimum height=1.4cm,align=center,font=\small}]
+\node[comp] (ui) at (0,0) {Keyboard UI};
+\node[comp] (ink) at (5.3,0) {Ink Capture};
+\node[comp] (pre) at (10.6,0) {Preprocessing\\Engine};
+\node[comp] (ref) at (15.9,0) {RefinerGAN};
+\node[comp] (seg) at (15.9,-3.4) {Ligature Segmenter\\+ Pre-classifier};
+\node[comp] (rec) at (10.6,-3.4) {Recognition Core};
+\node[comp] (lm) at (5.3,-3.4) {Language Model\\Layer};
+\node[comp,minimum width=14cm] (rt) at (8.8,-6.6) {Inference Runtime (TensorFlow Lite / ONNX Runtime Mobile / CoreML)};
+\draw[arr] (ui)--(ink) node[midway,above,flbl]{IStrokeInput};
+\draw[arr] (ink)--(pre) node[midway,above,flbl]{IRawInk};
+\draw[arr] (pre)--(ref) node[midway,above,flbl]{ICleanInk};
+\draw[arr] (ref)--(seg) node[midway,right,flbl]{IRefined};
+\draw[arr] (seg)--(rec) node[midway,above,flbl]{ILigature};
+\draw[arr] (rec)--(lm) node[midway,above,flbl]{ICandidates};
+\draw[arr] (lm.north west)--++(0,1.1)-|(ui.south) node[pos=0.2,above,flbl]{IWordList};
+\draw[dsh] (ref.east)--++(0.9,0)|-(rt.east);
+\draw[dsh] (seg.south)--(seg.south|-rt.north);
+\draw[dsh] (rec.south)--(rec.south|-rt.north);
+\draw[dsh] (lm.south)--(lm.south|-rt.north);
+\node[flbl] at (13.4,-5.0) {IModelRun};
+\end{tikzpicture}}
+\caption{Component Level Design}\label{fig:comp}
+\end{figure}
+
+\subsection{Deployment}
+The deployment diagram shows the physical nodes on which the software runs. Figure~\ref{fig:deploy} shows two nodes. Models are trained on a GPU workstation, where the Python training scripts and the handwriting corpus reside, and are exported to mobile formats. The exported models are bundled into the application installed on the smartphone, where the keyboard application, the model files, the inference runtime and a local store of user settings reside together. The keyboard communicates with host applications on the same phone through the input method framework of the operating system, and no handwriting data have to leave the phone. Keeping training and deployment on separate nodes also reflects the different needs of the two phases: training requires a powerful GPU and the complete corpus, while deployment requires only the compact, quantized model files and a runtime that fits within the memory and storage limits of the reference device.
+
+\begin{figure}[!ht]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}
+\draw (0,0) rectangle (8,6.6); \draw (0,6.6)--(0.4,7)--(8.4,7)--(8.4,0.4)--(8,0);\draw (8,6.6)--(8.4,7);
+\node[font=\small\bfseries,align=center] at (4,5.8) {\guillemotleft device\guillemotright\\Training Workstation (GPU)};
+\node[ent,minimum width=6.6cm] at (4,3.9) {PyTorch / Keras training scripts};
+\node[ent,minimum width=6.6cm] at (4,2.5) {Handwriting and text corpora};
+\node[ent,minimum width=6.6cm] at (4,1.1) {Model export (TFLite, ONNX, CoreML)};
+\draw (12,0) rectangle (21,6.6); \draw (12,6.6)--(12.4,7)--(21.4,7)--(21.4,0.4)--(21,0);\draw (21,6.6)--(21.4,7);
+\node[font=\small\bfseries,align=center] at (16.5,5.8) {\guillemotleft device\guillemotright\\Smartphone / Tablet (Android 13+, iOS 16+)};
+\node[ent,minimum width=3.8cm] at (14.4,3.7) {Urdu-Ink\\IME application};
+\node[ent,minimum width=3.8cm] at (18.7,3.7) {Model files\\(.tflite, .onnx, .mlmodel)};
+\node[ent,minimum width=3.8cm] at (14.4,1.7) {Inference runtime};
+\node[ent,minimum width=3.8cm] at (18.7,1.7) {Local settings store};
+\draw[dsh] (8.4,3.2)--(12,3.2) node[midway,above,flbl,align=center]{model deployment\\(app bundle)};
+\node[draw,minimum width=4cm,minimum height=1.2cm,align=center,font=\small] (host) at (16.5,-2.4) {\guillemotleft application\guillemotright\\Host app (messaging, notes)};
+\draw[arr] (16.5,0)--(host.north) node[midway,right,flbl]{input method framework};
+\end{tikzpicture}}
+\caption{Deployment Diagram}\label{fig:deploy}
+\end{figure}
+
+% =====================================================================
+%  CHAPTER 5
+% =====================================================================
+\fypchapter{SYSTEM TESTING AND VALIDATION}
+
+This chapter describes how Urdu-Ink Mobile was tested and how the results were validated against the objectives and requirements of the earlier chapters. It covers the overall approach to system testing, the testing techniques that were used, the test cases that were designed for the highest-priority requirements, and the verification of the non-functional requirements with measurable criteria.
+
+The chapter is organized as follows. Section~5.1 gives an overview of system testing and the analysis of the results, Section~5.2 describes the testing techniques, Section~5.3 presents the test cases, and Section~5.4 reports on the non-functional requirements.
+
+\section{System Testing}
+System testing checks whether the complete, integrated system satisfies its requirements. It is important for a handwriting keyboard because the quality of the product is judged by what the user experiences, which is a result of many interacting stages rather than any single model. A network that scores well in isolation may still produce a poor keyboard if the segmentation is wrong, if the latency is high or if the text is not inserted correctly into other applications. Four techniques were applied: unit testing of individual modules, integration testing of the pipeline, black-box functional testing from the point of view of the user, and performance testing on real devices.
+
+The overall analysis of the test results must be consistent with the objectives of Section~1.2.2. The analysis for the first and second objectives is based on the recognition accuracy of the full pipeline with and without the RefinerGAN, the analysis for the third and fourth objectives on CER and WER for unseen writers with and without language-model correction, the fifth objective on latency and the network-traffic test, and the sixth objective on the complete set of results of this chapter. \todo{Write two or three sentences here summarizing the actual outcome once all tests are completed, referring to Table~\ref{tab:nfr} and the test cases in Section~5.3.}
+
+\section{Testing Techniques}
+Testing techniques differ in what they look at. White-box techniques examine the internal structure of the code, black-box techniques examine only inputs and outputs, and techniques such as unit and integration testing are applied at different levels of the system. The techniques used in this project are described in the following subsections.
+
+\subsection{Unit Testing}
+Unit testing verifies each module separately by running it on prepared inputs and comparing its output with the expected output. It was used because the pipeline has many independent modules and an error in an early module spreads to all later ones. The preprocessing functions were tested with synthetic strokes whose correct resampled and smoothed forms are known, the segmenter with words of known ligature structure, and the data-reader with binary files created by hand to check the byte layout of the corpus format. The models were tested by checking their output shapes and by evaluating them on held-out data. \todo{Report the number of unit tests and how many passed.}
+
+\subsection{Integration Testing}
+Integration testing checks that modules work together through their interfaces. It was applied because several stages must agree on data formats, such as the coordinate scaling between the preprocessor and the RefinerGAN and the sequence format between the recognition core and the language model. The pipeline was integrated step by step: first the preprocessor with the RefinerGAN, then the segmenter and pre-classifier, then the recognition core, and finally the language model and the input method service. After each step a set of recorded handwriting samples was passed through the combined modules and the outputs were compared with the outputs of the separate modules. \todo{Report any interface defects found and how they were fixed.}
+
+\subsection{Black Box Testing}
+Black-box testing checks the behavior of the system against the functional requirements without looking at the code. It was used to test the keyboard as users experience it, in real applications. Testers wrote Urdu words on the canvas, selected candidates, deleted text and switched keyboards in messaging and note-taking applications, and checked the resulting text and the behavior of the interface against the expected results in the test case tables of Section~5.3. Testers included writers who were not part of the training data. \todo{Report the number of testers and the number of test scenarios.}
+
+\subsection{Performance Testing}
+Performance testing measures speed and resource use. It was applied because the main promise of the product is real-time recognition on ordinary phones. Latency was measured as the time between the end of a word and the display of the candidates, over a large number of words on the reference device and on at least one higher-end device, and memory and storage use were read from the profiling tools of the operating system. \todo{Describe the exact tools used, such as Android Studio Profiler or Xcode Instruments.}
+
+\section{Test Cases}
+A test case specifies the input, the conditions and the expected result for a function that is to be tested, so that the test can be repeated and the result judged as pass or fail. Not every function is tested exhaustively. The test cases were chosen according to the priority of the requirements and the risks of the project. Five test cases were designed: stroke capture (FR1), word recognition (FR2 to FR5), candidate selection and Unicode insertion (FR6 and FR7), response latency, and offline operation. Each test case follows the standard template in Tables~\ref{tab:tc1} to~\ref{tab:tc5}.
+
+\subsection{Test Case 1: Stroke Capture}
+This test case checks that the keyboard captures every stroke on the canvas, including late-written dots and diacritical marks, as required by FR1. Its results are recorded in Table~\ref{tab:tc1}.
+
+\testcase{Test Case 1: Stroke Capture}{tab:tc1}%
+{TC-01 / Functionality}%
+{Verify that all strokes written on the canvas are captured with position, pressure and time.}%
+{FR1 -- Stroke Capture}%
+{Set-up: install the keyboard, enable it in the system settings and focus a text field. Stop: clear the canvas and close the application.}%
+{Android 13 smartphone with the minimum specification and an iOS 16 device; keyboard build \todo{version}.}%
+{Write ten words, each with at least two strokes and with dots written after the main body; inspect the logged stroke count and point coordinates for each word.}%
+{The logged stroke count equals the number of strokes written for all ten words, point timestamps increase monotonically, and no stroke is missing or duplicated.}
+
+\subsection{Test Case 2: Word Recognition}
+This test case checks the end-to-end recognition accuracy of continuous cursive words for writers who were not part of the training data, which relates to FR2 to FR5 and to the accuracy requirement. Its results are recorded in Table~\ref{tab:tc2}.
+
+\testcase{Test Case 2: Word Recognition}{tab:tc2}%
+{TC-02 / System}%
+{Verify that written words are recognized with CER and WER within the targets.}%
+{FR2, FR3, FR4, FR5; Recognition accuracy (Section~3.4.1)}%
+{Set-up: load the held-out test set recorded by unseen writers and the trained models. Stop: save the recognition results and the confusion matrix.}%
+{Reference device with the minimum specification; evaluation mode of the keyboard; Python scripts to compute CER and WER.}%
+{Pass the \todo{number} test words through the pipeline and compare the output with the ground-truth text; repeat with the RefinerGAN disabled and with the language model disabled to measure their contribution.}%
+{CER is at most 8\% and WER is at most 20\%; the full pipeline gives lower error rates than the pipeline without the RefinerGAN and the pipeline without the language model.}
+
+\subsection{Test Case 3: Candidate Selection and Unicode Insertion}
+This test case checks that the user can select a suggested word and that the correct Unicode text arrives in the host application, as required by FR6 and FR7. Its results are recorded in Table~\ref{tab:tc3}.
+
+\testcase{Test Case 3: Candidate Selection and Unicode Insertion}{tab:tc3}%
+{TC-03 / Integration}%
+{Verify that a selected candidate is inserted into the active text field as correct Unicode text.}%
+{FR6 -- Language-Model Correction and Suggestions; FR7 -- Unicode Insertion}%
+{Set-up: open a messaging application and a notes application and focus a text field. Stop: delete the inserted text.}%
+{Android and iOS devices; messaging and note-taking applications installed on the device.}%
+{Write a word, tap the first, second and third candidate in turn on separate attempts, and read back the text inserted in each application.}%
+{The inserted text equals the tapped candidate in both applications; the canvas and candidate bar are cleared after insertion; the text can be copied and searched by the application.}
+
+\subsection{Test Case 4: Response Latency}
+This test case measures how quickly candidates appear, which is the speed requirement. Its results are recorded in Table~\ref{tab:tc4}.
+
+\testcase{Test Case 4: Response Latency}{tab:tc4}%
+{TC-04 / Performance}%
+{Measure the time from the end of a word to the display of candidates.}%
+{Speed (Section~3.4.2)}%
+{Set-up: enable the timing log and restart the keyboard so that models are freshly loaded. Stop: export the log file.}%
+{Reference device with quad-core 1.8~GHz processor and 3~GB of RAM; a higher-end device for comparison.}%
+{Write 200 words of different lengths at normal writing speed and record the latency of each word from the log.}%
+{The average latency is at most 300~ms and the 95th percentile at most 600~ms on the reference device.}
+
+\subsection{Test Case 5: Offline Operation and Privacy}
+This test case checks that recognition works without a network and that no handwriting leaves the device, as required by the privacy requirement. Its results are recorded in Table~\ref{tab:tc5}.
+
+\testcase{Test Case 5: Offline Operation and Privacy}{tab:tc5}%
+{TC-05 / Acceptance}%
+{Verify that recognition works in airplane mode and that no network traffic is generated by it.}%
+{Privacy (Section~3.4.4); FR5}%
+{Set-up: switch the device to airplane mode, and in a second run connect it to a network monitor. Stop: restore the network settings.}%
+{A smartphone with a packet-capture or network-monitoring tool.}%
+{With airplane mode on, write twenty words and record the result; with the network on, repeat the writing while monitoring all outgoing connections of the keyboard process.}%
+{Recognition succeeds for all words in airplane mode, and the monitor shows no outgoing connection carrying strokes or text from the recognition path.}
+
+\section{Non-Functional Requirements}
+Non-functional requirements describe quality attributes and are not satisfied by statements such as ``the software is efficient'' or ``accurate''. Each requirement of Section~3.4 is therefore checked by a measurable criterion, and Table~\ref{tab:nfr} summarizes the properties, the measures, the targets and the results. The purpose of the table is to compare each measured result with the target that was set in advance.
+
+\begin{table}[H]
+\caption{Non-Functional Requirements, Measures and Results}\label{tab:nfr}
+\centering\small\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{|p{1.0in}|p{1.6in}|p{1.5in}|p{1.2in}|}
+\hline
+\textbf{Property} & \textbf{Measure} & \textbf{Target} & \textbf{Result}\\\hline
+Accuracy & CER and WER on unseen writers & CER $\leq$ 8\%, WER $\leq$ 20\% & \todo{measured}\\\hline
+Speed & End-of-word to candidates (ms) & Mean $\leq$ 300 ms; P95 $\leq$ 600 ms & \todo{measured}\\\hline
+Usability & Attempts to first word; SUS score & $\leq$ 2 attempts; SUS $\geq$ 70 & \todo{measured}\\\hline
+Privacy & Network traffic from recognition & None carrying strokes or text & \todo{measured}\\\hline
+Size & Installed storage (MB); peak RAM & $\leq$ 500 MB; within 3 GB & \todo{measured}\\\hline
+Reliability & Crashes per 1,000 words; recovery time & 0 crashes; $<$ 2 s & \todo{measured}\\\hline
+Portability & Platforms passing functional tests & Android 13+, iOS 16+ & \todo{measured}\\\hline
+\end{tabular}
+\end{table}
+
+\subsection{Accuracy Results}
+Accuracy is reported from Test Case 2 as the CER and WER of the full pipeline for unseen writers, together with the ablation results that show the effect of the RefinerGAN and of the language model. \todo{Insert measured CER and WER and discuss which characters were confused most often, using the confusion matrix from the evaluation dashboard.}
+
+\subsection{Speed Results}
+Speed is reported from Test Case 4 as the mean and the 95th-percentile latency on the reference device. \todo{Insert the measured values and state whether the target was met.}
+
+\subsection{Usability Results}
+Usability is reported from sessions with new users who wrote words after a short demonstration and then completed the System Usability Scale questionnaire. \todo{Insert the number of participants, the attempts needed to write the first word and the average SUS score.}
+
+\subsection{Privacy Results}
+Privacy is reported from Test Case 5 by describing the traffic observed while the keyboard recognized handwriting. \todo{State the result of the network monitoring test.}
+
+\subsection{Size and Resource Use Results}
+Size and resource use are reported as the installed storage of the application with all models and as the peak memory observed during recognition. \todo{Insert the measured values.}
+
+\subsection{Reliability and Portability Results}
+Reliability is reported as the number of failures during 1,000 consecutive words and the recovery time after a forced restart, and portability as the list of platforms and devices on which the functional tests were passed. \todo{Insert the measured values and the devices tested.}
+
+% =====================================================================
+%  CHAPTER 6
+% =====================================================================
+\fypchapter{CONCLUSION}
+
+This chapter concludes the report. Section~6.1 summarizes the project, its key features and the results that were achieved, and Section~6.2 explains the limitations of the developed system and how they can be overcome in future work.
+
+\section{Conclusion}
+Urdu-Ink Mobile was developed to give Urdu speakers a keyboard in which they can write naturally on the screen of a phone and obtain editable Unicode text in any application. Starting from the pre-classification and wavelet pipeline of Safdar et~al.\ \cite{safdar2022}, the project extended recognition from isolated half-forms to continuous cursive words, added a RefinerGAN that cleans noisy touchscreen strokes, enlarged the training data with a CycleGAN, replaced classical classifiers with a Transformer and BiLSTM-CTC recognizer, and corrected errors with an Urdu N-gram model and BERT-Urdu. The whole pipeline is optimized to run locally on the device, so that handwriting stays private and the keyboard works offline. The testing described in Chapter~5 showed a CER of \todo{value}\%, a WER of \todo{value}\% and an average latency of \todo{value}~ms on the reference device, and \todo{state whether each target of Section~3.4 was met}. These results show that stroke refinement, word-level sequence modeling and language-model correction can together make handwriting a practical way of entering Urdu text on a phone, and they address the limitations of tablet-based, isolated-character and cloud-dependent systems identified in Chapter~2.
+
+\section{Limitations and Future Work}
+The system has several limitations. It is optimized for Urdu Nastaliq/Naskh and does not support other languages or decorative calligraphic styles without further training. Real-time performance depends on the processing power of the device, and it may lag on older entry-level phones that have no capable mobile GPU or NPU. Extremely unusual or very untidy handwriting that deviates strongly from standard ligature formations can still lower the accuracy. Finally, optional features such as translation add-ons need an internet connection, so they are not available in the offline core.
+
+These limitations can be addressed in future work. The recognizer can be extended to other Perso-Arabic languages that share the script, such as Pashto and Sindhi, by retraining on new corpora. Model compression through quantization, pruning and knowledge distillation can reduce the demands placed on entry-level devices. A larger corpus with more writers of different ages and skill levels, together with continued domain-adversarial training, can improve writer independence. The recognition granularity can be extended from words to complete sentences and to free-form writing with a continuous language model, and personalized adaptation to the user's own handwriting can be added while still keeping all data on the device. Finally, the keyboard can be ported to further Linux-based mobile operating systems.
+
+% =====================================================================
+%  APPENDIX
+% =====================================================================
+\fypspecial{Appendix -- I}{SUPPLEMENTARY MATERIAL}{APPENDIX -- I}
+
+\section*{A.1 Definitions of Terms}
+\noindent\textbf{Half-form:} the shape that a letter takes at a given position within a connected Urdu ligature (initial, medial or terminal) or in isolation. \textbf{Ligature:} a connected group of characters written without lifting the pen between joined letters; a word may contain several ligatures. \textbf{Nastaliq/Naskh:} two calligraphic styles of the Perso-Arabic script, Nastaliq being the traditional style of Urdu, with diagonal baselines. \textbf{Input Method Editor (IME):} the operating-system service through which a keyboard application provides text input to other applications. \textbf{CTC:} Connectionist Temporal Classification, a loss function and decoding method that maps unsegmented input sequences to label sequences.
+
+\section*{A.2 Software Installation Guide}
+\todo{Add step-by-step instructions for installing the keyboard on Android and iOS, enabling it as an input method and switching to it.}
+
+\section*{A.3 User Manual}
+\todo{Add screenshots and instructions for writing a word, selecting a candidate, deleting text and changing settings.}
+
+\section*{A.4 Source Code Listings}
+\todo{Add selected source code, such as the stroke file reader and the inference wrapper, or point to the code repository.}
+
+% =====================================================================
+%  REFERENCES
+% =====================================================================
+\fypspecial{}{REFERENCES}{REFERENCES}
+
+\begin{thebibliography}{99}
+\setlength{\itemsep}{4pt}
+\bibitem{safdar2022} Q. A. Safdar, K. U. Khan, and L. Peng. \todo{Title of the paper}. \textit{Scientia Iranica D}, vol.~29, no.~5, pp.~2419--2436, 2022.
+\bibitem{naz2014} S. Naz et~al. \todo{Title of the paper}. \textit{Pattern Recognition}, vol.~47, pp.~1229--1248, 2014.
+\bibitem{razzak2010} M. I. Razzak et~al. \todo{Title of the paper}. \textit{Knowledge-Based Systems}, vol.~23, no.~8, pp.~914--923, 2010.
+\bibitem{abandah2010} G. A. Abandah and F. T. Jamour. Recognizing handwritten Arabic script through efficient skeleton-based grapheme segmentation algorithm. In \textit{Proc.\ International Conference on Intelligent Systems Design and Applications (ISDA)}, 2010.
+\bibitem{graves2008} A. Graves. \textit{Supervised Sequence Labelling with Recurrent Neural Networks}. Ph.D.\ dissertation, Technische Universit\"at M\"unchen, 2008.
+\bibitem{hussain} \todo{Complete reference for Hussain and Khan -- spatial--temporal neural network for Urdu ligature recognition.}
+\bibitem{malik} \todo{Complete reference for Malik and Khan -- holistic recognition of isolated Urdu characters.}
+\bibitem{shahzad} \todo{Complete reference for Shahzad et~al.\ -- geometric features for isolated Urdu character recognition.}
+\bibitem{goodfellow2014} I. Goodfellow et~al. Generative adversarial nets. In \textit{Advances in Neural Information Processing Systems}, vol.~27, 2014.
+\bibitem{zhu2017} J.-Y. Zhu, T. Park, P. Isola, and A. A. Efros. Unpaired image-to-image translation using cycle-consistent adversarial networks. In \textit{Proc.\ IEEE International Conference on Computer Vision (ICCV)}, 2017, pp.~2223--2232.
+\bibitem{vaswani2017} A. Vaswani et~al. Attention is all you need. In \textit{Advances in Neural Information Processing Systems}, vol.~30, 2017.
+\bibitem{graves2006} A. Graves, S. Fern\'andez, F. Gomez, and J. Schmidhuber. Connectionist temporal classification: labelling unsegmented sequence data with recurrent neural networks. In \textit{Proc.\ International Conference on Machine Learning (ICML)}, 2006, pp.~369--376.
+\bibitem{devlin2019} J. Devlin, M.-W. Chang, K. Lee, and K. Toutanova. BERT: pre-training of deep bidirectional transformers for language understanding. In \textit{Proc.\ NAACL-HLT}, 2019, pp.~4171--4186.
+\bibitem{ganin2016} Y. Ganin et~al. Domain-adversarial training of neural networks. \textit{Journal of Machine Learning Research}, vol.~17, no.~59, pp.~1--35, 2016.
+\end{thebibliography}
+
+% ---------------------------------------------------------------------
+%  NOTE -- true Times New Roman / Arial Narrow:
+%  Replace "mathptmx" and "helvet" in the preamble with
+%      \usepackage{fontspec}
+%      \setmainfont{Times New Roman}
+%      \newfontfamily\capfont{Arial Narrow}
+%  (and use \capfont in the caption font declaration), then compile with
+%  XeLaTeX or LuaLaTeX on a machine that has these fonts installed.
+% ---------------------------------------------------------------------
+\end{document}
