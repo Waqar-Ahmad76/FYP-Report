@@ -12,79 +12,79 @@
 \contentsline {section}{\numberline {1.5}Report Organization}{5}{section.1.5}%
 \contentsline {chapter}{CHAPTER 2: BACKGROUND AND EXISTING SYSTEMS}{6}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Related Literature Review}{7}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Related Systems/Applications}{9}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Identified Problem from Existing Work}{10}{section.2.3}%
-\contentsline {section}{\numberline {2.4}Selected Boundary for Proposed Solution}{10}{section.2.4}%
-\contentsline {chapter}{CHAPTER 3: SYSTEM REQUIREMENTS AND SPECIFICATIONS}{12}{chapter.3}%
-\contentsline {section}{\numberline {3.1}System Specification}{13}{section.3.1}%
-\contentsline {section}{\numberline {3.2}System Modules}{13}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Data Acquisition Module}{13}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Urdu Handwriting Corpus Module}{14}{subsection.3.2.2}%
-\contentsline {subsection}{\numberline {3.2.3}Preprocessing Engine}{14}{subsection.3.2.3}%
-\contentsline {subsection}{\numberline {3.2.4}RefinerGAN Module}{14}{subsection.3.2.4}%
-\contentsline {subsection}{\numberline {3.2.5}Ligature Segmentation Module}{14}{subsection.3.2.5}%
-\contentsline {subsection}{\numberline {3.2.6}Pre-Classifier Module}{14}{subsection.3.2.6}%
-\contentsline {subsection}{\numberline {3.2.7}Hybrid Feature Extraction Module}{15}{subsection.3.2.7}%
-\contentsline {subsection}{\numberline {3.2.8}Recognition Core}{15}{subsection.3.2.8}%
-\contentsline {subsection}{\numberline {3.2.9}Language Model Layer}{15}{subsection.3.2.9}%
-\contentsline {subsection}{\numberline {3.2.10}Real-Time Inference Engine}{15}{subsection.3.2.10}%
-\contentsline {subsection}{\numberline {3.2.11}Evaluation and Analytics Module}{15}{subsection.3.2.11}%
-\contentsline {section}{\numberline {3.3}Functional Requirements/Software Features}{15}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Stroke Capture (FR1)}{16}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Stroke Preprocessing (FR2)}{16}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}Stroke Refinement (FR3)}{16}{subsection.3.3.3}%
-\contentsline {subsection}{\numberline {3.3.4}Segmentation and Pre-classification (FR4)}{16}{subsection.3.3.4}%
-\contentsline {subsection}{\numberline {3.3.5}Handwriting Recognition (FR5)}{16}{subsection.3.3.5}%
-\contentsline {subsection}{\numberline {3.3.6}Language-Model Correction and Suggestions (FR6)}{16}{subsection.3.3.6}%
-\contentsline {subsection}{\numberline {3.3.7}Unicode Insertion (FR7)}{16}{subsection.3.3.7}%
-\contentsline {subsection}{\numberline {3.3.8}Text Correction and Editing (FR8)}{16}{subsection.3.3.8}%
-\contentsline {subsection}{\numberline {3.3.9}Keyboard Management (FR9)}{17}{subsection.3.3.9}%
-\contentsline {subsection}{\numberline {3.3.10}Performance Evaluation (FR10)}{17}{subsection.3.3.10}%
-\contentsline {section}{\numberline {3.4}Non-Functional Requirements}{17}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Recognition Accuracy}{17}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Speed}{17}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}Usability}{17}{subsection.3.4.3}%
-\contentsline {subsection}{\numberline {3.4.4}Privacy}{18}{subsection.3.4.4}%
-\contentsline {subsection}{\numberline {3.4.5}Size and Resource Use}{18}{subsection.3.4.5}%
-\contentsline {subsection}{\numberline {3.4.6}Reliability and Robustness}{18}{subsection.3.4.6}%
-\contentsline {subsection}{\numberline {3.4.7}Portability}{18}{subsection.3.4.7}%
-\contentsline {chapter}{CHAPTER 4: SYSTEM MODELING AND DESIGN}{19}{chapter.4}%
-\contentsline {section}{\numberline {4.1}System Design and Analysis}{20}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Use Case Diagrams}{20}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Full Dress Use Case/Detailed Use Case}{20}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Write Urdu Handwriting -- Full Dress Use Case}{21}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Select Suggested Word -- Full Dress Use Case}{22}{subsection.4.3.2}%
-\contentsline {section}{\numberline {4.4}Activity Diagram}{22}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Data Flow Diagram}{23}{section.4.5}%
-\contentsline {section}{\numberline {4.6}System Sequence Diagram}{24}{section.4.6}%
-\contentsline {section}{\numberline {4.7}Sequence Diagram}{24}{section.4.7}%
-\contentsline {section}{\numberline {4.8}Design Class Diagram}{25}{section.4.8}%
-\contentsline {section}{\numberline {4.9}Architectural Diagrams}{26}{section.4.9}%
-\contentsline {subsection}{\numberline {4.9.1}Interface Design}{27}{subsection.4.9.1}%
-\contentsline {subsection}{\numberline {4.9.2}Component Level Design}{27}{subsection.4.9.2}%
-\contentsline {subsection}{\numberline {4.9.3}Deployment}{28}{subsection.4.9.3}%
-\contentsline {chapter}{CHAPTER 5: SYSTEM TESTING AND VALIDATION}{31}{chapter.5}%
-\contentsline {section}{\numberline {5.1}System Testing}{32}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Testing Techniques}{32}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}Unit Testing}{32}{subsection.5.2.1}%
-\contentsline {subsection}{\numberline {5.2.2}Integration Testing}{33}{subsection.5.2.2}%
-\contentsline {subsection}{\numberline {5.2.3}Black Box Testing}{33}{subsection.5.2.3}%
-\contentsline {subsection}{\numberline {5.2.4}Performance Testing}{33}{subsection.5.2.4}%
-\contentsline {section}{\numberline {5.3}Test Cases}{33}{section.5.3}%
-\contentsline {subsection}{\numberline {5.3.1}Test Case 1: Stroke Capture}{34}{subsection.5.3.1}%
-\contentsline {subsection}{\numberline {5.3.2}Test Case 2: Word Recognition}{34}{subsection.5.3.2}%
-\contentsline {subsection}{\numberline {5.3.3}Test Case 3: Candidate Selection and Unicode Insertion}{35}{subsection.5.3.3}%
-\contentsline {subsection}{\numberline {5.3.4}Test Case 4: Response Latency}{36}{subsection.5.3.4}%
-\contentsline {subsection}{\numberline {5.3.5}Test Case 5: Offline Operation and Privacy}{37}{subsection.5.3.5}%
-\contentsline {section}{\numberline {5.4}Non-Functional Requirements}{38}{section.5.4}%
-\contentsline {subsection}{\numberline {5.4.1}Accuracy Results}{38}{subsection.5.4.1}%
-\contentsline {subsection}{\numberline {5.4.2}Speed Results}{38}{subsection.5.4.2}%
-\contentsline {subsection}{\numberline {5.4.3}Usability Results}{38}{subsection.5.4.3}%
-\contentsline {subsection}{\numberline {5.4.4}Privacy Results}{39}{subsection.5.4.4}%
-\contentsline {subsection}{\numberline {5.4.5}Size and Resource Use Results}{39}{subsection.5.4.5}%
-\contentsline {subsection}{\numberline {5.4.6}Reliability and Portability Results}{39}{subsection.5.4.6}%
-\contentsline {chapter}{CHAPTER 6: CONCLUSION}{40}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Conclusion}{41}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Limitations and Future Work}{41}{section.6.2}%
-\contentsline {chapter}{APPENDIX -- I}{42}{section*.18}%
-\contentsline {chapter}{REFERENCES}{44}{section*.19}%
+\contentsline {section}{\numberline {2.2}Related Systems/Applications}{8}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Identified Problem from Existing Work}{9}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Selected Boundary for Proposed Solution}{9}{section.2.4}%
+\contentsline {chapter}{CHAPTER 3: SYSTEM REQUIREMENTS AND SPECIFICATIONS}{10}{chapter.3}%
+\contentsline {section}{\numberline {3.1}System Specification}{11}{section.3.1}%
+\contentsline {section}{\numberline {3.2}System Modules}{11}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Data Acquisition Module}{11}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Urdu Handwriting Corpus Module}{12}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Preprocessing Engine}{12}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}RefinerGAN Module}{12}{subsection.3.2.4}%
+\contentsline {subsection}{\numberline {3.2.5}Ligature Segmentation Module}{12}{subsection.3.2.5}%
+\contentsline {subsection}{\numberline {3.2.6}Pre-Classifier Module}{12}{subsection.3.2.6}%
+\contentsline {subsection}{\numberline {3.2.7}Hybrid Feature Extraction Module}{13}{subsection.3.2.7}%
+\contentsline {subsection}{\numberline {3.2.8}Recognition Core}{13}{subsection.3.2.8}%
+\contentsline {subsection}{\numberline {3.2.9}Language Model Layer}{13}{subsection.3.2.9}%
+\contentsline {subsection}{\numberline {3.2.10}Real-Time Inference Engine}{13}{subsection.3.2.10}%
+\contentsline {subsection}{\numberline {3.2.11}Evaluation and Analytics Module}{13}{subsection.3.2.11}%
+\contentsline {section}{\numberline {3.3}Functional Requirements/Software Features}{13}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Stroke Capture (FR1)}{14}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Stroke Preprocessing (FR2)}{14}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Stroke Refinement (FR3)}{14}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.4}Segmentation and Pre-classification (FR4)}{14}{subsection.3.3.4}%
+\contentsline {subsection}{\numberline {3.3.5}Handwriting Recognition (FR5)}{14}{subsection.3.3.5}%
+\contentsline {subsection}{\numberline {3.3.6}Language-Model Correction and Suggestions (FR6)}{14}{subsection.3.3.6}%
+\contentsline {subsection}{\numberline {3.3.7}Unicode Insertion (FR7)}{14}{subsection.3.3.7}%
+\contentsline {subsection}{\numberline {3.3.8}Text Correction and Editing (FR8)}{14}{subsection.3.3.8}%
+\contentsline {subsection}{\numberline {3.3.9}Keyboard Management (FR9)}{15}{subsection.3.3.9}%
+\contentsline {subsection}{\numberline {3.3.10}Performance Evaluation (FR10)}{15}{subsection.3.3.10}%
+\contentsline {section}{\numberline {3.4}Non-Functional Requirements}{15}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Recognition Accuracy}{15}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Speed}{15}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Usability}{15}{subsection.3.4.3}%
+\contentsline {subsection}{\numberline {3.4.4}Privacy}{16}{subsection.3.4.4}%
+\contentsline {subsection}{\numberline {3.4.5}Size and Resource Use}{16}{subsection.3.4.5}%
+\contentsline {subsection}{\numberline {3.4.6}Reliability and Robustness}{16}{subsection.3.4.6}%
+\contentsline {subsection}{\numberline {3.4.7}Portability}{16}{subsection.3.4.7}%
+\contentsline {chapter}{CHAPTER 4: SYSTEM MODELING AND DESIGN}{17}{chapter.4}%
+\contentsline {section}{\numberline {4.1}System Design and Analysis}{18}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Use Case Diagrams}{18}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Full Dress Use Case/Detailed Use Case}{18}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Write Urdu Handwriting -- Full Dress Use Case}{19}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Select Suggested Word -- Full Dress Use Case}{20}{subsection.4.3.2}%
+\contentsline {section}{\numberline {4.4}Activity Diagram}{20}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Data Flow Diagram}{21}{section.4.5}%
+\contentsline {section}{\numberline {4.6}System Sequence Diagram}{22}{section.4.6}%
+\contentsline {section}{\numberline {4.7}Sequence Diagram}{22}{section.4.7}%
+\contentsline {section}{\numberline {4.8}Design Class Diagram}{23}{section.4.8}%
+\contentsline {section}{\numberline {4.9}Architectural Diagrams}{24}{section.4.9}%
+\contentsline {subsection}{\numberline {4.9.1}Interface Design}{25}{subsection.4.9.1}%
+\contentsline {subsection}{\numberline {4.9.2}Component Level Design}{25}{subsection.4.9.2}%
+\contentsline {subsection}{\numberline {4.9.3}Deployment}{26}{subsection.4.9.3}%
+\contentsline {chapter}{CHAPTER 5: SYSTEM TESTING AND VALIDATION}{29}{chapter.5}%
+\contentsline {section}{\numberline {5.1}System Testing}{30}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Testing Techniques}{30}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Unit Testing}{30}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Integration Testing}{31}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}Black Box Testing}{31}{subsection.5.2.3}%
+\contentsline {subsection}{\numberline {5.2.4}Performance Testing}{31}{subsection.5.2.4}%
+\contentsline {section}{\numberline {5.3}Test Cases}{31}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Test Case 1: Stroke Capture}{32}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Test Case 2: Word Recognition}{32}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.3}Test Case 3: Candidate Selection and Unicode Insertion}{33}{subsection.5.3.3}%
+\contentsline {subsection}{\numberline {5.3.4}Test Case 4: Response Latency}{34}{subsection.5.3.4}%
+\contentsline {subsection}{\numberline {5.3.5}Test Case 5: Offline Operation and Privacy}{35}{subsection.5.3.5}%
+\contentsline {section}{\numberline {5.4}Non-Functional Requirements}{36}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}Accuracy Results}{36}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}Speed Results}{36}{subsection.5.4.2}%
+\contentsline {subsection}{\numberline {5.4.3}Usability Results}{36}{subsection.5.4.3}%
+\contentsline {subsection}{\numberline {5.4.4}Privacy Results}{37}{subsection.5.4.4}%
+\contentsline {subsection}{\numberline {5.4.5}Size and Resource Use Results}{37}{subsection.5.4.5}%
+\contentsline {subsection}{\numberline {5.4.6}Reliability and Portability Results}{37}{subsection.5.4.6}%
+\contentsline {chapter}{CHAPTER 6: CONCLUSION}{38}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Conclusion}{39}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Limitations and Future Work}{39}{section.6.2}%
+\contentsline {chapter}{APPENDIX -- I}{40}{section*.18}%
+\contentsline {chapter}{REFERENCES}{42}{section*.19}%
