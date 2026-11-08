@@ -663,7 +663,8 @@ The system is intended to serve users of both major mobile platforms. Portabilit
 % =====================================================================
 \fypchapter{SYSTEM MODELING AND DESIGN}
 
-System design and analysis translate the requirements of Chapter~3 into models that developers and reviewers can examine before and during implementation. Urdu-Ink Mobile is an interactive system with a user who writes on the screen, a pipeline of processing stages, and a host application that receives the result, so the models in this chapter show the functions available to the user, the flow of activities, the flow of data, the interaction between the user and the system, the interaction between the internal objects, the software classes, and the architecture of the whole system.
+%System design and analysis translate the requirements of Chapter~3 into models that developers and reviewers can examine before and during implementation. Urdu-Ink Mobile is an interactive system with a user who writes on the screen, a pipeline of processing stages, and a host application that receives the result, so the models in this chapter show the functions available to the user, the flow of activities, the flow of data, the interaction between the user and the system, the interaction between the internal objects, the software classes, and the architecture of the whole system.
+The requirements of Chapter~3 are converted into models that developers and reviewers can review before and during the implementation. Urdu-Ink Mobile is an interactive system with a user who writes on the screen, a pipeline of processing stages, and a host application that receives the results. This chapter shows the functions that are available to users using flow activities, flow of data, the interaction between user and the system and the architecture of the whole system.
 
 The chapter is organized as follows. Section~4.1 gives an overview of the models used, Section~4.2 presents the use case diagram, Section~4.3 gives the full dress use cases, Section~4.4 presents the activity diagram, Section~4.5 the data flow diagrams, Section~4.6 the system sequence diagram, Section~4.7 the sequence diagram, Section~4.8 the design class diagram, and Section~4.9 the architectural diagrams.
 
@@ -686,42 +687,38 @@ The chapter is organized as follows. Section~4.1 gives an overview of the models
   \node[font=\small\bfseries,align=center] at (#1,#2-1.95) {#3};}
 
 \section{System Design and Analysis}
-Analysis models describe what the system must do, and design models describe how it is built. In this project the following models are used. Use case diagrams and full dress use cases describe the functions seen from the point of view of the user. An activity diagram models the workflow of a recognition session. Data flow diagrams of level 0 and level 1 show how handwriting data are transformed into Unicode text. A system sequence diagram and a sequence diagram show the interaction between the user and the system and between the internal objects. A design class diagram shows the main software classes, and architectural diagrams, which include a layered architecture, the interface design, the component-level design and the deployment diagram, show the structure of the final product. Not every possible diagram is drawn, only those that add information for a system of this nature.
+%Analysis models describe what the system must do, and design models describe how it is built. In this project the following models are used. Use case diagrams and full dress use cases describe the functions seen from the point of view of the user. An activity diagram models the workflow of a recognition session. Data flow diagrams of level 0 and level 1 show how handwriting data are transformed into Unicode text. A system sequence diagram and a sequence diagram show the interaction between the user and the system and between the internal objects. A design class diagram shows the main software classes, and architectural diagrams, which include a layered architecture, the interface design, the component-level design and the deployment diagram, show the structure of the final product. Not every possible diagram is drawn, only those that add information for a system of this nature.
+Analysis models explain the required functions of the system while design models present the design of the system. The following diagrams are used in this project. Use case diagrams and full dress use cases describe the functions from user point of view.
 
 \section{Use Case Diagrams}
-A use case diagram depicts the functions of the system that are performed through interaction with its users, and it helps to view the system from the perspective of the user. Figure~\ref{fig:usecase} shows the main use case diagram of Urdu-Ink Mobile. The primary actor is the User, who writes Urdu words on the canvas, reviews and selects suggested words, corrects text and configures the keyboard. Writing a word includes the recognition of the strokes and the insertion of the accepted text into the host application. A second actor, the Developer/Researcher, collects handwriting samples and views the evaluation dashboard.
+%A use case diagram depicts the functions of the system that are performed through interaction with its users, and it helps to view the system from the perspective of the user. Figure~\ref{fig:usecase} shows the main use case diagram of Urdu-Ink Mobile. The primary actor is the User, who writes Urdu words on the canvas, reviews and selects suggested words, corrects text and configures the keyboard. Writing a word includes the recognition of the strokes and the insertion of the accepted text into the host application. A second actor, the Developer/Researcher, collects handwriting samples and views the evaluation dashboard.
+A use case diagram is used to show the functions of the system that requie user interaction. It also helps to view the system from users perspective.Figure~\ref{fig:usecase} shows the main use case diagram of Urdu-Ink Mobile. User is the primary actor here who writes words on the canvas and configures the keyboard.
 
 \begin{figure}[!ht]
 \centering
 \resizebox{\textwidth}{!}{%
 \begin{tikzpicture}
-\draw (3.2,-9.0) rectangle (12.8,1.6);
+\draw (3.2,-8.5) rectangle (12.8,1.6);
 \node[font=\small\bfseries] at (8,1.2) {\guillemotleft system\guillemotright\ Urdu-Ink Mobile};
 \stick{0.9}{-2.6}{User}
-\stick{14.8}{-5.2}{Developer /\\Researcher}
 \node[uc] (u1) at (5.6,0) {Write Urdu\\Handwriting};
 \node[uc] (u2) at (10.6,0) {Recognize Word};
-\node[uc] (u3) at (5.6,-2.6) {Select Suggested\\Word};
-\node[uc] (u4) at (10.6,-2.6) {Insert Text into\\Host Application};
-\node[uc] (u5) at (5.6,-5.2) {Correct or Delete\\Text};
-\node[uc] (u6) at (5.6,-7.8) {Configure Keyboard\\Settings};
-\node[uc] (u7) at (10.6,-5.6) {Collect Handwriting\\Samples};
-\node[uc] (u8) at (10.6,-7.8) {View Evaluation\\Dashboard};
-\foreach \u in {u1,u3,u5,u6} \draw (1.0,-3.5)--(\u.west);
-\draw (14.6,-6.1)--(u7.east);
-\draw (14.6,-6.1)--(u8.east);
+\node[uc] (u4) at (10.6,-2.7) {Insert Text into\\Host Application};
+\node[uc] (u5) at (5.6,-3.8) {Correct or Delete\\Text};
+\node[uc] (u6) at (6.2,-6.8) {Configure Keyboard\\Settings};
+\foreach \u in {u1,u5,u6} \draw (1.0,-3.5)--(\u.west);
 \draw[dsh] (u1)--(u2) node[midway,above,flbl]{\guillemotleft include\guillemotright};
-\draw[dsh] (u3)--(u4) node[midway,above,flbl]{\guillemotleft include\guillemotright};
-\draw[dsh] (u3)--(u1) node[midway,right,flbl]{\guillemotleft extend\guillemotright};
+\draw[dsh] (u2)--(u4) node[midway,right,flbl]{\guillemotleft include\guillemotright};
 \end{tikzpicture}}
 \caption{Main Use Case Diagram}\label{fig:usecase}
 \end{figure}
 
 \section{Full Dress Use Case/Detailed Use Case}
-Full dress use cases describe the main scenario and the alternatives of a use case in detail, and they are written only for use cases that are complex and need explanation. Two use cases were chosen for detailing: Write Urdu Handwriting, because it contains the whole recognition pipeline and most of the project's functional requirements, and Select Suggested Word, because it shows how language-model suggestions are used to resolve ambiguity. Simple use cases such as configuring the settings are not detailed.
-
+%Full dress use cases describe the main scenario and the alternatives of a use case in detail, and they are written only for use cases that are complex and need explanation. Two use cases were chosen for detailing: Write Urdu Handwriting, because it contains the whole recognition pipeline and most of the project's functional requirements, and Select Suggested Word, because it shows how language-model suggestions are used to resolve ambiguity. Simple use cases such as configuring the settings are not detailed.
+Full dress use cases are used to describe the main scenario and the alternatives of a use case in detail. They are only written for the use cases that are complex and require explanation. Write Urdu Handwriting use case is detailed using a full dress use case diagram becuase it contains most of the functional requirements of the project.
 \subsection{Write Urdu Handwriting -- Full Dress Use Case}
-Table~\ref{tab:fd1} describes the use case in which a user writes a word on the canvas and the system produces candidate words.
+%Table~\ref{tab:fd1} describes the use case in which a user writes a word on the canvas and the system produces candidate words.
+Table~\ref{tab:fd1} explains the full dress use case in which user writes a word on the canvas and the system recognizes the word.
 
 {\small\renewcommand{\arraystretch}{1.15}
 \begin{longtable}{|>{\bfseries}p{1.45in}|p{4.2in}|}
@@ -731,64 +728,58 @@ Use Case Name & Write Urdu Handwriting\\\hline
 Scope & Urdu-Ink Mobile keyboard\\\hline
 Level & User goal\\\hline
 Primary Actor & User\\\hline
-Stakeholders and Interests & User: wants fast and correct conversion of handwriting into text. Application owner: wants the host application to receive valid Unicode. Developer: wants accurate logs for evaluation.\\\hline
+Stakeholders and Interests & User: wants fast and correct conversion of handwriting into text. Application owner: wants the host application to receive valid Unicode. \\\hline
 Pre-conditions & The keyboard is installed and selected as the active input method; a text field of a host application has focus; the models are loaded.\\\hline
-Success Guarantee & A ranked list of candidate words for the written word is shown, and the handwriting data stay on the device.\\\hline
-Main Success Scenario & 1. The user writes a word in continuous cursive on the canvas. 2. The system captures the strokes. 3. The system resamples, smooths and normalizes them. 4. The RefinerGAN cleans the strokes. 5. The system segments the word into ligatures and routes them with the pre-classifier. 6. The recognition core produces character sequences. 7. The language model rescores the candidates. 8. The system displays the ranked candidate words.\\\hline
-Extensions & 2a. Accidental touch: the system discards the stroke as noise. 6a. Recognition confidence is low: the system shows the best candidates with a prompt to rewrite. 7a. Word not in the vocabulary: the system shows the raw recognition result.\\\hline
-Special Requirements & Candidates appear within 300~ms (Section~3.4.2); all processing is local (Section~3.4.4).\\\hline
+%Success Guarantee & A ranked list of candidate words for the written word is shown, and the handwriting data stay on the device.\\\hline
+%Main Success Scenario & 1. The user writes a word in continuous cursive on the canvas. 2. The system captures the strokes. 3. The system resamples, smooths and normalizes them. 4. The RefinerGAN cleans the strokes. 5. The system segments the word into ligatures and routes them with the pre-classifier. 6. The recognition core produces character sequences. 7. The language model rescores the candidates. 8. The system displays the ranked candidate words.\\\hline
+Main Success Scenario & 1. The user writes a word in continuous cursive on the canvas. 2. The system captures the strokes. 3. The system removes gitter, downsamples, interpolates/extrpolates and normalizes the strokes. 4. The system passes the preprocessed data to the recognizer. 5. The system inserts the recognized word into the target textbox. \\\hline
+Extensions & 5a. Word not in the vocabulary: the system shows the raw recognition result.\\\hline
+Special Requirements &  All processing is local (Section~3.4.4).\\\hline
 \end{longtable}}
 
-\subsection{Select Suggested Word -- Full Dress Use Case}
-Table~\ref{tab:fd2} describes the selection of a word from the candidate list and its insertion into the host application.
+% \subsection{Select Suggested Word -- Full Dress Use Case}
+% Table~\ref{tab:fd2} describes the selection of a word from the candidate list and its insertion into the host application.
 
-{\small\renewcommand{\arraystretch}{1.15}
-\begin{longtable}{|>{\bfseries}p{1.45in}|p{4.2in}|}
-\caption{Full Dress Use Case for Select Suggested Word}\label{tab:fd2}\\
-\hline
-Use Case Name & Select Suggested Word\\\hline
-Scope & Urdu-Ink Mobile keyboard\\\hline
-Level & User goal\\\hline
-Primary Actor & User\\\hline
-Stakeholders and Interests & User: wants the intended word inserted with a single tap. Host application: wants correct Unicode text.\\\hline
-Pre-conditions & A candidate list is displayed for the last written word.\\\hline
-Success Guarantee & The selected word is inserted into the active text field as Unicode and the canvas is cleared for the next word.\\\hline
-Main Success Scenario & 1. The user taps the intended word in the candidate bar. 2. The system sends the Unicode text to the host application. 3. The system clears the canvas and the candidate bar. 4. The system updates the language-model context with the chosen word.\\\hline
-Extensions & 1a. The intended word is not in the list: the user rewrites the word or deletes it. 2a. The host application rejects the input: the system shows an error and keeps the word in the candidate bar.\\\hline
-Special Requirements & Insertion completes within 100~ms of the tap (Section~3.4.2).\\\hline
-\end{longtable}}
+% {\small\renewcommand{\arraystretch}{1.15}
+% \begin{longtable}{|>{\bfseries}p{1.45in}|p{4.2in}|}
+% \caption{Full Dress Use Case for Select Suggested Word}\label{tab:fd2}\\
+% \hline
+% Use Case Name & Select Suggested Word\\\hline
+% Scope & Urdu-Ink Mobile keyboard\\\hline
+% Level & User goal\\\hline
+% Primary Actor & User\\\hline
+% Stakeholders and Interests & User: wants the intended word inserted with a single tap. Host application: wants correct Unicode text.\\\hline
+% Pre-conditions & A candidate list is displayed for the last written word.\\\hline
+% Success Guarantee & The selected word is inserted into the active text field as Unicode and the canvas is cleared for the next word.\\\hline
+% Main Success Scenario & 1. The user taps the intended word in the candidate bar. 2. The system sends the Unicode text to the host application. 3. The system clears the canvas and the candidate bar. 4. The system updates the language-model context with the chosen word.\\\hline
+% Extensions & 1a. The intended word is not in the list: the user rewrites the word or deletes it. 2a. The host application rejects the input: the system shows an error and keeps the word in the candidate bar.\\\hline
+% Special Requirements & Insertion completes within 100~ms of the tap (Section~3.4.2).\\\hline
+% \end{longtable}}
 
 \section{Activity Diagram}
-An activity diagram is a flowchart that shows the flow from one activity to another, and it is used here to give a high-level understanding of the system's functions from the perspective of the recognition session. Figure~\ref{fig:activity} shows the flow of a session. The user writes strokes, which are preprocessed, refined, segmented, pre-classified and recognized, after which the language model rescores the result and candidate words are displayed. If the user accepts a candidate, its Unicode text is inserted into the host application, and otherwise the user edits or rewrites the word and the flow returns to the beginning. The decision node after the candidate list is the only point at which the flow branches, and the loop it creates matches the real behavior of a keyboard, where a word that is not recognized correctly is simply written again. All activities before the decision are performed automatically by the system without user action, and they are the activities that must complete within the latency target of Section~3.4.2.
+%An activity diagram is a flowchart that shows the flow from one activity to another, and it is used here to give a high-level understanding of the system's functions from the perspective of the recognition session. Figure~\ref{fig:activity} shows the flow of a session. The user writes strokes, which are preprocessed, refined, segmented, pre-classified and recognized, after which the language model rescores the result and candidate words are displayed. If the user accepts a candidate, its Unicode text is inserted into the host application, and otherwise the user edits or rewrites the word and the flow returns to the beginning. The decision node after the candidate list is the only point at which the flow branches, and the loop it creates matches the real behavior of a keyboard, where a word that is not recognized correctly is simply written again. All activities before the decision are performed automatically by the system without user action, and they are the activities that must complete within the latency target of Section~3.4.2.
+An activity diagram is a flowchart that is used to show the flow from one activity to another. It is used here to give an overview of the system's function regarding recognition. Figure~\ref{fig:activity} shows the activity flow of a session. The user writes a word, which is preprocessed and then passed to the recognizer neural network. The recognizer recognizes the word and inserts the reconized word's Unicode the target textbox.
 
 \begin{figure}[!ht]
 \centering
-\resizebox{!}{0.56\textheight}{%
-\begin{tikzpicture}[node distance=0.5cm]
+\resizebox{!}{0.45\textheight}{%
+\begin{tikzpicture}[node distance=0.7cm]
 \node[circle,fill=black,minimum size=0.4cm,inner sep=0] (s) {};
-\node[act,below=of s] (a1) {Write strokes on canvas};
-\node[act,below=of a1] (a2) {Capture, resample, smooth and normalize};
-\node[act,below=of a2] (a3) {Refine strokes with RefinerGAN};
-\node[act,below=of a3] (a4) {Segment into ligatures};
-\node[act,below=of a4] (a5) {Pre-classify into 28 subsets (GNN)};
-\node[act,below=of a5] (a6) {Recognize (Transformer + BiLSTM-CTC)};
-\node[act,below=of a6] (a7) {Rescore with N-gram and BERT-Urdu};
-\node[act,below=of a7] (a8) {Display candidate words};
-\node[diamond,draw,aspect=2.4,below=of a8,font=\small,inner sep=1pt] (d) {User accepts?};
-\node[act,below=of d] (a9) {Insert Unicode text into application};
-\node[circle,draw,minimum size=0.5cm,inner sep=0,below=of a9] (e) {};
+\node[act,below=of s] (a1) {User writes a word};
+\node[act,below=of a1] (a2) {Capture the strokes, remove jitter, downsample, interpolate/extrapolate and normalize};
+\node[act,below=of a2] (a3) {Pass to recognizer neural network};
+\node[act,below=of a3] (a4) {Recognize the word};
+\node[act,below=of a4] (a5) {Insert recognized Unicode into the target textbox};
+\node[circle,draw,minimum size=0.5cm,inner sep=0,below=of a5] (e) {};
 \node[circle,fill=black,minimum size=0.28cm,inner sep=0] at (e) {};
-\node[act,right=1.4cm of d,minimum width=3.6cm] (r) {Edit or rewrite word};
-\foreach \f/\t in {s/a1,a1/a2,a2/a3,a3/a4,a4/a5,a5/a6,a6/a7,a7/a8,a8/d,a9/e} \draw[arr] (\f)--(\t);
-\draw[arr] (d)--(a9) node[midway,right,flbl]{[yes]};
-\draw[arr] (d)--(r) node[midway,above,flbl]{[no]};
-\draw[arr] (r.east)-|++(0.9,0)|-(a1.east);
+\foreach \f/\t in {s/a1,a1/a2,a2/a3,a3/a4,a4/a5,a5/e} \draw[arr] (\f)--(\t);
 \end{tikzpicture}}
 \caption{Activity Diagram}\label{fig:activity}
 \end{figure}
 
 \section{Data Flow Diagram}
-A data flow diagram represents the flow of data through a system, showing the inputs and outputs of each entity and process without control flow or decisions. A data flow diagram is appropriate for this project because the system receives input data in the form of strokes, transforms them through a number of processes and returns text as output. Figure~\ref{fig:dfd0} shows the level 0 diagram, in which the whole keyboard is a single process that exchanges data with three external entities. The User supplies handwritten strokes and receives candidate words, the Host Application receives Unicode text, and the Developer/Researcher supplies test samples and receives evaluation metrics.
+%A data flow diagram represents the flow of data through a system, showing the inputs and outputs of each entity and process without control flow or decisions. A data flow diagram is appropriate for this project because the system receives input data in the form of strokes, transforms them through a number of processes and returns text as output. Figure~\ref{fig:dfd0} shows the level 0 diagram, in which the whole keyboard is a single process that exchanges data with three external entities. The User supplies handwritten strokes and receives candidate words, the Host Application receives Unicode text, and the Developer/Researcher supplies test samples and receives evaluation metrics.
+A data flow diagram is used to show the flow of data in an application. It shows the inputs and outputs of each entity and process without the control flow or decisions. A data flow diagram is used for this project because the system recieves input from users in the form of strokes, preprocesses it and then returns the Unicode of recognized words. Figure~\ref{fig:dfd0} shows the level 0 diagram, which shows the system as a single process which exchanges data with three entities. The user supplies the data in the form of handwriting strokes and receives the recognized word as output. The host application receives Unicode text and the developer provides test samples and receives evaluation results.
 
 \begin{figure}[!ht]
 \centering
@@ -799,7 +790,7 @@ A data flow diagram represents the flow of data through a system, showing the in
 \node[ent] (h) at (6.5,0) {Host\\Application};
 \node[ent] (d) at (0,-4.2) {Developer /\\Researcher};
 \draw[arr] (u.30)--(p.150) node[midway,above,flbl]{Handwritten strokes};
-\draw[arr] (p.210)--(u.330) node[midway,below,flbl]{Candidate words};
+\draw[arr] (p.210)--(u.330) node[midway,below,flbl]{Recognized words};
 \draw[arr] (p.east)--(h.west) node[midway,above,flbl]{Unicode text};
 \draw[arr] (d.100)--(p.260) node[midway,left,flbl]{Test samples};
 \draw[arr] (p.280)--(d.80) node[midway,right,flbl]{CER/WER metrics, confusion matrix};
@@ -807,45 +798,91 @@ A data flow diagram represents the flow of data through a system, showing the in
 \caption{DFD Level 0}\label{fig:dfd0}
 \end{figure}
 
-Figure~\ref{fig:dfd1} decomposes the system into six processes. Strokes from the user are captured and preprocessed (1.0), refined by the RefinerGAN (2.0), segmented and pre-classified (3.0), and recognized by the feature extractor and classifier (4.0). The language model (5.0) rescores the result and sends Unicode text to the host application, and an evaluation process (6.0) compares the recognized text against ground-truth labels. The models used by processes 2.0, 3.0 and 4.0 are held in the trained model store (D1), the language model process reads the Urdu text corpus (D2), and the evaluation process reads the labelled test samples (D3).
+%Figure~\ref{fig:dfd1} decomposes the system into six processes. Strokes from the user are captured and preprocessed (1.0), refined by the RefinerGAN (2.0), segmented and pre-classified (3.0), and recognized by the feature extractor and classifier (4.0). The language model (5.0) rescores the result and sends Unicode text to the host application, and an evaluation process (6.0) compares the recognized text against ground-truth labels. The models used by processes 2.0, 3.0 and 4.0 are held in the trained model store (D1), the language model process reads the Urdu text corpus (D2), and the evaluation process reads the labelled test samples (D3).
+Figure~\ref{fig:dfd1} decomposes the system into 4 processes. Strokes written by the user are captured(1.0), strokes are preprocessed(2.0), recognized by the neural network and sends the Unicode to host application(3.0) and an evaluation process that compares the recognized words against actual labels(4.0). The recognizer is stoed in the trained model store(D1) and the evaluation process reads the labelled test samples(D2).
+
+% \begin{figure}[!ht]
+% \centering
+% \resizebox{\textwidth}{!}{%
+% \begin{tikzpicture}
+% \node[ent] (u) at (0,6) {User};
+% \node[proc,minimum width=3cm] (p1) at (4.8,6) {1.0\\Capture and\\Preprocess};
+% \node[proc,minimum width=3cm] (p2) at (10,6) {2.0\\Refine Strokes\\(RefinerGAN)};
+% \node[proc,minimum width=3cm] (p3) at (15.2,6) {3.0\\Segment and\\Pre-classify};
+% \node[store] (d1) at (12.6,3.7) {D1  Trained models};
+% \node[proc,minimum width=3cm] (p4) at (15.2,1.2) {4.0\\Extract Features\\and Recognize};
+% \node[proc,minimum width=3cm] (p5) at (10,1.2) {5.0\\Apply Language\\Model};
+% \node[store] (d2) at (10,-1.3) {D2  Urdu text corpus};
+% \node[ent] (h) at (4.8,1.2) {Host\\Application};
+% \node[proc,minimum width=3cm] (p6) at (4.8,-3) {6.0\\Evaluate\\Performance};
+% \node[store] (d3) at (4.8,-5.5) {D3  Labelled test samples};
+% \node[ent] (dv) at (0,-3) {Developer /\\Researcher};
+% \draw[arr] (u)--(p1) node[midway,above,flbl]{Strokes};
+% \draw[arr] (p1)--(p2) node[midway,above,flbl]{Clean ink};
+% \draw[arr] (p2)--(p3) node[midway,above,flbl]{Refined strokes};
+% \draw[arr] (p3)--(p4) node[midway,right,flbl]{Ligatures, subsets};
+% \draw[arr] (p4)--(p5) node[midway,above,flbl]{Candidates};
+% \draw[arr] (p5)--(h) node[midway,above,flbl]{Unicode text};
+% \draw[arr] (p5.south west)--(p6.north east) node[midway,above,sloped,flbl]{Recognized text};
+% \draw[arr] (p5.north)--++(0,1.3)-|(u.south) node[pos=0.25,above,flbl]{Candidate words};
+% \draw[dsh] (d1.north west)--(p2.south);
+% \draw[dsh] (d1.north east)--(p3.south west);
+% \draw[dsh] (d1.south east)--(p4.north west);
+% \draw[dsh] (d2)--(p5);
+% \draw[dsh] (d3)--(p6);
+% \draw[arr] (dv.north east)--(p6.north west) node[midway,above,sloped,flbl]{Test samples};
+% \draw[arr] (p6.west)--(dv.east) node[midway,below,flbl]{Metrics};
+% \end{tikzpicture}}
+% \caption{DFD Level 1}\label{fig:dfd1}
+% \end{figure}
 
 \begin{figure}[!ht]
 \centering
 \resizebox{\textwidth}{!}{%
 \begin{tikzpicture}
 \node[ent] (u) at (0,6) {User};
-\node[proc,minimum width=3cm] (p1) at (4.8,6) {1.0\\Capture and\\Preprocess};
-\node[proc,minimum width=3cm] (p2) at (10,6) {2.0\\Refine Strokes\\(RefinerGAN)};
-\node[proc,minimum width=3cm] (p3) at (15.2,6) {3.0\\Segment and\\Pre-classify};
-\node[store] (d1) at (12.6,3.7) {D1  Trained models};
-\node[proc,minimum width=3cm] (p4) at (15.2,1.2) {4.0\\Extract Features\\and Recognize};
-\node[proc,minimum width=3cm] (p5) at (10,1.2) {5.0\\Apply Language\\Model};
-\node[store] (d2) at (10,-1.3) {D2  Urdu text corpus};
-\node[ent] (h) at (4.8,1.2) {Host\\Application};
-\node[proc,minimum width=3cm] (p6) at (4.8,-3) {6.0\\Evaluate\\Performance};
-\node[store] (d3) at (4.8,-5.5) {D3  Labelled test samples};
-\node[ent] (dv) at (0,-3) {Developer /\\Researcher};
-\draw[arr] (u)--(p1) node[midway,above,flbl]{Strokes};
-\draw[arr] (p1)--(p2) node[midway,above,flbl]{Clean ink};
-\draw[arr] (p2)--(p3) node[midway,above,flbl]{Refined strokes};
-\draw[arr] (p3)--(p4) node[midway,right,flbl]{Ligatures, subsets};
-\draw[arr] (p4)--(p5) node[midway,above,flbl]{Candidates};
-\draw[arr] (p5)--(h) node[midway,above,flbl]{Unicode text};
-\draw[arr] (p5.south west)--(p6.north east) node[midway,above,sloped,flbl]{Recognized text};
-\draw[arr] (p5.north)--++(0,1.3)-|(u.south) node[pos=0.25,above,flbl]{Candidate words};
-\draw[dsh] (d1.north west)--(p2.south);
-\draw[dsh] (d1.north east)--(p3.south west);
-\draw[dsh] (d1.south east)--(p4.north west);
-\draw[dsh] (d2)--(p5);
-\draw[dsh] (d3)--(p6);
-\draw[arr] (dv.north east)--(p6.north west) node[midway,above,sloped,flbl]{Test samples};
-\draw[arr] (p6.west)--(dv.east) node[midway,below,flbl]{Metrics};
+\node[proc,minimum width=3cm] (p1) at (4.8,6) {1.0\\Capture Strokes};
+\node[proc,minimum width=3cm] (p2) at (10,6) {2.0\\Preprocess Strokes};
+\node[proc,minimum width=3cm] (p3) at (15.2,6) {3.0\\Recognize with\\Neural Network};
+\node[store] (d1) at (15.2,3.7) {D1  Trained model};
+\node[ent] (h) at (15.2,1.2) {Host\\Application};
+\node[proc,minimum width=3cm] (p4) at (10,1.2) {4.0\\Evaluate Results};
+\node[store] (d2) at (10,-1.3) {D2  Labelled test samples};
+\node[ent] (dv) at (4.8,1.2) {Developer /\\Researcher};
+\draw[arr] (u)--(p1) node[midway,above,flbl]{Handwritten strokes};
+\draw[arr] (p1)--(p2) node[midway,above,flbl]{Captured strokes};
+\draw[arr] (p2)--(p3) node[midway,above,flbl]{Preprocessed strokes};
+\draw[arr] (p3)--(h) node[midway,right,flbl]{Unicode text};
+\draw[arr] (p3.south west)--(p4.north east) node[midway,above,sloped,flbl]{Recognized words};
+\draw[dsh] (d1)--(p3);
+\draw[dsh] (d2)--(p4);
+\draw[arr] (p4.west)--(dv.east) node[midway,below,flbl]{Evaluation results};
 \end{tikzpicture}}
 \caption{DFD Level 1}\label{fig:dfd1}
 \end{figure}
 
 \section{System Sequence Diagram}
-A system sequence diagram illustrates the input and output events that pass between an actor and the system treated as a black box, and it is derived from a use case. It is drawn here for the Write Urdu Handwriting and Select Suggested Word use cases of Section~4.3, so that the external events that the keyboard must handle are clear. Figure~\ref{fig:ssd} shows that the user repeatedly sends stroke data while writing, signals the end of a word by lifting the finger and pausing, receives the list of candidates, selects one of them and finally causes Unicode text to be committed.
+%A system sequence diagram illustrates the input and output events that pass between an actor and the system treated as a black box, and it is derived from a use case. It is drawn here for the Write Urdu Handwriting and Select Suggested Word use cases of Section~4.3, so that the external events that the keyboard must handle are clear. Figure~\ref{fig:ssd} shows that the user repeatedly sends stroke data while writing, signals the end of a word by lifting the finger and pausing, receives the list of candidates, selects one of them and finally causes Unicode text to be committed.
+The input and output events that occur between the actor and the system treated as a blackbox are illustrated using a system sequence diagram. It is a form of use case diagram. A system sequence diagram for the Write Urdu Handwriting of section~4.3, is given here so that the external events that the keyboard has to handle are clear. Figure~\ref{fig:ssd} shows that a user writes an Urdu word, sends the strokes to the system after completing writing the word and receives the Unicode text as a result.
+
+% \begin{figure}[!ht]
+% \centering
+% \resizebox{0.9\textwidth}{!}{%
+% \begin{tikzpicture}
+% \node[ent,minimum width=2cm] (a) at (0,0) {Actor: User};
+% \node[ent,minimum width=3cm] (s) at (8,0) {:Urdu-Ink System};
+% \draw[dashed] (a.south)--++(0,-9.2);
+% \draw[dashed] (s.south)--++(0,-9.2);
+% \draw (0.75,-1.4) rectangle (8.9,-3.2);
+% \node[font=\scriptsize,anchor=north west,fill=white,draw] at (0.75,-1.4) {loop [while writing]};
+% \draw[arr] (0,-2.3)--(8,-2.3) node[midway,above,flbl]{writeStroke(points, pressure, time)};
+% \draw[arr] (0,-4.2)--(8,-4.2) node[midway,above,flbl]{endOfWord(pause detected)};
+% \draw[dsh] (8,-5.4)--(0,-5.4) node[midway,above,flbl]{candidateList(words, scores)};
+% \draw[arr] (0,-6.8)--(8,-6.8) node[midway,above,flbl]{selectCandidate(index)};
+% \draw[dsh] (8,-8.2)--(0,-8.2) node[midway,above,flbl]{commitText(Unicode)};
+% \end{tikzpicture}}
+% \caption{System Sequence Diagram}\label{fig:ssd}
+% \end{figure}
 
 \begin{figure}[!ht]
 \centering
@@ -853,74 +890,158 @@ A system sequence diagram illustrates the input and output events that pass betw
 \begin{tikzpicture}
 \node[ent,minimum width=2cm] (a) at (0,0) {Actor: User};
 \node[ent,minimum width=3cm] (s) at (8,0) {:Urdu-Ink System};
-\draw[dashed] (a.south)--++(0,-9.2);
-\draw[dashed] (s.south)--++(0,-9.2);
-\draw (0.75,-1.4) rectangle (8.9,-3.2);
-\node[font=\scriptsize,anchor=north west,fill=white,draw] at (0.75,-1.4) {loop [while writing]};
-\draw[arr] (0,-2.3)--(8,-2.3) node[midway,above,flbl]{writeStroke(points, pressure, time)};
-\draw[arr] (0,-4.2)--(8,-4.2) node[midway,above,flbl]{endOfWord(pause detected)};
-\draw[dsh] (8,-5.4)--(0,-5.4) node[midway,above,flbl]{candidateList(words, scores)};
-\draw[arr] (0,-6.8)--(8,-6.8) node[midway,above,flbl]{selectCandidate(index)};
-\draw[dsh] (8,-8.2)--(0,-8.2) node[midway,above,flbl]{commitText(Unicode)};
+\draw[dashed] (a.south)--++(0,-5);
+\draw[dashed] (s.south)--++(0,-5);
+\draw[arr] (0,-1.8)--(8,-1.8) node[midway,above,flbl]{sendStrokes(completed Urdu word)};
+\draw[dsh] (8,-3.6)--(0,-3.6) node[midway,above,flbl]{recognizedText(Unicode)};
 \end{tikzpicture}}
 \caption{System Sequence Diagram}\label{fig:ssd}
 \end{figure}
 
 \section{Sequence Diagram}
-A sequence diagram depicts the interaction between objects in the order in which messages are exchanged. It is drawn here for the event of recognizing and inserting one written word. Figure~\ref{fig:seq} shows that the input method service passes the captured strokes to the preprocessor, which sends clean strokes to the RefinerGAN. The refined strokes are segmented, the ligatures are recognized, and the N-best list is rescored by the language model, after which the candidates are returned to the input method service and displayed to the user. When the user selects a word, the service commits the Unicode text to the host application.
+%A sequence diagram depicts the interaction between objects in the order in which messages are exchanged. It is drawn here for the event of recognizing and inserting one written word. Figure~\ref{fig:seq} shows that the input method service passes the captured strokes to the preprocessor, which sends clean strokes to the RefinerGAN. The refined strokes are segmented, the ligatures are recognized, and the N-best list is rescored by the language model, after which the candidates are returned to the input method service and displayed to the user. When the user selects a word, the service commits the Unicode text to the host application.
+A sequence diagram shows the interaction between objects in the order in which they exchange data and messages. It is used here to show the event of recognition and insertion of one handwritten word.Figure~\ref{fig:seq} shows that the strokes of handwriting are captured using the input method service. The captured strokes are passed to the preprocessing pipeline which prepates the raw strokes for recognition. The cleaned strokes are then sent to the nueral netwrok, which recognizes the word and returns the Unicode text to the host application.
+
+% \begin{figure}[!ht]
+% \centering
+% \resizebox{\textwidth}{!}{%
+% \begin{tikzpicture}
+% \foreach \x/\n in {0/User,2.7/{:KeyboardIME},5.4/{:Preprocessor},8.1/{:RefinerGAN},10.8/{:Segmenter},13.5/{:Recognizer},16.2/{:LanguageModel}}
+%   {\node[ent,minimum width=2.3cm,font=\footnotesize] at (\x,0) {\n}; \draw[dashed] (\x,-0.5)--(\x,-11.2);}
+% \draw[arr] (0,-1.2)--(2.7,-1.2) node[midway,above,flbl]{writeStrokes()};
+% \draw[arr] (2.7,-2.3)--(5.4,-2.3) node[midway,above,flbl]{preprocess(strokes)};
+% \draw[arr] (5.4,-3.4)--(8.1,-3.4) node[midway,above,flbl]{refine(strokes)};
+% \draw[arr] (8.1,-4.5)--(10.8,-4.5) node[midway,above,flbl]{segment(refined)};
+% \draw[arr] (10.8,-5.6)--(13.5,-5.6) node[midway,above,flbl]{recognize(ligatures)};
+% \draw[arr] (13.5,-6.7)--(16.2,-6.7) node[midway,above,flbl]{rescore(N-best)};
+% \draw[dsh] (16.2,-7.8)--(2.7,-7.8) node[pos=0.5,above,flbl]{candidates(words)};
+% \draw[dsh] (2.7,-8.7)--(0,-8.7) node[midway,above,flbl]{showCandidates()};
+% \draw[arr] (0,-9.6)--(2.7,-9.6) node[midway,above,flbl]{select(word)};
+% \draw[dsh] (2.7,-10.5)--(0,-10.5) node[midway,above,flbl]{commitText(Unicode) to host app};
+% \end{tikzpicture}}
+% \caption{Sequence Diagram}\label{fig:seq}
+% \end{figure}
 
 \begin{figure}[!ht]
 \centering
 \resizebox{\textwidth}{!}{%
 \begin{tikzpicture}
-\foreach \x/\n in {0/User,2.7/{:KeyboardIME},5.4/{:Preprocessor},8.1/{:RefinerGAN},10.8/{:Segmenter},13.5/{:Recognizer},16.2/{:LanguageModel}}
-  {\node[ent,minimum width=2.3cm,font=\footnotesize] at (\x,0) {\n}; \draw[dashed] (\x,-0.5)--(\x,-11.2);}
-\draw[arr] (0,-1.2)--(2.7,-1.2) node[midway,above,flbl]{writeStrokes()};
-\draw[arr] (2.7,-2.3)--(5.4,-2.3) node[midway,above,flbl]{preprocess(strokes)};
-\draw[arr] (5.4,-3.4)--(8.1,-3.4) node[midway,above,flbl]{refine(strokes)};
-\draw[arr] (8.1,-4.5)--(10.8,-4.5) node[midway,above,flbl]{segment(refined)};
-\draw[arr] (10.8,-5.6)--(13.5,-5.6) node[midway,above,flbl]{recognize(ligatures)};
-\draw[arr] (13.5,-6.7)--(16.2,-6.7) node[midway,above,flbl]{rescore(N-best)};
-\draw[dsh] (16.2,-7.8)--(2.7,-7.8) node[pos=0.5,above,flbl]{candidates(words)};
-\draw[dsh] (2.7,-8.7)--(0,-8.7) node[midway,above,flbl]{showCandidates()};
-\draw[arr] (0,-9.6)--(2.7,-9.6) node[midway,above,flbl]{select(word)};
-\draw[dsh] (2.7,-10.5)--(0,-10.5) node[midway,above,flbl]{commitText(Unicode) to host app};
+\foreach \x/\n in {0/User,3.8/{:Input Method Service},7.6/{:Preprocessing Pipeline},11.4/{:Neural Network},15.2/{:Host Application}}
+  {\node[ent,minimum width=2.8cm,font=\footnotesize] at (\x,0) {\n}; \draw[dashed] (\x,-0.5)--(\x,-6.2);}
+\draw[arr] (0,-1.2)--(3.8,-1.2) node[midway,above,flbl]{writeStrokes()};
+\draw[arr] (3.8,-2.3)--(7.6,-2.3) node[midway,above,flbl]{preprocess(rawStrokes)};
+\draw[arr] (7.6,-3.4)--(11.4,-3.4) node[midway,above,flbl]{recognize(cleanStrokes)};
+\draw[dsh] (11.4,-4.5)--(3.8,-4.5) node[pos=0.5,above,flbl]{recognizedText(Unicode)};
+\draw[arr] (3.8,-5.6)--(15.2,-5.6) node[midway,above,flbl]{commitText(Unicode)};
 \end{tikzpicture}}
 \caption{Sequence Diagram}\label{fig:seq}
 \end{figure}
 
 \section{Design Class Diagram}
-The design class diagram shows the main software classes of the system, their attributes and operations, and the relationships between them. The central class is UrduInkIME, the input method service that receives touch events, owns the InkSession (which holds the Stroke objects of the current word) and delegates recognition to the InferenceEngine. The InferenceEngine coordinates the pipeline classes in order: Preprocessor, RefinerGAN, LigatureSegmenter, PreClassifier, RecognitionCore and LanguageModel. Each of these classes corresponds to a module of Section~3.2. The UrduInkIME class is the only class that interacts with the operating system, which keeps the platform-specific Kotlin and Swift code separate from the recognition code. The InkSession aggregates one or more Stroke objects, and each Stroke in turn holds the ordered points with their coordinates, pressure and time offsets, mirroring the binary corpus format of Section~1.4.3. The InferenceEngine hides the differences between the mobile runtimes, so that a model can be exchanged without changes to the other classes. The numbers on the arrows between the pipeline classes show the order in which they are called for each written word. Figure~\ref{fig:class} shows the diagram.
+%The design class diagram shows the main software classes of the system, their attributes and operations, and the relationships between them. The central class is UrduInkIME, the input method service that receives touch events, owns the InkSession (which holds the Stroke objects of the current word) and delegates recognition to the InferenceEngine. The InferenceEngine coordinates the pipeline classes in order: Preprocessor, RefinerGAN, LigatureSegmenter, PreClassifier, RecognitionCore and LanguageModel. Each of these classes corresponds to a module of Section~3.2. The UrduInkIME class is the only class that interacts with the operating system, which keeps the platform-specific Kotlin and Swift code separate from the recognition code. The InkSession aggregates one or more Stroke objects, and each Stroke in turn holds the ordered points with their coordinates, pressure and time offsets, mirroring the binary corpus format of Section~1.4.3. The InferenceEngine hides the differences between the mobile runtimes, so that a model can be exchanged without changes to the other classes. The numbers on the arrows between the pipeline classes show the order in which they are called for each written word. Figure~\ref{fig:class} shows the diagram.
+The desing class diagram shows the main classes of the system, their properties and functions and the relationship between them. UrduInkIME is the main class, which captures the handwriting strokes. The UrduInkSession holds the stroke objectss that will be passed to the preprocessor. The preprocessor class preprocesses the strokes to make them ready for recognition. It then passes clean strokes to the recognizer. The recognizer recognizes the handwriten word. The only class that interacts directly with the operating system and keeps the corresponding code separate from the recognition code. The UrduInkSession holds one or more strokes with their corresponding coordinates, pressure and time offset values. The InferenceEngine hides the differences between the mobile runtimes, so that a model can be exchanged without changes to the other classes. The numbers on the arrows in the pipeline show the order in which the classes are called for one handwritten word.
+
+% \begin{figure}[!ht]
+% \centering
+% \resizebox{0.95\textwidth}{!}{%
+% \begin{tikzpicture}
+% \node[cls] (ime) at (0,0) {\textbf{UrduInkIME}\nodepart{second}-session: InkSession\\-engine: InferenceEngine\nodepart{third}+onTouchEvent()\\+showCandidates()\\+commitText()};
+% \node[cls] (ses) at (5.8,0) {\textbf{InkSession}\nodepart{second}-strokes: List$\langle$Stroke$\rangle$\\-canvasSize\nodepart{third}+addStroke()\\+clear()};
+% \node[cls] (str) at (11.6,0) {\textbf{Stroke}\nodepart{second}-points: List$\langle$Point$\rangle$\\-startTime\nodepart{third}+length()\\+boundingBox()};
+% \node[cls] (eng) at (5.8,-3.9) {\textbf{InferenceEngine}\nodepart{second}-runtime: TFLite/ONNX/CoreML\nodepart{third}+recognizeWord(session)\\+loadModels()};
+% \node[cls] (pre) at (0,-8) {\textbf{Preprocessor}\nodepart{second}-targetSpacing\\-smoothingWindow\nodepart{third}+resample()\\+smooth()\\+normalize()\\+denoise()};
+% \node[cls] (ref) at (5.8,-8) {\textbf{RefinerGAN}\nodepart{second}-generator\\-discriminator\nodepart{third}+refine(strokes)};
+% \node[cls] (seg) at (11.6,-8) {\textbf{LigatureSegmenter}\nodepart{second}-skeletonParams\nodepart{third}+skeletonize()\\+split()};
+% \node[cls] (lm) at (0,-12.2) {\textbf{LanguageModel}\nodepart{second}-ngram\\-bertUrdu\nodepart{third}+rescore(nbest)\\+suggest()};
+% \node[cls] (rec) at (5.8,-12.2) {\textbf{RecognitionCore}\nodepart{second}-featureExtractor\\-transformer\\-ctcDecoder\nodepart{third}+extractFeatures()\\+decode()};
+% \node[cls] (pc) at (11.6,-12.2) {\textbf{PreClassifier}\nodepart{second}-gnnModel\\-subsets: 28\nodepart{third}+encodeTopology()\\+route()};
+% \draw[arr] (ime)--(ses) node[midway,above,flbl]{owns};
+% \draw[arr] (ses)--(str) node[midway,above,flbl]{1..*};
+% \draw[arr] (ime.south)--++(0,-0.6)-|(eng.north west) node[pos=0.2,left,flbl]{uses};
+% \draw[arr] (eng.south west)--++(0,-0.3)-|(pre.north) node[pos=0.25,above,flbl]{1. calls};
+% \draw[arr] (pre)--(ref) node[midway,above,flbl]{2.};
+% \draw[arr] (ref)--(seg) node[midway,above,flbl]{3.};
+% \draw[arr] (seg)--(pc) node[midway,right,flbl]{4.};
+% \draw[arr] (pc)--(rec) node[midway,above,flbl]{5.};
+% \draw[arr] (rec)--(lm) node[midway,above,flbl]{6.};
+% \end{tikzpicture}}
+% \caption{Class Diagram}\label{fig:class}
+% \end{figure}
 
 \begin{figure}[!ht]
 \centering
 \resizebox{0.95\textwidth}{!}{%
 \begin{tikzpicture}
-\node[cls] (ime) at (0,0) {\textbf{UrduInkIME}\nodepart{second}-session: InkSession\\-engine: InferenceEngine\nodepart{third}+onTouchEvent()\\+showCandidates()\\+commitText()};
-\node[cls] (ses) at (5.8,0) {\textbf{InkSession}\nodepart{second}-strokes: List$\langle$Stroke$\rangle$\\-canvasSize\nodepart{third}+addStroke()\\+clear()};
-\node[cls] (str) at (11.6,0) {\textbf{Stroke}\nodepart{second}-points: List$\langle$Point$\rangle$\\-startTime\nodepart{third}+length()\\+boundingBox()};
+\node[cls] (ime) at (0,0) {\textbf{UrduInkIME}\nodepart{second}-session: UrduInkSession\\-engine: InferenceEngine\nodepart{third}+captureStrokes()\\+commitText()};
+\node[cls] (ses) at (5.8,0) {\textbf{UrduInkSession}\nodepart{second}-strokes: List$\langle$Stroke$\rangle$\nodepart{third}+addStroke()\\+getStrokes()};
+\node[cls] (str) at (11.6,0) {\textbf{Stroke}\nodepart{second}-coordinates\\-pressure\\-timeOffset\nodepart{third}+getPoints()};
 \node[cls] (eng) at (5.8,-3.9) {\textbf{InferenceEngine}\nodepart{second}-runtime: TFLite/ONNX/CoreML\nodepart{third}+recognizeWord(session)\\+loadModels()};
-\node[cls] (pre) at (0,-8) {\textbf{Preprocessor}\nodepart{second}-targetSpacing\\-smoothingWindow\nodepart{third}+resample()\\+smooth()\\+normalize()\\+denoise()};
-\node[cls] (ref) at (5.8,-8) {\textbf{RefinerGAN}\nodepart{second}-generator\\-discriminator\nodepart{third}+refine(strokes)};
-\node[cls] (seg) at (11.6,-8) {\textbf{LigatureSegmenter}\nodepart{second}-skeletonParams\nodepart{third}+skeletonize()\\+split()};
-\node[cls] (lm) at (0,-12.2) {\textbf{LanguageModel}\nodepart{second}-ngram\\-bertUrdu\nodepart{third}+rescore(nbest)\\+suggest()};
-\node[cls] (rec) at (5.8,-12.2) {\textbf{RecognitionCore}\nodepart{second}-featureExtractor\\-transformer\\-ctcDecoder\nodepart{third}+extractFeatures()\\+decode()};
-\node[cls] (pc) at (11.6,-12.2) {\textbf{PreClassifier}\nodepart{second}-gnnModel\\-subsets: 28\nodepart{third}+encodeTopology()\\+route()};
+\node[cls] (pre) at (0,-8) {\textbf{Preprocessor}\nodepart{second}-settings\nodepart{third}+preprocess(strokes)};
+\node[cls] (rec) at (5.8,-8) {\textbf{Recognizer}\nodepart{second}-neuralNetwork\nodepart{third}+recognize(strokes)\\+returnUnicode()};
+\node[cls] (host) at (-5.8,0) {\textbf{HostApplication}\nodepart{second}-targetTextBox\nodepart{third}+insertUnicode(text)};
+\node[cls] (os) at (-5.8,-3.9) {\textbf{OperatingSystem}\nodepart{second}-platform APIs\nodepart{third}+receiveInput()\\+commitText()};
 \draw[arr] (ime)--(ses) node[midway,above,flbl]{owns};
 \draw[arr] (ses)--(str) node[midway,above,flbl]{1..*};
-\draw[arr] (ime.south)--++(0,-0.6)-|(eng.north west) node[pos=0.2,left,flbl]{uses};
-\draw[arr] (eng.south west)--++(0,-0.3)-|(pre.north) node[pos=0.25,above,flbl]{1. calls};
-\draw[arr] (pre)--(ref) node[midway,above,flbl]{2.};
-\draw[arr] (ref)--(seg) node[midway,above,flbl]{3.};
-\draw[arr] (seg)--(pc) node[midway,right,flbl]{4.};
-\draw[arr] (pc)--(rec) node[midway,above,flbl]{5.};
-\draw[arr] (rec)--(lm) node[midway,above,flbl]{6.};
+\draw[arr] (ime.south west)--(os.north east) node[midway,left,flbl]{OS interaction};
+\draw[arr] (ime.south east)--(eng.north west) node[midway,above,sloped,flbl]{passes session};
+\draw[arr] (eng.south west)--(pre.north) node[pos=0.25,above,flbl]{1. preprocess};
+\draw[arr] (pre)--(rec) node[midway,above,flbl]{2. recognize};
+\draw[arr] (rec.north east)--(eng.south east) node[midway,right,flbl]{Unicode};
+\draw[arr] (eng.north east) to[bend left=25] node[midway,right,flbl]{Unicode result} (ime.south east);
+\draw[arr] (ime.west)--(host.east) node[midway,above,flbl]{commitText(Unicode)};
 \end{tikzpicture}}
 \caption{Class Diagram}\label{fig:class}
 \end{figure}
 
 \section{Architectural Diagrams}
-An architecture serves as a blueprint of the system. It provides an abstraction that manages complexity and defines how the components communicate and coordinate. A layered architecture is followed for Urdu-Ink Mobile because the processing stages form a natural pipeline and because each layer can be replaced or optimized without changing the others, for example when a new runtime or a better recognizer becomes available. Figure~\ref{fig:arch} shows the five layers of the system. The presentation layer holds the keyboard user interface. The input layer captures the strokes. The processing layer cleans, refines, segments and pre-classifies them. The recognition and language layer extracts features, recognizes and corrects the text. The runtime and platform layer executes the models on the operating system of the phone. The strict ordering of the layers also supports testing, because each layer can be exercised with recorded input from the layer above it, and it supports portability, because only the presentation, input and platform layers need platform-specific code while the processing, recognition and language layers use the same model files on Android and iOS. The interface design, component-level design and deployment diagram follow in the next subsections.
+%An architecture serves as a blueprint of the system. It provides an abstraction that manages complexity and defines how the components communicate and coordinate. A layered architecture is followed for Urdu-Ink Mobile because the processing stages form a natural pipeline and because each layer can be replaced or optimized without changing the others, for example when a new runtime or a better recognizer becomes available. Figure~\ref{fig:arch} shows the five layers of the system. The presentation layer holds the keyboard user interface. The input layer captures the strokes. The processing layer cleans, refines, segments and pre-classifies them. The recognition and language layer extracts features, recognizes and corrects the text. The runtime and platform layer executes the models on the operating system of the phone. The strict ordering of the layers also supports testing, because each layer can be exercised with recorded input from the layer above it, and it supports portability, because only the presentation, input and platform layers need platform-specific code while the processing, recognition and language layers use the same model files on Android and iOS. The interface design, component-level design and deployment diagram follow in the next subsections.
+An architecture provides a blueprint of a project that gives abstraction to reduce complexity and explain how different components communicate with each other. A layered architecture is followed for UrduInk Mobile becuase every layer can be replaced without changing any other component of the system. For example when a new runtime or recognizere is available, it can be swapped without changing anything else.Figure~\ref{fig:arch} shows the five layers of the system. The presentation layer contains the keyboard user interface. The input layer captures the required stroke data. The preprocessing layer cleans the raw strokes to prepare for recognition. The next layer is recognition layer that recognizes the handwritten word. Then the runtime and platform layer executes the model on the operating system. This arrangemnet of layers also supports testing as each layer can be tested with input from the layer above. This arrangement also allows portability as only the presentation, input and paltform layer contains platform specific code.
+
+% \begin{figure}[!ht]
+% \centering
+% \resizebox{\textwidth}{!}{%
+% \begin{tikzpicture}
+% \begin{scope}[yshift=0cm]
+% \node[lay,minimum width=15cm,minimum height=1.9cm] {};
+% \node[font=\small\bfseries,anchor=north west] at (-7.4,0.9) {Presentation layer};
+% \node[lay,minimum width=4.2cm,minimum height=0.9cm,font=\footnotesize] at (-4.4,-0.25) {Writing canvas};
+% \node[lay,minimum width=4.2cm,minimum height=0.9cm,font=\footnotesize] at (0.5,-0.25) {Candidate bar};
+% \node[lay,minimum width=4.2cm,minimum height=0.9cm,font=\footnotesize] at (5.4,-0.25) {Keys and settings};
+% \end{scope}
+% \begin{scope}[yshift=-2.6cm]
+% \node[lay,minimum width=15cm,minimum height=1.9cm] {};
+% \node[font=\small\bfseries,anchor=north west] at (-7.4,0.9) {Input layer};
+% \node[lay,minimum width=6.8cm,minimum height=0.9cm,font=\footnotesize] at (-3.6,-0.25) {IME service};
+% \node[lay,minimum width=6.8cm,minimum height=0.9cm,font=\footnotesize] at (3.6,-0.25) {Multi-touch stroke logger};
+% \end{scope}
+% \begin{scope}[yshift=-5.2cm]
+% \node[lay,minimum width=15cm,minimum height=1.9cm] {};
+% \node[font=\small\bfseries,anchor=north west] at (-7.4,0.9) {Processing layer};
+% \node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (-5.5,-0.25) {Preprocessing};
+% \node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (-1.8,-0.25) {RefinerGAN};
+% \node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (1.9,-0.25) {Ligature segmentation};
+% \node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (5.6,-0.25) {GNN pre-classifier};
+% \end{scope}
+% \begin{scope}[yshift=-7.8cm]
+% \node[lay,minimum width=15cm,minimum height=1.9cm] {};
+% \node[font=\small\bfseries,anchor=north west] at (-7.4,0.9) {Recognition and language layer};
+% \node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (-5.5,-0.25) {Hybrid features};
+% \node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (-1.8,-0.25) {Transformer +\\BiLSTM-CTC};
+% \node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (1.9,-0.25) {N-gram model};
+% \node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (5.6,-0.25) {BERT-Urdu};
+% \end{scope}
+% \begin{scope}[yshift=-10.4cm]
+% \node[lay,minimum width=15cm,minimum height=1.9cm] {};
+% \node[font=\small\bfseries,anchor=north west] at (-7.4,0.9) {Runtime and platform layer};
+% \node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (-5.5,-0.25) {TensorFlow Lite};
+% \node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (-1.8,-0.25) {ONNX Runtime\\Mobile};
+% \node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (1.9,-0.25) {CoreML};
+% \node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (5.6,-0.25) {Android / iOS};
+% \end{scope}
+% \foreach \y in {-1.0,-3.6,-6.2,-8.8} \draw[arr] (0,\y)--(0,\y-0.65);
+% \end{tikzpicture}}
+% \caption{Layered Architecture Diagram}\label{fig:arch}
+% \end{figure}
 
 \begin{figure}[!ht]
 \centering
@@ -929,9 +1050,8 @@ An architecture serves as a blueprint of the system. It provides an abstraction 
 \begin{scope}[yshift=0cm]
 \node[lay,minimum width=15cm,minimum height=1.9cm] {};
 \node[font=\small\bfseries,anchor=north west] at (-7.4,0.9) {Presentation layer};
-\node[lay,minimum width=4.2cm,minimum height=0.9cm,font=\footnotesize] at (-4.4,-0.25) {Writing canvas};
-\node[lay,minimum width=4.2cm,minimum height=0.9cm,font=\footnotesize] at (0.5,-0.25) {Candidate bar};
-\node[lay,minimum width=4.2cm,minimum height=0.9cm,font=\footnotesize] at (5.4,-0.25) {Keys and settings};
+\node[lay,minimum width=4.2cm,minimum height=0.9cm,font=\footnotesize] at (-2.4,-0.25) {Writing canvas};
+\node[lay,minimum width=4.2cm,minimum height=0.9cm,font=\footnotesize] at (2.4,-0.25) {Keys and settings};
 \end{scope}
 \begin{scope}[yshift=-2.6cm]
 \node[lay,minimum width=15cm,minimum height=1.9cm] {};
@@ -941,19 +1061,16 @@ An architecture serves as a blueprint of the system. It provides an abstraction 
 \end{scope}
 \begin{scope}[yshift=-5.2cm]
 \node[lay,minimum width=15cm,minimum height=1.9cm] {};
-\node[font=\small\bfseries,anchor=north west] at (-7.4,0.9) {Processing layer};
-\node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (-5.5,-0.25) {Preprocessing};
-\node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (-1.8,-0.25) {RefinerGAN};
-\node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (1.9,-0.25) {Ligature segmentation};
-\node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (5.6,-0.25) {GNN pre-classifier};
+\node[font=\small\bfseries,anchor=north west] at (-7.4,0.9) {Preprocessing layer};
+\node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (-5.5,-0.25) {Jitter removal};
+\node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (-1.8,-0.25) {Downsample};
+\node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (1.9,-0.25) {Interpolate / extrapolate};
+\node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (5.6,-0.25) {Normalization};
 \end{scope}
 \begin{scope}[yshift=-7.8cm]
 \node[lay,minimum width=15cm,minimum height=1.9cm] {};
-\node[font=\small\bfseries,anchor=north west] at (-7.4,0.9) {Recognition and language layer};
-\node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (-5.5,-0.25) {Hybrid features};
-\node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (-1.8,-0.25) {Transformer +\\BiLSTM-CTC};
-\node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (1.9,-0.25) {N-gram model};
-\node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (5.6,-0.25) {BERT-Urdu};
+\node[font=\small\bfseries,anchor=north west] at (-7.4,0.9) {Recognition layer};
+\node[lay,minimum width=6.8cm,minimum height=0.9cm,font=\footnotesize] at (0,-0.25) {Recognizer neural network};
 \end{scope}
 \begin{scope}[yshift=-10.4cm]
 \node[lay,minimum width=15cm,minimum height=1.9cm] {};
@@ -961,7 +1078,7 @@ An architecture serves as a blueprint of the system. It provides an abstraction 
 \node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (-5.5,-0.25) {TensorFlow Lite};
 \node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (-1.8,-0.25) {ONNX Runtime\\Mobile};
 \node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (1.9,-0.25) {CoreML};
-\node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (5.6,-0.25) {Android / iOS};
+\node[lay,minimum width=3.3cm,minimum height=0.9cm,font=\footnotesize] at (5.6,-0.25) {Android};
 \end{scope}
 \foreach \y in {-1.0,-3.6,-6.2,-8.8} \draw[arr] (0,\y)--(0,\y-0.65);
 \end{tikzpicture}}
@@ -969,7 +1086,29 @@ An architecture serves as a blueprint of the system. It provides an abstraction 
 \end{figure}
 
 \subsection{Interface Design}
-The interface design shows the layout of the keyboard as the user sees it. Figure~\ref{fig:ui} presents the wireframe. The upper part of the screen shows the text field of the host application, below it a candidate bar displays the ranked words, and the largest area is the writing canvas with a dashed baseline that helps users write on a line. A bottom row holds the keys for switching keyboards, inserting a space, deleting and inserting a new line, and a button for the settings. The design keeps all common actions within reach of the thumb and allows the user to write and select a word without leaving the keyboard.
+%The interface design shows the layout of the keyboard as the user sees it. Figure~\ref{fig:ui} presents the wireframe. The upper part of the screen shows the text field of the host application, below it a candidate bar displays the ranked words, and the largest area is the writing canvas with a dashed baseline that helps users write on a line. A bottom row holds the keys for switching keyboards, inserting a space, deleting and inserting a new line, and a button for the settings. The design keeps all common actions within reach of the thumb and allows the user to write and select a word without leaving the keyboard.
+The interface desing shows the interface of the keyboard as the user sees it. Figure~\ref{fig:ui} presents the wireframe. The upper part of the layout shows the textbox of th host application. Below the textbox is the writing canvas with a dashed line that helps users write on a straight line. A row below the canvas holds the keys for switching keyboards, inserting a space, deleting and inserting a new line and a button for settings. This row also holds a button to signal the end of the word and send the strokes for recognition. All the buttons can be reached with a single hand and allow the user to enter the words without leaving the keyboard.
+
+% \begin{figure}[!ht]
+% \centering
+% \resizebox{!}{0.42\textheight}{%
+% \begin{tikzpicture}
+% \draw[rounded corners=14pt,thick] (0,0) rectangle (8,13.5);
+% \draw (0.5,10.4) rectangle (7.5,12.9);
+% \node[font=\small,align=center] at (4,11.65) {Text field of the\\host application};
+% \draw (0.5,9.1) rectangle (7.5,10.1);
+% \foreach \x/\t in {0.5/{word 1},2.9/{word 2},5.2/{word 3}} \draw[rounded corners=6pt,fill=gray!15] (\x+0.1,9.2) rectangle (\x+2.2,10) node[midway,font=\small]{\t};
+% \draw (0.5,2.1) rectangle (7.5,8.8);
+% \draw[dashed] (0.8,5.5)--(7.2,5.5);
+% \node[font=\small,gray] at (4,7.9) {Writing canvas (write Urdu here)};
+% \foreach \x/\t in {0.5/Switch,1.9/Space,4.5/Delete,5.9/Enter} {};
+% \draw (0.5,0.5) rectangle (1.9,1.8) node[midway,font=\scriptsize]{Switch};
+% \draw (2.0,0.5) rectangle (4.6,1.8) node[midway,font=\scriptsize]{Space};
+% \draw (4.7,0.5) rectangle (6.0,1.8) node[midway,font=\scriptsize]{Delete};
+% \draw (6.1,0.5) rectangle (7.5,1.8) node[midway,font=\scriptsize]{Enter};
+% \end{tikzpicture}}
+% \caption{Interface Design Diagram}\label{fig:ui}
+% \end{figure}
 
 \begin{figure}[!ht]
 \centering
@@ -978,22 +1117,49 @@ The interface design shows the layout of the keyboard as the user sees it. Figur
 \draw[rounded corners=14pt,thick] (0,0) rectangle (8,13.5);
 \draw (0.5,10.4) rectangle (7.5,12.9);
 \node[font=\small,align=center] at (4,11.65) {Text field of the\\host application};
-\draw (0.5,9.1) rectangle (7.5,10.1);
-\foreach \x/\t in {0.5/{word 1},2.9/{word 2},5.2/{word 3}} \draw[rounded corners=6pt,fill=gray!15] (\x+0.1,9.2) rectangle (\x+2.2,10) node[midway,font=\small]{\t};
-\draw (0.5,2.1) rectangle (7.5,8.8);
-\draw[dashed] (0.8,5.5)--(7.2,5.5);
-\node[font=\small,gray] at (4,7.9) {Writing canvas (write Urdu here)};
-\foreach \x/\t in {0.5/Switch,1.9/Space,4.5/Delete,5.9/Enter} {};
-\draw (0.5,0.5) rectangle (1.9,1.8) node[midway,font=\scriptsize]{Switch};
-\draw (2.0,0.5) rectangle (4.6,1.8) node[midway,font=\scriptsize]{Space};
-\draw (4.7,0.5) rectangle (6.0,1.8) node[midway,font=\scriptsize]{Delete};
-\draw (6.1,0.5) rectangle (7.5,1.8) node[midway,font=\scriptsize]{Enter};
+\draw (0.5,2.1) rectangle (7.5,10);
+\draw[dashed] (0.8,5.8)--(7.2,5.8);
+\node[font=\small,gray] at (4,8.5) {Writing canvas (write Urdu here)};
+\draw (0.5,0.5) rectangle (1.6,1.8) node[midway,font=\scriptsize]{Switch};
+\draw (1.7,0.5) rectangle (3.8,1.8) node[midway,font=\scriptsize]{Space};
+\draw (3.9,0.5) rectangle (5.0,1.8) node[midway,font=\scriptsize]{Delete};
+\draw (5.1,0.5) rectangle (6.1,1.8) node[midway,font=\scriptsize]{Enter};
+\draw (6.2,0.5) rectangle (7.5,1.8) node[midway,font=\scriptsize,align=center]{End Word /\\Recognize};
 \end{tikzpicture}}
 \caption{Interface Design Diagram}\label{fig:ui}
 \end{figure}
 
 \subsection{Component Level Design}
-The component diagram shows the software components and the interfaces through which they communicate. In Figure~\ref{fig:comp} the keyboard user interface passes strokes through the stroke-input interface to the Ink Capture component, which delivers raw ink to the Preprocessing Engine. The cleaned ink goes to the RefinerGAN component, then to the Ligature Segmenter, the Recognition Core and the Language Model component, and the final candidates return to the keyboard user interface. The three neural components, the RefinerGAN, the Recognition Core and the Language Model, obtain their model execution from the Inference Runtime component, which hides the differences between TensorFlow Lite, ONNX Runtime Mobile and CoreML.
+%The component diagram shows the software components and the interfaces through which they communicate. In Figure~\ref{fig:comp} the keyboard user interface passes strokes through the stroke-input interface to the Ink Capture component, which delivers raw ink to the Preprocessing Engine. The cleaned ink goes to the RefinerGAN component, then to the Ligature Segmenter, the Recognition Core and the Language Model component, and the final candidates return to the keyboard user interface. The three neural components, the RefinerGAN, the Recognition Core and the Language Model, obtain their model execution from the Inference Runtime component, which hides the differences between TensorFlow Lite, ONNX Runtime Mobile and CoreML.
+The component diagram shows the software components and the interfaces that they communicate through. In Figure~\ref{fig:comp} the keyboard user interface passes the strokes to the stroke-input interface to the InkCapture component. The InkCapture component passes the raw strokes to the preprocessing engine that cleans the strokes and prepares them for recognition. The preprocessed and cleaned strokes are then passed to the neural network for recogniton. The recognized word is returned to the keyboard user interface. The neural network component is executed by the Inference Runtime component, which abstract the differece between TensorFlow Lite, ONNX Runtime Mobile and CoreML.
+
+% \begin{figure}[!ht]
+% \centering
+% \resizebox{\textwidth}{!}{%
+% \begin{tikzpicture}[comp/.style={rectangle,draw,minimum width=2.9cm,minimum height=1.4cm,align=center,font=\small}]
+% \node[comp] (ui) at (0,0) {Keyboard UI};
+% \node[comp] (ink) at (5.3,0) {Ink Capture};
+% \node[comp] (pre) at (10.6,0) {Preprocessing\\Engine};
+% \node[comp] (ref) at (15.9,0) {RefinerGAN};
+% \node[comp] (seg) at (15.9,-3.4) {Ligature Segmenter\\+ Pre-classifier};
+% \node[comp] (rec) at (10.6,-3.4) {Recognition Core};
+% \node[comp] (lm) at (5.3,-3.4) {Language Model\\Layer};
+% \node[comp,minimum width=14cm] (rt) at (8.8,-6.6) {Inference Runtime (TensorFlow Lite / ONNX Runtime Mobile / CoreML)};
+% \draw[arr] (ui)--(ink) node[midway,above,flbl]{IStrokeInput};
+% \draw[arr] (ink)--(pre) node[midway,above,flbl]{IRawInk};
+% \draw[arr] (pre)--(ref) node[midway,above,flbl]{ICleanInk};
+% \draw[arr] (ref)--(seg) node[midway,right,flbl]{IRefined};
+% \draw[arr] (seg)--(rec) node[midway,above,flbl]{ILigature};
+% \draw[arr] (rec)--(lm) node[midway,above,flbl]{ICandidates};
+% \draw[arr] (lm.north west)--++(0,1.1)-|(ui.south) node[pos=0.2,above,flbl]{IWordList};
+% \draw[dsh] (ref.east)--++(0.9,0)|-(rt.east);
+% \draw[dsh] (seg.south)--(seg.south|-rt.north);
+% \draw[dsh] (rec.south)--(rec.south|-rt.north);
+% \draw[dsh] (lm.south)--(lm.south|-rt.north);
+% \node[flbl] at (13.4,-5.0) {IModelRun};
+% \end{tikzpicture}}
+% \caption{Component Level Design}\label{fig:comp}
+% \end{figure}
 
 \begin{figure}[!ht]
 \centering
@@ -1002,30 +1168,42 @@ The component diagram shows the software components and the interfaces through w
 \node[comp] (ui) at (0,0) {Keyboard UI};
 \node[comp] (ink) at (5.3,0) {Ink Capture};
 \node[comp] (pre) at (10.6,0) {Preprocessing\\Engine};
-\node[comp] (ref) at (15.9,0) {RefinerGAN};
-\node[comp] (seg) at (15.9,-3.4) {Ligature Segmenter\\+ Pre-classifier};
-\node[comp] (rec) at (10.6,-3.4) {Recognition Core};
-\node[comp] (lm) at (5.3,-3.4) {Language Model\\Layer};
-\node[comp,minimum width=14cm] (rt) at (8.8,-6.6) {Inference Runtime (TensorFlow Lite / ONNX Runtime Mobile / CoreML)};
+\node[comp] (rec) at (15.3,0) {Recognizer Neural\\Network};
+\node[comp,minimum width=14cm] (rt) at (8.8,-3.4) {Inference Runtime (TensorFlow Lite / ONNX Runtime Mobile / CoreML)};
 \draw[arr] (ui)--(ink) node[midway,above,flbl]{IStrokeInput};
 \draw[arr] (ink)--(pre) node[midway,above,flbl]{IRawInk};
-\draw[arr] (pre)--(ref) node[midway,above,flbl]{ICleanInk};
-\draw[arr] (ref)--(seg) node[midway,right,flbl]{IRefined};
-\draw[arr] (seg)--(rec) node[midway,above,flbl]{ILigature};
-\draw[arr] (rec)--(lm) node[midway,above,flbl]{ICandidates};
-\draw[arr] (lm.north west)--++(0,1.1)-|(ui.south) node[pos=0.2,above,flbl]{IWordList};
-\draw[dsh] (ref.east)--++(0.9,0)|-(rt.east);
-\draw[dsh] (seg.south)--(seg.south|-rt.north);
-\draw[dsh] (rec.south)--(rec.south|-rt.north);
-\draw[dsh] (lm.south)--(lm.south|-rt.north);
-\node[flbl] at (13.4,-5.0) {IModelRun};
+\draw[arr] (pre)--(rec) node[midway,above,flbl]{ICleanInk};
+\draw[arr] (rec.north)--(15.3,2.1)--(0,2.1)--(ui.north) node[pos=0.5,above,flbl]{IWord (recognized word)};
+\draw[dsh] (rec.south)--(rec.south|-rt.north) node[midway,right,flbl]{IModelRun};
 \end{tikzpicture}}
 \caption{Component Level Design}\label{fig:comp}
 \end{figure}
 
 \subsection{Deployment}
-The deployment diagram shows the physical nodes on which the software runs. Figure~\ref{fig:deploy} shows two nodes. Models are trained on a GPU workstation, where the Python training scripts and the handwriting corpus reside, and are exported to mobile formats. The exported models are bundled into the application installed on the smartphone, where the keyboard application, the model files, the inference runtime and a local store of user settings reside together. The keyboard communicates with host applications on the same phone through the input method framework of the operating system, and no handwriting data have to leave the phone. Keeping training and deployment on separate nodes also reflects the different needs of the two phases: training requires a powerful GPU and the complete corpus, while deployment requires only the compact, quantized model files and a runtime that fits within the memory and storage limits of the reference device.
+%The deployment diagram shows the physical nodes on which the software runs. Figure~\ref{fig:deploy} shows two nodes. Models are trained on a GPU workstation, where the Python training scripts and the handwriting corpus reside, and are exported to mobile formats. The exported models are bundled into the application installed on the smartphone, where the keyboard application, the model files, the inference runtime and a local store of user settings reside together. The keyboard communicates with host applications on the same phone through the input method framework of the operating system, and no handwriting data have to leave the phone. Keeping training and deployment on separate nodes also reflects the different needs of the two phases: training requires a powerful GPU and the complete corpus, while deployment requires only the compact, quantized model files and a runtime that fits within the memory and storage limits of the reference device.
+The deployment diagram shows the physical devices the model is trained and runs on. Figure~\ref{fig:deploy} shows two devices. The model is trained on a consumer laptop where the python training script and the dataset are stored and is then exported in mobile formats. The exported model is bundled with the keyboard application that is installed on user's smartphone where the keyboard application, the model files, the inference runtime and user settings are stored. The keyboard interacts with the target application using the input method services of the operating system and no data leaves the user's device. Keeping the training and deployment of different devices also shows the different requirements of the two phases. Training requires a better GPU and the full training dataset while deployment only requires the quantized, compact model and runtime that fits withing the RAM and storage constraints of the user's smartphone.
 
+% \begin{figure}[!ht]
+% \centering
+% \resizebox{\textwidth}{!}{%
+% \begin{tikzpicture}
+% \draw (0,0) rectangle (8,6.6); \draw (0,6.6)--(0.4,7)--(8.4,7)--(8.4,0.4)--(8,0);\draw (8,6.6)--(8.4,7);
+% \node[font=\small\bfseries,align=center] at (4,5.8) {\guillemotleft device\guillemotright\\Training Workstation (GPU)};
+% \node[ent,minimum width=6.6cm] at (4,3.9) {PyTorch / Keras training scripts};
+% \node[ent,minimum width=6.6cm] at (4,2.5) {Handwriting and text corpora};
+% \node[ent,minimum width=6.6cm] at (4,1.1) {Model export (TFLite, ONNX, CoreML)};
+% \draw (12,0) rectangle (21,6.6); \draw (12,6.6)--(12.4,7)--(21.4,7)--(21.4,0.4)--(21,0);\draw (21,6.6)--(21.4,7);
+% \node[font=\small\bfseries,align=center] at (16.5,5.8) {\guillemotleft device\guillemotright\\Smartphone / Tablet (Android 13+, iOS 16+)};
+% \node[ent,minimum width=3.8cm] at (14.4,3.7) {Urdu-Ink\\IME application};
+% \node[ent,minimum width=3.8cm] at (18.7,3.7) {Model files\\(.tflite, .onnx, .mlmodel)};
+% \node[ent,minimum width=3.8cm] at (14.4,1.7) {Inference runtime};
+% \node[ent,minimum width=3.8cm] at (18.7,1.7) {Local settings store};
+% \draw[dsh] (8.4,3.2)--(12,3.2) node[midway,above,flbl,align=center]{model deployment\\(app bundle)};
+% \node[draw,minimum width=4cm,minimum height=1.2cm,align=center,font=\small] (host) at (16.5,-2.4) {\guillemotleft application\guillemotright\\Host app (messaging, notes)};
+% \draw[arr] (16.5,0)--(host.north) node[midway,right,flbl]{input method framework};
+% \end{tikzpicture}}
+% \caption{Deployment Diagram}\label{fig:deploy}
+% \end{figure}
 \begin{figure}[!ht]
 \centering
 \resizebox{\textwidth}{!}{%
@@ -1036,11 +1214,11 @@ The deployment diagram shows the physical nodes on which the software runs. Figu
 \node[ent,minimum width=6.6cm] at (4,2.5) {Handwriting and text corpora};
 \node[ent,minimum width=6.6cm] at (4,1.1) {Model export (TFLite, ONNX, CoreML)};
 \draw (12,0) rectangle (21,6.6); \draw (12,6.6)--(12.4,7)--(21.4,7)--(21.4,0.4)--(21,0);\draw (21,6.6)--(21.4,7);
-\node[font=\small\bfseries,align=center] at (16.5,5.8) {\guillemotleft device\guillemotright\\Smartphone / Tablet (Android 13+, iOS 16+)};
+\node[font=\small\bfseries,align=center] at (16.5,5.8) {\guillemotleft device\guillemotright\\Smartphone / Tablet (Android 10+)};
 \node[ent,minimum width=3.8cm] at (14.4,3.7) {Urdu-Ink\\IME application};
 \node[ent,minimum width=3.8cm] at (18.7,3.7) {Model files\\(.tflite, .onnx, .mlmodel)};
 \node[ent,minimum width=3.8cm] at (14.4,1.7) {Inference runtime};
-\node[ent,minimum width=3.8cm] at (18.7,1.7) {Local settings store};
+\node[ent,minimum width=3.8cm] at (18.7,1.7) {Local settings};
 \draw[dsh] (8.4,3.2)--(12,3.2) node[midway,above,flbl,align=center]{model deployment\\(app bundle)};
 \node[draw,minimum width=4cm,minimum height=1.2cm,align=center,font=\small] (host) at (16.5,-2.4) {\guillemotleft application\guillemotright\\Host app (messaging, notes)};
 \draw[arr] (16.5,0)--(host.north) node[midway,right,flbl]{input method framework};
