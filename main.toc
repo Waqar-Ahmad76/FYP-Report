@@ -21,7 +21,7 @@
 \contentsline {subsection}{\numberline {3.2.1}Data Acquisition Module}{11}{subsection.3.2.1}%
 \contentsline {subsection}{\numberline {3.2.2}Urdu Handwriting Corpus Module}{12}{subsection.3.2.2}%
 \contentsline {subsection}{\numberline {3.2.3}Preprocessing Engine}{12}{subsection.3.2.3}%
-\contentsline {subsection}{\numberline {3.2.4}RefinerGAN Module}{12}{subsection.3.2.4}%
+\contentsline {subsection}{\numberline {3.2.4}GAN-Based Stroke Generation Module}{12}{subsection.3.2.4}%
 \contentsline {subsection}{\numberline {3.2.5}Ligature Segmentation Module}{12}{subsection.3.2.5}%
 \contentsline {subsection}{\numberline {3.2.6}Pre-Classifier Module}{12}{subsection.3.2.6}%
 \contentsline {subsection}{\numberline {3.2.7}Hybrid Feature Extraction Module}{13}{subsection.3.2.7}%
@@ -32,7 +32,7 @@
 \contentsline {section}{\numberline {3.3}Functional Requirements/Software Features}{13}{section.3.3}%
 \contentsline {subsection}{\numberline {3.3.1}Stroke Capture (FR1)}{14}{subsection.3.3.1}%
 \contentsline {subsection}{\numberline {3.3.2}Stroke Preprocessing (FR2)}{14}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}Stroke Refinement (FR3)}{14}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.3}GAN-Based Stroke Generation (FR3)}{14}{subsection.3.3.3}%
 \contentsline {subsection}{\numberline {3.3.4}Segmentation and Pre-classification (FR4)}{14}{subsection.3.3.4}%
 \contentsline {subsection}{\numberline {3.3.5}Handwriting Recognition (FR5)}{14}{subsection.3.3.5}%
 \contentsline {subsection}{\numberline {3.3.6}Language-Model Correction and Suggestions (FR6)}{14}{subsection.3.3.6}%
